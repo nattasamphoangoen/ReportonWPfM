@@ -99,6 +99,9 @@ public partial class Account_Login : System.Web.UI.Page
                 {
                     Session["AccountId"] = dsUser.Tables["Account"].Rows[0]["Id"].ToString();
                     Session["USERNAME"] = dsUser.Tables["Account"].Rows[0]["Title"].ToString() + " " + dsUser.Tables["Account"].Rows[0]["Firstname"].ToString() + " " + dsUser.Tables["Account"].Rows[0]["Lastname"].ToString();
+                    
+                    Session["BLSNAME"] = dsUser.Tables["Account"].Rows[0]["Firstname"].ToString() + dsUser.Tables["Account"].Rows[0]["Lastname"].ToString();
+
                     Session["USEREMAIL"] = dsUser.Tables["Account"].Rows[0]["Email"].ToString();
                     Session["USERTYPE"] = dsUser.Tables["Account"].Rows[0]["UserType"].ToString();
                     Session["USERLOGON"] = dsUser.Tables["Account"].Rows[0]["LoginDate"].ToString();

@@ -472,6 +472,7 @@ cite {
   color: #3a87ad;
 }
 
+
 .text-left {
   text-align: left;
 }
@@ -2111,7 +2112,11 @@ fieldset[disabled] .btn-default.active {
   background-color: #ffffff;
   border-color: #cccccc;
 }
-
+.btn-bt-p{
+  color: #ffffff;
+    background-color: rgb(153, 0, 255);
+    border-color: rgb(162, 0, 255);
+}
 .btn-primary {
   color: #ffffff;
   background-color: #428bca;
