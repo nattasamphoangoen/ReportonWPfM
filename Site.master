@@ -129,6 +129,7 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="~/User_Search">ผู้ร่วมโครงการ |<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a runat="server" href="~/User_Search">เพิ่มข้อมูล % สัดส่วนภาระงานแต่ละโครงการ</a></li>
+                                    <li><a runat="server" href="~/Evaluate_User">แบบรายงานผลการปฏิบัติงาน (Report on Work Performance)</a></li>
                                 </ul>
                             </li>
                         </ul>
