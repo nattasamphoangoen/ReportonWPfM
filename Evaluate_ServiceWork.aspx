@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Evaluate_ServiceWork" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Evaluate_ServiceWork.aspx.cs" Inherits="Evaluate_ServiceWork" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" 
+    CodeFile="Evaluate_ServiceWork.aspx.cs" Inherits="Evaluate_ServiceWork" Culture="en-US" Debug="true" %>
 
   <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
@@ -23,69 +24,125 @@
         {
             height: 17px;
         }
-               .cal_Theme1 .ajax__calendar_container
-        {
-            background-color: #ffefef;
-            border: solid 1px #260000;
-        }
-        .cal_Theme1 .ajax__calendar_header
-        {
+               .cal_Theme1 .ajax__calendar_container   {
+            background-color: #DEF1F4;
+            border:solid 1px #77D5F7;
+            }
+
+            .cal_Theme1 .ajax__calendar_header  {
             background-color: #ffffff;
             margin-bottom: 4px;
-        }
-        .cal_Theme1 .ajax__calendar_title, .cal_Theme1 .ajax__calendar_next, .cal_Theme1 .ajax__calendar_prev
-        {
+            }
+
+            .cal_Theme1 .ajax__calendar_title,
+            .cal_Theme1 .ajax__calendar_next,
+            .cal_Theme1 .ajax__calendar_prev    {
             color: #004080;
             padding-top: 3px;
-        }
-        .cal_Theme1 .ajax__calendar_body
-        {
-            background-color: #eff7ff;
-            border: solid 1px #442525;
-        }
-        .cal_Theme1 .ajax__calendar_dayname
-        {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 3px;
+            }
+
+            .cal_Theme1 .ajax__calendar_body    {
+            background-color: #ffffff;
+            border: solid 1px #77D5F7;
+            }
+
+            .cal_Theme1 .ajax__calendar_dayname {
+            text-align:center;
+            font-weight:bold;
+            margin-bottom: 4px;
             margin-top: 2px;
-        }
-        .cal_Theme1 .ajax__calendar_day
-        {
-            text-align: center;
-        }
-        .cal_Theme1 .ajax__calendar_hover .ajax__calendar_day, .cal_Theme1 .ajax__calendar_hover .ajax__calendar_month, .cal_Theme1 .ajax__calendar_hover .ajax__calendar_year, .cal_Theme1 .ajax__calendar_active
-        {
+            color: #004080;
+            }
+
+            .cal_Theme1 .ajax__calendar_day {
+            color: #004080;
+            text-align:center;
+            }
+
+            .cal_Theme1 .ajax__calendar_hover .ajax__calendar_day,
+            .cal_Theme1 .ajax__calendar_hover .ajax__calendar_month,
+            .cal_Theme1 .ajax__calendar_hover .ajax__calendar_year,
+            .cal_Theme1 .ajax__calendar_active  {
             color: #004080;
             font-weight: bold;
-            background-color: #ffffff;
-        }
-        .cal_Theme1 .ajax__calendar_today
-        {
-            font-weight: bold;
-        }
-        .cal_Theme1 .ajax__calendar_other, .cal_Theme1 .ajax__calendar_hover .ajax__calendar_today, .cal_Theme1 .ajax__calendar_hover .ajax__calendar_title
-        {
+            background-color: #DEF1F4;
+            }
+
+            .cal_Theme1 .ajax__calendar_today   {
+            font-weight:bold;
+            }
+
+            .cal_Theme1 .ajax__calendar_other,
+            .cal_Theme1 .ajax__calendar_hover .ajax__calendar_today,
+            .cal_Theme1 .ajax__calendar_hover .ajax__calendar_title {
             color: #bbbbbb;
-        }
-        .colorAdd{
-            color: #ff3a3a;
-        }
+            }
     </style>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+         
         <ContentTemplate>
+
+
+
             <style>
                 body, html {
                     background: url("./Images/bg-1.png")no-repeat;
                     background-size: cover;
                 }
             </style>
-
+       
             <div class="jumbotron">
                 <div class="jumbotron" style="padding: 10px; background-color: #DCDCDC">
                     <h2>แบบรายงานผลการปฏิบัติงาน</h2>
                     <p class="lead">สถาบันวิจัยแสงซินโครตรอน (องค์การมหาชน)</p>
+                    
+                    <div colspan="2" align="right">
+                   <tr>
+                    <td>
+                        <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
+                        <img id="report" alt="" border="0" height="16" name="popcal"
+                         src="Images/n2.png" width="16" /> 
+                        </asp:LinkButton>
+                    </td> 
+
+                    <td>
+                        <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
+                        <img id="report" alt="" border="0" height="16" name="popcal"
+                         src="Images/n3.png" width="16" /> 
+                        </asp:LinkButton>
+                    </td> 
+                    
+                    <td>
+                        <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
+                        <img id="report" alt="" border="0" height="16" name="popcal"
+                         src="Images/n4.png" width="16" /> 
+                        </asp:LinkButton>
+                    </td>
+                    
+                    <td>
+                        <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
+                        <img id="report" alt="" border="0" height="16" name="popcal"
+                         src="Images/n5.png" width="16" /> 
+                        </asp:LinkButton>
+                    </td>
+                    
+                    <td>
+                        <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
+                        <img id="report" alt="" border="0" height="16" name="popcal"
+                         src="Images/n6.png" width="16" /> 
+                        </asp:LinkButton>
+                    </td>
+                    
+                    <td>
+                        <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
+                        <img id="report" alt="" border="0" height="16" name="popcal"
+                         src="Images/n7.png" width="16" /> 
+                        </asp:LinkButton>
+                    </td>
+                    </tr>
+    
                 </div>
+            </div>
 
                 
 
@@ -135,14 +192,21 @@
                                 <asp:BoundField HeaderText="หมายเลขโครงการ" DataField="projectCode" ItemStyle-Width="80px" >
                                     <ItemStyle Width="60px"  Font-Size="Small" />
                                 </asp:BoundField>
-                                <asp:BoundField HeaderText="ชื่อโครงการ" DataField="projectName" ItemStyle-Width="150px" >
+                                <asp:BoundField HeaderText="ชื่อโครงการ" DataField="projectName" ItemStyle-Width="80px" >
                                     <ItemStyle Width="120px" Font-Size="Small"/>
                                 </asp:BoundField>
-                                <asp:BoundField HeaderText="วันที่ให้บริการ" DataField="updateDate" ItemStyle-Width="80px" >
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
 
-                                <asp:BoundField HeaderText="จำนวน shift" DataField="projectShipft" ItemStyle-Width="80px" >
+                                <asp:templatefield headertext="วันที่ให้บริการ"  ItemStyle-Width="120px">
+                                    <itemtemplate>
+                                        <%# Convert.ToDateTime(Eval("updateDate")).ToString("dd/MM/yyyy - ") %>
+                                         <%# Convert.ToDateTime(Eval("updateDateOut")).ToString("dd/MM/yyyy") %>
+                                         <ItemStyle Width="100px" Font-Size="Small" />
+                                    </itemtemplate>
+                                </asp:templatefield>
+                                
+
+                               
+                                <asp:BoundField HeaderText="จำนวน shift" DataField="projectShipft" ItemStyle-Width="50px" >
                                     <ItemStyle Width="60px" Font-Size="Small" />
                                 </asp:BoundField>
 
@@ -150,10 +214,24 @@
                                     <ItemStyle Width="60px" Font-Size="Small" />
                                 </asp:BoundField>
 
-                                <asp:BoundField HeaderText="เอกสารแนบ" DataField="fileNameOld" ItemStyle-Width="150px" >
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                               </asp:BoundField>
+                                <asp:TemplateField HeaderText="เอกสารแนบ" ShowHeader="False" ItemStyle-Width="150px">
+                                <ItemStyle Width="100px" Font-Size="Small" />
+                                <ItemTemplate>
+                                        <asp:HiddenField ID="hdf_Path" runat="server" Value='<%# Bind("path") %>'></asp:HiddenField>
+                                        <asp:LinkButton ID="lnkDownload" runat="server"  CausesValidation="False" OnClick="btnDownload_Click">
+                                            <img id="DownloadService" alt="" border="0" height="16" name="popcal" src="Images/Dowload.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
 
+                                        <asp:LinkButton ID="LinkButton3" runat="server" Text='' >
+                                            <img id="DeletService" alt="" border="0" height="16" name="popcal" src="Images/viwe.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                </ItemTemplate>
+                                </asp:TemplateField>
+
+                              
                                <asp:TemplateField  HeaderStyle-HorizontalAlign="Center"
                                     HeaderStyle-VerticalAlign="Middle">
                                     <ItemTemplate>
@@ -197,24 +275,6 @@
                     </td>
                 </tr>
 
-                       
-
-                       
-                       <td valign="top" colspan="3">
-                           <asp:FileUpload ID="fuUploadImg" runat="server" CssClass="txt_howtonav" EnableTheming="True" />
-                        <asp:Button ID="ButtonUploadImg" runat="server" CssClass="txt_howtonav" OnClick="ButtonUploadDeparture_Click" Text="Upload" ValidationGroup="Departure" />
-                        <asp:RequiredFieldValidator ID="reqUploadDeparture" runat="server" ControlToValidate="fuUploadImg" Display="Dynamic" ErrorMessage="โปรดเลือกใช้ไฟล์ภาพตามที่กำหนด" SetFocusOnError="True" ValidationGroup="Departure"></asp:RequiredFieldValidator>
-                        <asp:RegularExpressionValidator ID="vldUploadDeparture" runat="server" ControlToValidate="fuUploadImg" Display="Dynamic" ErrorMessage="*ระบุได้เฉพาะไฟล์ (.jpg, .jpeg)!!" SetFocusOnError="True" ValidationExpression="^.+\.((jpg)|(JPG)|(jpeg)|(JPEG))$" ValidationGroup="Departure"></asp:RegularExpressionValidator>
-                        <br />
-                    </td>
-                      <td valign="top" colspan="3">
-                        <asp:Label ID="lblUploadStatus" runat="server" CssClass="gray" Text="ขนาดไฟล์ไม่เกิน 300k. (เฉพาะไฟล์ jpg, jpeg)"></asp:Label>
-                    </td>
-                      
-                      
-                      
-                      
-
                 <tr>
                     <td colspan="6" align="center">
                         <asp:Label ID="lblRecord" runat="server" Font-Bold="true" CssClass="gray"></asp:Label>
@@ -226,6 +286,7 @@
                 </tr>
             </table>
         </ContentTemplate>
+           
     </asp:UpdatePanel>    
     </div> 
 
@@ -255,7 +316,7 @@
                                 <td valign="top" width="150" colspan="3">
                                     <asp:TextBox ID="txtProjectCode" runat="server" CssClass="gray" Width="180px"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="reqProjectCodeAdd" runat="server" ErrorMessage="*" ControlToValidate="txtProjectCode"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_1"></asp:RequiredFieldValidator>
+                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_1" style="color: #ff0000"></asp:RequiredFieldValidator>
                                 </td>
                             </tr>
 
@@ -266,28 +327,33 @@
                                 <td valign="top" width="150" colspan="3">
                                     <asp:TextBox ID="txtProjectName" runat="server" CssClass="gray" Width="180px"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="reqProjectNameAdd" runat="server" ErrorMessage="*" ControlToValidate="txtProjectName"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_1"></asp:RequiredFieldValidator>
+                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_1" style="color: #ff0000"></asp:RequiredFieldValidator>
                                 </td>
                             </tr>
       
 
                            <tr> 
                             <td align="right" valign="top">
-                                    <strong style="color: #003359">วันที่ให้บริการ</strong>
+                                    <strong style="color: #003359">วันที่ให้บริการ :</strong>
                                 </td>
                                 <td valign="top">
-                                    <asp:TextBox ID="txtProjectDate" runat="server" CssClass="gray" Width="180px" ></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectDate" runat="server" CssClass="gray" Width="90px" ></asp:TextBox>
                                     <cc1:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="txtProjectDate" Format="yyyy-MM-dd"
                                     PopupButtonID="CalendarVisitDate" CssClass="cal_Theme1">
                                     </cc1:CalendarExtender>
                                     <img id="CalendarVisitDate" alt="" border="0" height="16" name="popcal" src="Images/calendar.png"
                                         width="16" />
 
-                                    <asp:RequiredFieldValidator ID="reqProjectDateAdd" runat="server" ControlToValidate="txtProjectDate"
-                                        Display="Dynamic" ErrorMessage="*วันที่ให้บริการ." SetFocusOnError="True" ValidationGroup="AddServeice1_1"></asp:RequiredFieldValidator>
+                                    <asp:Label ID="lbl_cal" runat="server" Text=' - '></asp:Label>
+                                    <asp:TextBox ID="txtProjectDateOut" runat="server" CssClass="gray" Width="90px" ></asp:TextBox>
+                                    <cc1:CalendarExtender ID="CalendarExtenderOut" runat="server" TargetControlID="txtProjectDateOut" Format="yyyy-MM-dd"
+                                    PopupButtonID="CalendarVisitDateOut" CssClass="cal_Theme1">
+                                    </cc1:CalendarExtender>
+                                    <img id="CalendarVisitDateOut" alt="" border="0" height="16" name="popcal" src="Images/calendar.png"
+                                        width="16" />
                                 </td>
                                 </tr>
-
+                                
                                 
 
 
@@ -297,8 +363,8 @@
                                 </td>
                                 <td valign="top" width="150" colspan="3">
                                     <asp:TextBox ID="txtProjectShift" runat="server" CssClass="gray" Width="180px"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="reqProjectShiftAdd" runat="server" ErrorMessage="*" ControlToValidate="txtProjectShift"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_1"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="reqProjectShiftAdd" runat="server" ErrorMessage="*" ControlToValidate="txtProjectShift" 
+                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_1"  style="color: #ff0000" ></asp:RequiredFieldValidator>
                                 </td>
                             </tr>  
                             <tr>
@@ -306,12 +372,12 @@
                                     <span style="color: Red">*</span> <strong style="color: #003359">เอกสารแนบ :</strong>
                                 </td>
                                 <td valign="top" width="150" colspan="3">
-                                    <asp:FileUpload ID="FileUpload1_1" runat="server" EnableTheming="True" />
-                                    <asp:RequiredFieldValidator ID="reqProjectFileAdd" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_1"
+                                    <asp:FileUpload ID="FileUpload1_1" runat="server" EnableTheming="True" style="color: #0d0044"/>
+                                    <asp:RequiredFieldValidator ID="reqProjectFileAdd" runat="server" ErrorMessage="*โปรดเลือกไฟล์"  style="color: #ff0000" ControlToValidate="FileUpload1_1"
                                         Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_1"></asp:RequiredFieldValidator>
-                                     <asp:Label id="UploadStatusLabel"
-                                        runat="server">
-                                    </asp:Label> 
+                                     <asp:RegularExpressionValidator ID="vldUploadDeparture" runat="server" style="color: #ff0000" ControlToValidate="FileUpload1_1" 
+                                     Display="Dynamic" ErrorMessage="*ระบุได้เฉพาะไฟล์ (PDF, Excel, Word)!!" SetFocusOnError="True" 
+                                     ValidationExpression="^.+\.((docx)|(odt)|(doc)|(pdf)|(xlsx)|(xls))$" ValidationGroup="AddServeice1_1"></asp:RegularExpressionValidator> 
                                 </td>
                             </tr>
 
@@ -339,7 +405,9 @@
                 </div>
                 <br />
             </ContentTemplate>
+             
         </asp:UpdatePanel>
+        
     </asp:Panel>
 <!-- ========================popup========================================================== -->
 
@@ -390,9 +458,13 @@
                                 <asp:BoundField HeaderText="ชื่อโครงการ" DataField="projectName" ItemStyle-Width="150px">
                                     <ItemStyle Width="120px" Font-Size="Small"/>
                                 </asp:BoundField>
-                                <asp:BoundField HeaderText="วันที่ให้บริการ" DataField="updateDate" ItemStyle-Width="80px">
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
+                               <asp:templatefield headertext="วันที่ให้บริการ"  ItemStyle-Width="120px">
+                                    <itemtemplate>
+                                        <%# Convert.ToDateTime(Eval("updateDate")).ToString("dd/MM/yyyy - ") %>
+                                         <%# Convert.ToDateTime(Eval("updateDateOut")).ToString("dd/MM/yyyy") %>
+                                         <ItemStyle Width="100px" Font-Size="Small" />
+                                    </itemtemplate>
+                                </asp:templatefield>
 
                                 <asp:BoundField HeaderText="จำนวน shift" DataField="projectShipft" ItemStyle-Width="80px">
                                     <ItemStyle Width="60px" Font-Size="Small" />
@@ -402,9 +474,21 @@
                                     <ItemStyle Width="60px" Font-Size="Small" />
                                 </asp:BoundField>
 
-                                <asp:BoundField HeaderText="เอกสารแนบ" DataField="fileNameOld" ItemStyle-Width="150px">
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="เอกสารแนบ" ShowHeader="False" ItemStyle-Width="150px">
+                                <ItemStyle Width="100px" Font-Size="Small" />
+                                <ItemTemplate>
+                                        <asp:LinkButton ID="lnkDownload1_2" runat="server" OnClick="btnDownload_Click2">
+                                            <img id="DownloadService" alt="" border="0" height="16" name="popcal" src="Images/Dowload.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                        <asp:LinkButton ID="LinkButton1_2" runat="server" Text='' >
+                                            <img id="DeletService" alt="" border="0" height="16" name="popcal" src="Images/viwe.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                </ItemTemplate>
+                                </asp:TemplateField>
                                
                                <asp:TemplateField  HeaderStyle-HorizontalAlign="Center"
                                     HeaderStyle-VerticalAlign="Middle">
@@ -505,21 +589,28 @@
 
                            <tr> 
                             <td align="right" valign="top">
-                                    <strong style="color: #003359">วันที่ให้บริการ</strong>
+                                    <strong style="color: #003359">วันที่ให้บริการ :</strong>
                                 </td>
                                 <td valign="top">
-                                    <asp:TextBox ID="txtProjectDate2" runat="server" CssClass="gray" Width="180px" ></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectDate2" runat="server" CssClass="gray" Width="90px" ></asp:TextBox>
                                     <cc1:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="txtProjectDate2" Format="yyyy-MM-dd"
                                     PopupButtonID="CalendarVisitDate2" CssClass="cal_Theme1">
                                     </cc1:CalendarExtender>
                                     <img id="CalendarVisitDate2" alt="" border="0" height="16" name="popcal" src="Images/calendar.png"
                                         width="16" />
 
-                                    <asp:RequiredFieldValidator ID="reqProjectDate2Add" runat="server" ControlToValidate="txtProjectDate2"
-                                        Display="Dynamic" ErrorMessage="*วันที่ให้บริการ." SetFocusOnError="True" ValidationGroup="AddServeice1_2"></asp:RequiredFieldValidator>
-                                    
+                                    <asp:Label ID="lbl_cal2" runat="server" Text=' - '></asp:Label>
+                                    <asp:TextBox ID="txtProjectDateOut2" runat="server" CssClass="gray" Width="90px" ></asp:TextBox>
+                                    <cc1:CalendarExtender ID="CalendarExtenderOut2" runat="server" TargetControlID="txtProjectDateOut2" Format="yyyy-MM-dd"
+                                    PopupButtonID="CalendarVisitDateOut2" CssClass="cal_Theme1">
+                                    </cc1:CalendarExtender>
+                                    <img id="CalendarVisitDateOut2" alt="" border="0" height="16" name="popcal" src="Images/calendar.png"
+                                        width="16" />
                                 </td>
                                 </tr>
+                                
+                                 
+                               
 
                              <tr>
                                 <td valign="top" align="right">
@@ -540,6 +631,9 @@
                                     <asp:FileUpload ID="FileUpload1_2" runat="server" />
                                     <asp:RequiredFieldValidator ID="reqProjectFile2Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_2"
                                         Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_2"></asp:RequiredFieldValidator>
+                                 <asp:RegularExpressionValidator ID="vldUploadDeparture2" runat="server" style="color: #ff0000" ControlToValidate="FileUpload1_2" 
+                                     Display="Dynamic" ErrorMessage="*ระบุได้เฉพาะไฟล์ (PDF, Excel, Word)!!" SetFocusOnError="True" 
+                                     ValidationExpression="^.+\.((docx)|(odt)|(doc)|(pdf)|(xlsx)|(xls))$" ValidationGroup="AddServeice1_2"></asp:RegularExpressionValidator> 
                                 </td>
                             </tr>
 
@@ -630,9 +724,21 @@
                                     <ItemStyle Width="60px" Font-Size="Small" />
                                 </asp:BoundField>
 
-                                <asp:BoundField HeaderText="เอกสารแนบ" DataField="fileNameOld" ItemStyle-Width="150px">
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="เอกสารแนบ" ShowHeader="False" ItemStyle-Width="150px">
+                                <ItemStyle Width="100px" Font-Size="Small" />
+                                <ItemTemplate>
+                                        <asp:LinkButton ID="lnkDownload1_3" runat="server" OnClick="btnDownload_Click3">
+                                            <img id="DownloadService" alt="" border="0" height="16" name="popcal" src="Images/Dowload.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                        <asp:LinkButton ID="LinkButton1_3" runat="server" Text='' >
+                                            <img id="DeletService" alt="" border="0" height="16" name="popcal" src="Images/viwe.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                </ItemTemplate>
+                                </asp:TemplateField>
                                
                                <asp:TemplateField  HeaderStyle-HorizontalAlign="Center"
                                     HeaderStyle-VerticalAlign="Middle">
@@ -751,12 +857,10 @@
 
                              <tr>
                                 <td valign="top" align="right">
-                                    <span style="color: Red">*</span> <strong style="color: #003359">รายละเอียด/ผลลัพธ์ที่ให้บริการ :</strong>
+                                    <strong style="color: #003359">รายละเอียด/ผลลัพธ์ที่ให้บริการ :</strong>
                                 </td>
                                 <td valign="top" width="150" colspan="3">
                                     <asp:TextBox ID="txtProjectDescription3" runat="server" CssClass="gray" Width="180px"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="reqprojectDescription3Add" runat="server" ErrorMessage="*" ControlToValidate="txtProjectDescription3"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_3"></asp:RequiredFieldValidator>
                                 </td>
                             </tr>  
                             <tr>
@@ -767,6 +871,9 @@
                                     <asp:FileUpload ID="FileUpload1_3" runat="server"  />
                                     <asp:RequiredFieldValidator ID="reqProjectFile3Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_3"
                                         Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_3"></asp:RequiredFieldValidator>
+                                         <asp:RegularExpressionValidator ID="vldUploadDeparture3" runat="server" style="color: #ff0000" ControlToValidate="FileUpload1_3" 
+                                     Display="static" ErrorMessage="*ระบุได้เฉพาะไฟล์ (PDF, Excel, Word)!!" SetFocusOnError="True" 
+                                     ValidationExpression="^.+\.((docx)|(odt)|(doc)|(pdf)|(xlsx)|(xls))$" ValidationGroup="AddServeice1_3"></asp:RegularExpressionValidator> 
                                 </td>
                             </tr>
 
@@ -846,21 +953,29 @@
                                     <ItemStyle Width="50px" Font-Size="Small" />
                                 </asp:BoundField>
 
-                                <asp:BoundField  HeaderText="%ที่ร่วม" DataField="projectPrecentJoint" ItemStyle-Width="80px" >
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
+                              
 
                                 <asp:BoundField HeaderText="คะแนน" DataField="projectScore" ItemStyle-Width="80px">
                                     <ItemStyle Width="60px" Font-Size="Small" />
                                 </asp:BoundField>
 
-                                <asp:BoundField HeaderText="เอกสารแนบแบ่ง %" DataField="fileNamePrecentOld" ItemStyle-Width="150px">
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
                                
-                                <asp:BoundField HeaderText="เอกสารแนบ" DataField="fileNameOld" ItemStyle-Width="150px">
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
+                               
+                                <asp:TemplateField HeaderText="เอกสารแนบ" ShowHeader="False" ItemStyle-Width="150px">
+                                <ItemStyle Width="100px" Font-Size="Small" />
+                                <ItemTemplate>
+                                        <asp:LinkButton ID="lnkDownload1_4" runat="server" OnClick="btnDownload_Click4">
+                                            <img id="DownloadService" alt="" border="0" height="16" name="popcal" src="Images/Dowload.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                        <asp:LinkButton ID="LinkButton1_4" runat="server" Text='' >
+                                            <img id="DeletService" alt="" border="0" height="16" name="popcal" src="Images/viwe.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                </ItemTemplate>
+                                </asp:TemplateField>
                                
                                <asp:TemplateField  HeaderStyle-HorizontalAlign="Center"
                                     HeaderStyle-VerticalAlign="Middle">
@@ -967,34 +1082,18 @@
                                 </td>
                                 </tr>
 
-                             <tr>
-                                <td valign="top" align="right">
-                                    <span style="color: Red">*</span> <strong style="color: #003359">%ที่ร่วม :</strong>
-                                </td>
-                                <td valign="top" width="150" colspan="3">
-                                    <asp:TextBox ID="txtprojectPrecentJoint4" runat="server" CssClass="gray" Width="180px"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="reqprojectPrecentJoint4Add" runat="server" ErrorMessage="*" ControlToValidate="txtprojectPrecentJoint4"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_4"></asp:RequiredFieldValidator>
-                                </td>
-                            </tr>  
-                            <tr>
-                                <td valign="top" align="right">
-                                    <span style="color: Red">*</span> <strong style="color: #003359">เอกสารแนบแบ่ง % :</strong>
-                                </td>
-                                <td valign="top" width="150" colspan="4">
-                                    <asp:FileUpload ID="FileUpload1_4_1" runat="server"  />
-                                    <asp:RequiredFieldValidator ID="reqProjectFilePrecent4Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_4_1"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_4"></asp:RequiredFieldValidator>
-                                </td>
-                            </tr>
+                          
                             <tr>
                                 <td valign="top" align="right">
                                     <span style="color: Red">*</span> <strong style="color: #003359">เอกสารแนบ :</strong>
                                 </td>
                                 <td valign="top" width="150" colspan="4">
-                                    <asp:FileUpload ID="FileUpload1_4_2" runat="server"  />
-                                    <asp:RequiredFieldValidator ID="reqProjectFile4Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_4_2"
+                                    <asp:FileUpload ID="FileUpload1_4" runat="server"  />
+                                    <asp:RequiredFieldValidator ID="reqProjectFile4Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_4"
                                         Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_4"></asp:RequiredFieldValidator>
+                                 <asp:RegularExpressionValidator ID="vldUploadDeparture4" runat="server" style="color: #ff0000" ControlToValidate="FileUpload1_4" 
+                                     Display="Dynamic" ErrorMessage="*ระบุได้เฉพาะไฟล์ (PDF, Excel, Word)!!" SetFocusOnError="True" 
+                                     ValidationExpression="^.+\.((docx)|(odt)|(doc)|(pdf)|(xlsx)|(xls))$" ValidationGroup="AddServeice1_4"></asp:RegularExpressionValidator> 
                                 </td>
                             </tr>
 
@@ -1077,21 +1176,29 @@
                                     <ItemStyle Width="50px" Font-Size="Small" />
                                 </asp:BoundField>
 
-                                <asp:BoundField  HeaderText="%ที่ร่วม" DataField="projectPrecentJoint" ItemStyle-Width="80px" >
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
+                              
 
                                 <asp:BoundField HeaderText="คะแนน" DataField="projectScore" ItemStyle-Width="80px">
                                     <ItemStyle Width="60px" Font-Size="Small" />
                                 </asp:BoundField>
 
-                                <asp:BoundField HeaderText="เอกสารแนบแบ่ง %" DataField="fileNamePrecentOld" ItemStyle-Width="150px">
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
                                
-                                <asp:BoundField HeaderText="เอกสารแนบ" DataField="fileNameOld" ItemStyle-Width="150px">
-                                    <ItemStyle Width="100px" Font-Size="Small" />
-                                </asp:BoundField>
+                               
+                                <asp:TemplateField HeaderText="เอกสารแนบ" ShowHeader="False" ItemStyle-Width="150px">
+                                <ItemStyle Width="100px" Font-Size="Small" />
+                                <ItemTemplate>
+                                        <asp:LinkButton ID="lnkDownload1_5" runat="server"  CausesValidation="False" OnClick="btnDownload_Click5">
+                                            <img id="DownloadService" alt="" border="0" height="16" name="popcal" src="Images/Dowload.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                        <asp:LinkButton ID="LinkButton1_5" runat="server" Text='' >
+                                            <img id="DeletService" alt="" border="0" height="16" name="popcal" src="Images/viwe.gif"
+                                        width="16" />
+                                        </asp:LinkButton>
+
+                                </ItemTemplate>
+                                </asp:TemplateField>
                                
                                <asp:TemplateField  HeaderStyle-HorizontalAlign="Center"
                                     HeaderStyle-VerticalAlign="Middle">
@@ -1190,7 +1297,7 @@
                                             <asp:ListItem Value="" >Select</asp:ListItem>
                                         </asp:DropDownList>
                                 <asp:SqlDataSource ID="sqlClass5Add" runat="server" ConnectionString="<%$ ConnectionStrings:SLRIConnectionString %>"
-                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'Sevice1-5-Type' ORDER BY id">
+                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'Sevice1-5-Type' AND ddlStatus = 'A' ORDER BY id">
                                 </asp:SqlDataSource>
                                     <asp:RequiredFieldValidator ID="reqClass5Add" runat="server" ControlToValidate="txtProjectClass5"
                                         Display="Dynamic" ErrorMessage="*" SetFocusOnError="True" ValidationGroup="AddServeice1_5"></asp:RequiredFieldValidator>
@@ -1198,33 +1305,15 @@
                                 </td>
                                 </tr>
 
-                             <tr>
-                                <td valign="top" align="right">
-                                    <span style="color: Red">*</span> <strong style="color: #003359">%ที่ร่วม :</strong>
-                                </td>
-                                <td valign="top" width="150" colspan="3">
-                                    <asp:TextBox ID="txtprojectPrecentJoint5" runat="server" CssClass="gray" Width="180px"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="reqprojectPrecentJoint5Add" runat="server" ErrorMessage="*" ControlToValidate="txtprojectPrecentJoint4"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_5"></asp:RequiredFieldValidator>
-                                </td>
-                            </tr>  
-                            <tr>
-                                <td valign="top" align="right">
-                                    <span style="color: Red">*</span> <strong style="color: #003359">เอกสารแนบแบ่ง % :</strong>
-                                </td>
-                                <td valign="top" width="150" colspan="4">
-                                    <asp:FileUpload ID="FileUpload1_5_1" runat="server"  />
-                                    <asp:RequiredFieldValidator ID="reqProjectFilePrecent5Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_5_1"
-                                        Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_5"></asp:RequiredFieldValidator>
-                                </td>
-                            </tr>
+                          
+                         
                             <tr>
                                 <td valign="top" align="right">
                                     <span style="color: Red">*</span> <strong style="color: #003359">เอกสารแนบ :</strong>
                                 </td>
                                 <td valign="top" width="150" colspan="4">
-                                    <asp:FileUpload ID="FileUpload1_5_2" runat="server"  />
-                                    <asp:RequiredFieldValidator ID="reqProjectFile5Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_5_2"
+                                    <asp:FileUpload ID="FileUpload1_5" runat="server"  />
+                                    <asp:RequiredFieldValidator ID="reqProjectFile5Add" runat="server" ErrorMessage="*" ControlToValidate="FileUpload1_5"
                                         Display="Dynamic" SetFocusOnError="True" ValidationGroup="AddServeice1_5"></asp:RequiredFieldValidator>
                                 </td>
                             </tr>
@@ -1261,6 +1350,13 @@
 
 
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="btnAddService" />
+            <asp:PostBackTrigger ControlID="btnAddService2" />
+            <asp:PostBackTrigger ControlID="btnAddService3" />
+            <asp:PostBackTrigger ControlID="btnAddService4" />
+            <asp:PostBackTrigger ControlID="btnAddService5" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
 
