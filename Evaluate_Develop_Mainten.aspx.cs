@@ -54,7 +54,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     }
     protected void report5_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Services_Academic.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
     protected void report6_Click (object sender, EventArgs e) {
@@ -65,6 +65,11 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void report7_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
         Response.Redirect ("~/Evaluate_Other.aspx?nID=" + rId);
+
+    }
+    protected void reportSummary_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
     }
 
@@ -2250,10 +2255,10 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan6_1.Text);
-            cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic6_1.SelectedValue);
-            cmd.Parameters.AddWithValue ("@ProjectInProgress", txtProjectInProgress6_1.Text);
-            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6_1.Text);
+            cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan6_1.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic6_1.SelectedValue.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectInProgress", txtProjectInProgress6_1.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6_1.Text.Trim ());
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
@@ -2647,10 +2652,10 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan6_2.Text);
+            cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan6_2.Text.Trim ());
             cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic6_2.SelectedValue);
-            cmd.Parameters.AddWithValue ("@ProjectInProgress", txtProjectInProgress6_2.Text);
-            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6_2.Text);
+            cmd.Parameters.AddWithValue ("@ProjectInProgress", txtProjectInProgress6_2.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6_2.Text.Trim ());
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);

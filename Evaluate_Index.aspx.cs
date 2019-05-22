@@ -48,7 +48,7 @@ public partial class Evaluate_Index : System.Web.UI.Page
     protected void report5_Click(object sender, EventArgs e)
     {
       string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Services_Academic.aspx?nID=" + rId);
+        Response.Redirect("~/Evaluate_AcademicServices.aspx?nID=" + rId);
      
     }
     protected void report6_Click(object sender, EventArgs e)
