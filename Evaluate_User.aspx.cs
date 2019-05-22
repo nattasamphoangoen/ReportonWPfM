@@ -73,7 +73,7 @@ public partial class Evaluate_User : System.Web.UI.Page
     {
         string sql = @"SELECT M.id as Mid, M.acountId, C.projectYear, C.projectRound,
                                 CASE WHEN C.projectUserStatus = 'W' THEN 'เปิด' 
-                                WHEN C.projectUserStatus = 'C' THEN 'ปิด' end as projectUserStatus
+                                WHEN C.projectUserStatus = 'C' THEN 'ปิด' END AS projectUserStatus
                         FROM EvaluateMaster AS M
                         LEFT JOIN ProjectControl AS C ON M.roundId = C.id
                         LEFT JOIN Account AS A ON M.acountId = A.id
@@ -206,7 +206,7 @@ public partial class Evaluate_User : System.Web.UI.Page
         {
             String ProjectStatus = Convert.ToString(((HiddenField)e.Row.FindControl("hdf_ProjectStatus")).Value);
 
-            if (ProjectStatus == "C")
+            if (ProjectStatus == "ปิด")
             {
                 e.Row.FindControl("bt_EditRound").Visible = false;
                 e.Row.FindControl("bt_ViewRound").Visible = true;

@@ -38,7 +38,11 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         this.SearchData5 ();
 
     }
+    protected void reportSummary_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
+    }
     protected void report2_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
         Response.Redirect ("~/Evaluate_Develop_Mainten.aspx?nID=" + rId);
@@ -56,7 +60,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
     }
     protected void report5_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Services_Academic.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
     protected void report6_Click (object sender, EventArgs e) {
@@ -236,6 +240,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
     string upnameOld;
 
     protected bool SaveService (string ID) {
+
         SqlCommand com;
         string str;
 
@@ -279,7 +284,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete) || !Directory.Exists (filepathEdit)) {
             Directory.CreateDirectory (filepath);
             Directory.CreateDirectory (filepathDelete);
-            Directory.CreateDirectory (filepathEdit);
+            // Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
         string OldFileName = Path.GetFileName (FileUpload1_1.FileName);
@@ -298,17 +303,18 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         con.Close ();
 
         string sql = "";
-        if (ID == "") {
+        
+            if (ID == "" ) {
 
-            sql = @"INSERT INTO EvaluateSevice1_1
+                sql = @"INSERT INTO EvaluateSevice1_1
                     (masterId,  projectCode,  projectName, projectDate, projectShipft, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore, updateDate, updateDateOut, projectDateOut) 
                     VALUES
                     (@MasterId, @ProjectCode, @ProjectName, @ProjectDate, @ProjectShift, @Path, @IpAddress, @FileNameOld,
                     @FileName, @CreatedBy, @Score1_1, @ProjectDate, @ProjectDateOut, @ProjectDateOut)";
-        } else {
+            } else {
 
-            sql = @"UPDATE EvaluateSevice1_1  SET
+                sql = @"UPDATE EvaluateSevice1_1  SET
                     updateDate = @ProjectDate,
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
@@ -323,38 +329,39 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                     (@MasterId, @ProjectCode, @ProjectName, @ProjectDate, @ProjectShift, @Path, @IpAddress, @FileNameOld,
                     @FileName, @CreatedBy, @Score1_1, @ProjectDate, @ProjectDateOut, @ProjectDateOut)";
 
-        }
+            }
 
-        //  db.ConnectionString = con_string;
+            //  db.ConnectionString = con_string;
 
-        SqlCommand cmd = new SqlCommand ();
-        cmd.CommandText = sql;
+            SqlCommand cmd = new SqlCommand ();
+            cmd.CommandText = sql;
 
-        try {
-            decimal totalScore1_1 = decimal.Parse (txtProjectShift.Text) * 2;
+            try {
+                decimal totalScore1_1 = decimal.Parse (txtProjectShift.Text) * 2;
 
-            cmd.Parameters.AddWithValue ("@Id", ID);
-            cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@ProjectCode", txtProjectCode.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectDate", txtProjectDate.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectShift", txtProjectShift.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@Path", filepath);
-            cmd.Parameters.AddWithValue ("@IpAddress", ip);
-            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-            cmd.Parameters.AddWithValue ("@FileName", NewFileName);
-            cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score1_1", totalScore1_1);
-            cmd.Parameters.AddWithValue ("@ProjectDateOut", txtProjectDateOut.Text.Trim ());
-            // cmd.Parameters.AddWithValue ("@FileNameOld1_1", upnameOld);
+                cmd.Parameters.AddWithValue ("@Id", ID);
+                cmd.Parameters.AddWithValue ("@MasterId", rId);
+                cmd.Parameters.AddWithValue ("@ProjectCode", txtProjectCode.Text.Trim ());
+                cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName.Text.Trim ());
+                cmd.Parameters.AddWithValue ("@ProjectDate", txtProjectDate.Text.Trim ());
+                cmd.Parameters.AddWithValue ("@ProjectShift", txtProjectShift.Text.Trim ());
+                cmd.Parameters.AddWithValue ("@Path", filepath);
+                cmd.Parameters.AddWithValue ("@IpAddress", ip);
+                cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
+                cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+                cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
+                cmd.Parameters.AddWithValue ("@Score1_1", totalScore1_1);
+                cmd.Parameters.AddWithValue ("@ProjectDateOut", txtProjectDateOut.Text.Trim ());
+                // cmd.Parameters.AddWithValue ("@FileNameOld1_1", upnameOld);
 
-            db.ExecuteNonQuery (cmd);
+                db.ExecuteNonQuery (cmd);
 
-            return true;
-        } catch (Exception ex) {
-            lblInError1_1.Text += "SaveService = " + ex.Message + "<br />";
-            return false;
-        }
+                return true;
+            } catch (Exception ex) {
+                lblInError1_1.Text += "SaveService = " + ex.Message + "<br />";
+                return false;
+            }
+        
         //finally { con.Close(); 
 
     }
@@ -826,7 +833,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                                         
                     FROM [EvaluateSevice1_3] 
 
-                    WHERE masterId =  @MasterId ";
+                    WHERE projectStatus = 'A' AND masterId =  @MasterId ";
 
         //string prefix = " AND ";
 
@@ -1044,7 +1051,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         decimal totalScore1_3 = 0;
         try {
 
-            String class1_3 = txtProjectClass3.SelectedValue;
+            String class1_3 = txtProjectClass3.SelectedValue.ToString();
             if (class1_3 == "A") {
                 totalScore1_3 = 10;
                 classet1_3 = "Class A";
@@ -1459,9 +1466,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ,[projectClass]
                         ,[projectScore]
                         ,[projectStatus]
-                       
                         ,[path]
-                       
                         ,[fileName]
                         ,[fileNameOld]
                         ,[createdBy]

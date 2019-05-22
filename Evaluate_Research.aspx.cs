@@ -8,9 +8,8 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using ClassLibrary;
 //3
-public partial class Evaluate_Research : System.Web.UI.Page
-{
- //=============================Research3_1 =================================================
+public partial class Evaluate_Research : System.Web.UI.Page {
+    //=============================Research3_1 =================================================
     Authorize A = new Authorize ();
     SqlConnection con = new SqlConnection ();
     protected string con_string = WebConfigurationManager.ConnectionStrings["SLRIConnectionString"].ConnectionString;
@@ -28,13 +27,12 @@ public partial class Evaluate_Research : System.Web.UI.Page
 
         this.SearchData3 ();
 
-        // this.SearchData4 ();
-        // this.SearchData7 ();
-        // this.SearchData8 ();
-        // this.SearchData9 ();
-        // this.SearchData5 ();
-        // this.SearchData6 ();
-       
+        this.SearchData4 ();
+        this.SearchData7 ();
+        this.SearchData8 ();
+        this.SearchData9 ();
+        this.SearchData5 ();
+        this.SearchData6 ();
 
     }
 
@@ -55,7 +53,7 @@ public partial class Evaluate_Research : System.Web.UI.Page
     }
     protected void report5_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Services_Academic.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
     protected void report6_Click (object sender, EventArgs e) {
@@ -68,7 +66,11 @@ public partial class Evaluate_Research : System.Web.UI.Page
         Response.Redirect ("~/Evaluate_Other.aspx?nID=" + rId);
 
     }
+    protected void reportSummary_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
+    }
     protected void SearchData () {
         string sql = @"SELECT [id]
                     ,[masterId]
@@ -428,7 +430,8 @@ public partial class Evaluate_Research : System.Web.UI.Page
             cmd1.CommandText = sql;
             cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus.Value);
             db.ExecuteDataTable (cmd1);
-            this.SearchData ();ClearPopUp ();
+            this.SearchData ();
+            ClearPopUp ();
         }
         SqlCommand com;
         string str;
@@ -456,7 +459,7 @@ public partial class Evaluate_Research : System.Web.UI.Page
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
         fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
         File.Move (fileSrc, fileDelete);
-        
+        SearchData ();
         reader.Close ();
         con.Close ();
 
@@ -1691,7 +1694,7 @@ public partial class Evaluate_Research : System.Web.UI.Page
     protected void ClearPopUp5 () {
         txtProjectTopic5.Text = "";
         txtProjectType5.Text = "";
-        txtProjectClass5.Text = "";
+        txtProjectJoint5.Text = "";
 
     }
     protected void btnAddResearch_Click5 (object sender, EventArgs e) {
@@ -1717,7 +1720,42 @@ public partial class Evaluate_Research : System.Web.UI.Page
         // txtBuilder.Text = "";
     }
 
-    protected void btnDownload_Click5 (object sender, EventArgs e) {
+    protected void btnDownload_Click5_1 (object sender, EventArgs e) {
+        SqlCommand com;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_5] 
+                    WHERE  id =  @Id ";
+
+        com = new SqlCommand (sql, con);
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData5.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
+
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
+
+    }
+    protected void btnDownload_Click5_2 (object sender, EventArgs e) {
         SqlCommand com;
 
         SqlConnection con = new SqlConnection (con_string);
@@ -1787,8 +1825,8 @@ public partial class Evaluate_Research : System.Web.UI.Page
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_2\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_2\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -1800,8 +1838,8 @@ public partial class Evaluate_Research : System.Web.UI.Page
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload3_5.FileName);
-        string NewFileName = "Research3_5_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_5.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_5_2.FileName);
+        string NewFileName = "Research3_5_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_5_2.FileName;
         // string NewFileName = FileUpload3_5.FileName;
 
         string InsertFile = filepath + NewFileName;
@@ -1810,12 +1848,12 @@ public partial class Evaluate_Research : System.Web.UI.Page
         string filepathDeleteShare;
         string filepathEditShare;
         string rootpathShare = Request.PhysicalApplicationPath;
-        string pathShare = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tabShare3-5\\";
-        string pathDeleteShare = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tabShare3-5\\";
+        string pathShare = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tabShare3-5_1\\";
+        string pathDeleteShare = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tabShare3-5_1\\";
         string pathEditShare = "Edit\\" + path;
         // filepathEditShare = rootpath + pathEdit;
-        filepathShare = rootpath + path;
-        filepathDeleteShare = rootpath + pathDelete;
+        filepathShare = rootpath + pathShare;
+        filepathDeleteShare = rootpath + pathDeleteShare;
         //var directoryInfoShare = new DirectoryInfo (filepath);
         if (!Directory.Exists (filepathShare) || !Directory.Exists (filepathDeleteShare)) {
             Directory.CreateDirectory (filepathShare);
@@ -1823,15 +1861,15 @@ public partial class Evaluate_Research : System.Web.UI.Page
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileNameShare = Path.GetFileName (FileUploadShare3_5.FileName);
-        string NewFileNameShare = "Research3_5_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUploadShare3_5.FileName;
+        string OldFileNameShare = Path.GetFileName (FileUploadShare3_5_1.FileName);
+        string NewFileNameShare = "Research3_5_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUploadShare3_5_1.FileName;
         // string NewFileName = FileUpload3_5.FileName;
 
         string InsertFileShare = filepathShare + NewFileNameShare;
         //InsertFile.SaveAs
-        if (FileUpload3_5.HasFile || FileUploadShare3_5.HasFile) {
-            FileUpload3_5.SaveAs (InsertFile);
-            FileUploadShare3_5.SaveAs (InsertFileShare);
+        if (FileUpload3_5_2.HasFile || FileUploadShare3_5_1.HasFile) {
+            FileUpload3_5_2.SaveAs (InsertFile);
+            FileUploadShare3_5_1.SaveAs (InsertFileShare);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -1872,15 +1910,23 @@ public partial class Evaluate_Research : System.Web.UI.Page
 
         try {
             decimal totalScore3_5 = 0;
-            // string Type3_5 = txtProjectType5.SelectedValue.ToString ();
-            // string Class3_5 = txtProjectClass5.SelectedValue.ToString ();
+            string Type3_5 = txtProjectType5.SelectedValue.ToString ();
+            decimal Joint5 = decimal.Parse (txtProjectJoint5.Text);
+            if (Type3_5 == "Main auther") {
+                totalScore3_5 = 60;
+            } else {
+                if (Joint5 >= 1 && Joint5 <= 10) {
+                    totalScore3_5 = 10;
+                } else {
+                    totalScore3_5 = Joint5;
+                }
+            }
 
-           
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectType", txtProjectType5.SelectedValue);
             cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic5.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass5.SelectedValue);
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint5.Text);
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@PathShare", filepathShare);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
@@ -1951,7 +1997,7 @@ public partial class Evaluate_Research : System.Web.UI.Page
             hdf_ResearchStatus5.Value = ds.Rows[0]["id"].ToString ();
             txtProjectTopic5.Text = ds.Rows[0]["projectTopic"].ToString ();
             txtProjectType5.SelectedValue = ds.Rows[0]["projectType"].ToString ();
-            txtProjectClass5.SelectedValue = ds.Rows[0]["projectClass"].ToString ();
+            txtProjectJoint5.Text = ds.Rows[0]["projectJoint"].ToString ();
 
         }
 
@@ -1964,6 +2010,8 @@ public partial class Evaluate_Research : System.Web.UI.Page
         DataTable ds = this.SearchOneArea5 (Id);
         string fileSrc;
         string fileDelete;
+        string fileSrcPresent;
+        string fileDeletePresent;
 
         if (ds != null && ds.Rows.Count > 0) {
 
@@ -1995,11 +2043,15 @@ public partial class Evaluate_Research : System.Web.UI.Page
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_2\\";
+        string pathPresent = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_1\\";
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
         fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
+        fileSrcPresent = ds.Rows[0]["pathShare"].ToString () + ds.Rows[0]["fileNameShare"].ToString ();
+        fileDeletePresent = rootpath + pathPresent + ds.Rows[0]["fileNameShare"].ToString ();
         File.Move (fileSrc, fileDelete);
+        File.Move (fileSrcPresent, fileDeletePresent);
         reader.Close ();
         con.Close ();
     }
@@ -2009,1486 +2061,1639 @@ public partial class Evaluate_Research : System.Web.UI.Page
     //#####################################################################################################################################
     //##########################################################Strat 3_6################################################################
 
-    // protected void SearchData6 () {
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectTopic]
-    //                 ,[projectName]
-    //                 ,[projectPlan]
-    //                 ,[projectInProgress]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDaye]
-    //                 FROM [EvaluateResearch3_6] 
+    protected void SearchData6 () {
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectName]
+                    ,[projectJoint]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[pathShare]
+                    ,[path]
+                    ,[fileNameShare]
+                    ,[fileName]
+                    ,[fileNameShareOld]
+                    ,[fileNameOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
+                    FROM [EvaluateResearch3_6] 
 
-    //                 WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
+                    WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
-    //     con.ConnectionString = con_string;
-    //     con.Open ();
-    //     SqlCommand cmd = new SqlCommand (sql, con);
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
 
-    //     string rId = Request.QueryString["nId"];
-    //     cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //     SqlDataAdapter da = new SqlDataAdapter (cmd);
-    //     DataSet ds = new DataSet ();
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (cmd);
+        DataSet ds = new DataSet ();
 
-    //     con.Close ();
+        con.Close ();
 
-    //     DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //     gvData6.DataSource = blacklistDT.DefaultView;
-    //     gvData6.DataBind ();
-    //     lblRecord6.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
+        DataTable blacklistDT = db.ExecuteDataTable (cmd);
+        gvData6.DataSource = blacklistDT.DefaultView;
+        gvData6.DataBind ();
+        lblRecord6.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
 
-    // }
+    }
 
-    // protected void Add3_6_Click (object sender, EventArgs e) {
-    //     UpdatePanel3_6.Update ();
-    //     popupAddResearch3_6.Show ();
-    //     this.ClearPopUp6 ();
-    // }
+    protected void Add3_6_Click (object sender, EventArgs e) {
+        UpdatePanel3_6.Update ();
+        popupAddResearch3_6.Show ();
+        this.ClearPopUp6 ();
+    }
 
-    // protected void gvData_Sorting6 (object sender, GridViewSortEventArgs e) {
-    //     SortDirection SD = GridviewSortDirection;
-    //     GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
-    // }
+    protected void gvData_Sorting6 (object sender, GridViewSortEventArgs e) {
+        SortDirection SD = GridviewSortDirection;
+        GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
+    }
 
-    // protected void gvData_PageIndexChanging6 (object sender, GridViewPageEventArgs e) {
-    //     gvData6.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
-    //     gvData6.PageIndex = e.NewPageIndex;
-    //     gvData6.DataBind ();
-    //     this.btnSubmit_Click6 (sender, e);
-    // }
-    // protected void gvData_SelectedIndexChanged6 (object sender, EventArgs e) {
+    protected void gvData_PageIndexChanging6 (object sender, GridViewPageEventArgs e) {
+        gvData6.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
+        gvData6.PageIndex = e.NewPageIndex;
+        gvData6.DataBind ();
+        this.btnSubmit_Click6 (sender, e);
+    }
+    protected void gvData_SelectedIndexChanged6 (object sender, EventArgs e) {
 
-    // }
+    }
 
-    // protected void gvData_RowDataBound6 (object sender, GridViewRowEventArgs e) {
-    //     if (e.Row.RowType == DataControlRowType.DataRow) {
-    //         String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6")).Value);
-    //     }
+    protected void gvData_RowDataBound6 (object sender, GridViewRowEventArgs e) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6")).Value);
+        }
 
-    // }
+    }
 
-    // public SortDirection GridviewSortDirection6 {
-    //     get {
-    //         if (ViewState["sortDirection"] == null) {
-    //             ViewState["sortDirection"] = SortDirection.Ascending;
-    //         }
-    //         return (SortDirection) ViewState["sortDirection"];
-    //     }
-    //     set {
-    //         ViewState["sortDirection"] = value;
-    //     }
-    // }
+    public SortDirection GridviewSortDirection6 {
+        get {
+            if (ViewState["sortDirection"] == null) {
+                ViewState["sortDirection"] = SortDirection.Ascending;
+            }
+            return (SortDirection) ViewState["sortDirection"];
+        }
+        set {
+            ViewState["sortDirection"] = value;
+        }
+    }
 
-    // //=============================popup=================================================
+    //=============================popup=================================================
 
-    // protected void ClearPopUp6 () {
-    //     txtProjectTopic6.SelectedValue = "";
-    //     txtProjectName6.Text = "";
-    //     txtProjectPlan6.Text = "";
-    //     txtProjectInProgress6.Text = "";
+    protected void ClearPopUp6 () {
 
-    // }
-    // protected void btnAddResearch_Click6 (object sender, EventArgs e) {
-    //     UpdatePanel3_6.Update ();
-    //     if (this.SaveResearch6 (hdf_ResearchStatus6.Value) == true) {
-    //         this.SearchData6 ();
-    //         popupAddResearch3_6.Hide ();
-    //     }
+        txtProjectName6.Text = "";
+        txtProjectJoint6.Text = "";
 
-    // }
-    // protected void btnCancelResearch_Click6 (object sender, EventArgs e) {
-    //     UpdatePanel3_6.Update ();
-    //     popupAddResearch3_6.Hide ();
-    // }
+    }
+    protected void btnAddResearch_Click6 (object sender, EventArgs e) {
+        UpdatePanel3_6.Update ();
+        if (this.SaveResearch6 (hdf_ResearchStatus6.Value) == true) {
+            this.SearchData6 ();
+            popupAddResearch3_6.Hide ();
+        }
 
-    // protected void btnSubmit_Click6 (object sender, EventArgs e) {
-    //     Add3_6.Visible = true;
-    //     this.SearchData6 ();
-    // }
+    }
+    protected void btnCancelResearch_Click6 (object sender, EventArgs e) {
+        UpdatePanel3_6.Update ();
+        popupAddResearch3_6.Hide ();
+    }
 
-    // protected void btnReset_Click6 (object sender, EventArgs e) {
-    //     // ddlArea.SelectedValue = "";
-    //     // txtBuilder.Text = "";
-    // }
+    protected void btnSubmit_Click6 (object sender, EventArgs e) {
+        Add3_6.Visible = true;
+        this.SearchData6 ();
+    }
 
-    // protected void btnDownload_Click6 (object sender, EventArgs e) {
-    //     SqlCommand com;
+    protected void btnReset_Click6 (object sender, EventArgs e) {
+        // ddlArea.SelectedValue = "";
+        // txtBuilder.Text = "";
+    }
 
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,path + fileName AS Pathfile
-    //                 FROM [EvaluateResearch3_6] 
-    //                 WHERE  id =  @Id ";
+    protected void btnDownload_Click6_1 (object sender, EventArgs e) {
+        SqlCommand com;
 
-    //     com = new SqlCommand (sql, con);
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_6] 
+                    WHERE  id =  @Id ";
 
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
-    //     com.Parameters.AddWithValue ("@Id", Id);
-    //     SqlDataAdapter da = new SqlDataAdapter (com);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string Pathfile = reader["Pathfile"].ToString ();
+        com = new SqlCommand (sql, con);
 
-    //     Response.Clear ();
-    //     byte[] Content = File.ReadAllBytes (Pathfile);
-    //     //Response.ContentType = "text/plain";
-    //     Response.ContentType = "application/octect-stream";
-    //     Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
-    //     Response.TransmitFile (Pathfile);
-    //     Response.BufferOutput = true;
-    //     Response.OutputStream.Write (Content, 0, Content.Length);
-    //     Response.WriteFile (Pathfile);
-    //     Response.Flush ();
-    //     Response.End ();
-    //     con.Close ();
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
 
-    // }
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
 
-    // protected bool SaveResearch6 (string ID) {
-    //     SqlCommand com;
-    //     string str;
+    }
+    protected void btnDownload_Click6_2 (object sender, EventArgs e) {
+        SqlCommand com;
 
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,path + fileName AS Pathfile
+                    FROM [EvaluateResearch3_6] 
+                    WHERE  id =  @Id ";
 
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
+        com = new SqlCommand (sql, con);
 
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
 
-    //     string rId = Request.QueryString["nId"];
-    //     //==========================IPADDRESS ==================================
-    //     string strHostName = System.Net.Dns.GetHostName ();
-    //     IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
-    //     IPAddress[] addr = ipEntry.AddressList;
-    //     string ip = addr[1].ToString ();
-    //     //==========================IPADDRESS END==================================
-    //     //==========================upfile====================================
-    //     string filepath;
-    //     string filepathDelete;
-    //     string filepathEdit;
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6\\";
-    //     string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6\\";
-    //     string pathEdit = "Edit\\" + path;
-    //     // filepathEdit = rootpath + pathEdit;
-    //     filepath = rootpath + path;
-    //     filepathDelete = rootpath + pathDelete;
-    //     var directoryInfo = new DirectoryInfo (filepath);
-    //     if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
-    //         Directory.CreateDirectory (filepath);
-    //         Directory.CreateDirectory (filepathDelete);
-    //         //  Directory.CreateDirectory (filepathEdit);
-    //         //directoryInfo.CreateSubdirectory("k");
-    //     }
-    //     string OldFileName = Path.GetFileName (FileUpload3_6.FileName);
-    //     string NewFileName = "Research3_6_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_6.FileName;
-    //     // string NewFileName = FileUpload3_6.FileName;
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
 
-    //     string InsertFile = filepath + NewFileName;
-    //     //InsertFile.SaveAs
-    //     if (FileUpload3_6.HasFile) {
-    //         FileUpload3_6.SaveAs (InsertFile);
-    //     }
-    //     //hpf.SaveAs(InsertFile);
+    }
 
-    //     //==========================upfile end===============================
-    //     reader.Close ();
-    //     con.Close ();
+    protected bool SaveResearch6 (string ID) {
+        SqlCommand com;
+        string str;
 
-    //     string sql = "";
-    //     if (ID == "") {
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
 
-    //         sql = @"INSERT INTO EvaluateResearch3_6
-    //                 (masterId,  projectTopic,  projectName, projectPlan, projectInProgress, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectTopic, @ProjectName, @ProjectPlan, @ProjectInProgress, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_6)";
-    //     } else {
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
 
-    //         sql = @"UPDATE EvaluateResearch3_6  SET                    
-    //                 ipAdressUpdate = @IpAddress,
-    //                 updatedBy = @CreatedBy,
-    //                 projectStatus = 'I'                   
-    //                 WHERE ID = @Id
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+
+        string rId = Request.QueryString["nId"];
+        //==========================IPADDRESS ==================================
+        string strHostName = System.Net.Dns.GetHostName ();
+        IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
+        IPAddress[] addr = ipEntry.AddressList;
+        string ip = addr[1].ToString ();
+        //==========================IPADDRESS END==================================
+        //==========================upfile====================================
+        string filepath;
+        string filepathDelete;
+        string filepathEdit;
+        string rootpath = Request.PhysicalApplicationPath;
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_1\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_1\\";
+        string pathEdit = "Edit\\" + path;
+        // filepathEdit = rootpath + pathEdit;
+        filepath = rootpath + path;
+        filepathDelete = rootpath + pathDelete;
+        var directoryInfo = new DirectoryInfo (filepath);
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
+            Directory.CreateDirectory (filepath);
+            Directory.CreateDirectory (filepathDelete);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName = Path.GetFileName (FileUpload3_6_1.FileName);
+        string NewFileName = "Research3_6_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_6_1.FileName;
+        // string NewFileName = FileUpload3_6.FileName;
+
+        string InsertFile = filepath + NewFileName;
+        //InsertFile.SaveAs
+        if (FileUpload3_6_1.HasFile) {
+            FileUpload3_6_1.SaveAs (InsertFile);
+        }
+        //hpf.SaveAs(InsertFile);
+        //==========================================================
+        string filepath1;
+        string filepathDelete1;
+        string filepathEdit1;
+        string rootpath1 = Request.PhysicalApplicationPath;
+        string path1 = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_2\\";
+        string pathDelete1 = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_2\\";
+        string pathEdit1 = "Edit\\" + path;
+        // filepathEdit = rootpath + pathEdit;
+        filepath1 = rootpath1 + path1;
+        filepathDelete1 = rootpath1 + pathDelete1;
+        var directoryInfo1 = new DirectoryInfo (filepath1);
+        if (!Directory.Exists (filepath1) || !Directory.Exists (filepathDelete1)) {
+            Directory.CreateDirectory (filepath1);
+            Directory.CreateDirectory (filepathDelete1);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName1 = Path.GetFileName (FileUpload3_6_2.FileName);
+        string NewFileName1 = "Research3_6_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_6_2.FileName;
+        // string NewFileName = FileUpload3_6.FileName;
+
+        string InsertFile1 = filepath1 + NewFileName1;
+        //InsertFile.SaveAs
+        if (FileUpload3_6_2.HasFile) {
+            FileUpload3_6_2.SaveAs (InsertFile1);
+        }
+        //==========================upfile end===============================
+        reader.Close ();
+        con.Close ();
+
+        string sql = "";
+        if (ID == "") {
+
+            sql = @"INSERT INTO EvaluateResearch3_6
+                    (masterId,  projectName, projectJOint, path, ipAddressCreate, fileNameOld,
+                    fileName, createdBy, projectScore, pathShare, fileNameShareOld ,fileNameShare) 
+                    VALUES
+                    (@MasterId, @ProjectName, @ProjectJoint, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_6, @PathShare, @FileNameShareOld, @FileNameShare)";
+        } else {
+
+            sql = @"UPDATE EvaluateResearch3_6  SET                    
+                    ipAdressUpdate = @IpAddress,
+                    updatedBy = @CreatedBy,
+                    projectStatus = 'I'                   
+                    WHERE ID = @Id
                     
-    //                INSERT INTO EvaluateResearch3_6
-    //                 (masterId,  projectTopic,  projectName, projectPlan, projectInProgress, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectTopic, @ProjectName, @ProjectPlan, @ProjectInProgress, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_6)";
+                   INSERT INTO EvaluateResearch3_6
+                    (masterId,  projectName, projectJOint, path, ipAddressCreate, fileNameOld,
+                    fileName, createdBy, projectScore, pathShare, fileNameShareOld ,fileNameShare) 
+                    VALUES
+                    (@MasterId, @ProjectName, @ProjectJoint, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_6,@PathShare, @FileNameShareOld, @FileNameShare)";
 
-    //     }
+        }
 
-    //     //  db.ConnectionString = con_string;
+        //  db.ConnectionString = con_string;
 
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = sql;
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = sql;
 
-    //     try {
-    //         decimal totalScore3_6 = 0;
-    //         string Topic3_6 = txtProjectTopic6.SelectedValue.ToString ();
-    //         decimal plan6 = decimal.Parse (txtProjectPlan6.Text);
-    //         decimal InProgress6 = decimal.Parse (txtProjectInProgress6.Text);
-    //         if (Topic3_6 == "ออกแบบระบบลำเลียงแสง                                                                                ") {
-    //             totalScore3_6 = (InProgress6 * 100) / plan6;
-    //         } else {
-    //             totalScore3_6 = (InProgress6 * 70) / plan6;
-    //         }
+        try {
+            double totalScore3_6 = 0;
+            // string Topic3_6 = txtProjectTopic6.SelectedValue.ToString ();
+            double Joint6 = double.Parse (txtProjectJoint6.Text);
+            // decimal InProgress6 = decimal.Parse (txtProjectInProgress6.Text);
+            totalScore3_6 = Joint6 * 0.7;
 
-    //         cmd.Parameters.AddWithValue ("@Id", ID);
-    //         cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //         cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan6.Text);
-    //         cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic6.SelectedValue);
-    //         cmd.Parameters.AddWithValue ("@ProjectInProgress", txtProjectInProgress6.Text);
-    //         cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6.Text);
-    //         cmd.Parameters.AddWithValue ("@Path", filepath);
-    //         cmd.Parameters.AddWithValue ("@IpAddress", ip);
-    //         cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-    //         cmd.Parameters.AddWithValue ("@FileName", NewFileName);
-    //         cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-    //         cmd.Parameters.AddWithValue ("@Score3_6", totalScore3_6);
+            cmd.Parameters.AddWithValue ("@Id", ID);
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint6.Text);
+            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6.Text);
+            cmd.Parameters.AddWithValue ("@Path", filepath1);
+            cmd.Parameters.AddWithValue ("@PathShare", filepath);
+            cmd.Parameters.AddWithValue ("@IpAddress", ip);
+            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName1);
+            cmd.Parameters.AddWithValue ("@FileName", NewFileName1);
+            cmd.Parameters.AddWithValue ("@FileNameShareOld", OldFileName);
+            cmd.Parameters.AddWithValue ("@FileNameShare", NewFileName);
+            cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
+            cmd.Parameters.AddWithValue ("@Score3_6", totalScore3_6);
 
-    //         // cmd.Parameters.AddWithValue ("@FileNameOld3_6", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_6", upnameOld);
 
-    //         db.ExecuteNonQuery (cmd);
+            db.ExecuteNonQuery (cmd);
 
-    //         return true;
-    //     } catch (Exception ex) {
-    //         lblInError3_6.Text += "SaveResearch6 = " + ex.Message + "<br />";
-    //         return false;
-    //     }
-    //     //finally { con.Close(); 
+            return true;
+        } catch (Exception ex) {
+            lblInError3_6.Text += "SaveResearch6 = " + ex.Message + "<br />";
+            return false;
+        }
+        //finally { con.Close(); 
 
-    // }
+    }
 
-    // protected DataTable SearchOneArea6 (string ID) {
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectTopic]
-    //                 ,[projectName]
-    //                 ,[projectPlan]
-    //                 ,[projectInProgress]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDaye]
+    protected DataTable SearchOneArea6 (string ID) {
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectName]
+                    ,[projectJoint]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[pathShare]
+                    ,[path]
+                    ,[fileNameShare]
+                    ,[fileName]
+                    ,[fileNameShareOld]
+                    ,[fileNameOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
                                                         
-    //                 FROM [EvaluateResearch3_6] 
+                    FROM [EvaluateResearch3_6] 
 
-    //                 WHERE id =  @Id ";
+                    WHERE id =  @Id ";
 
-    //     cmd.Parameters.AddWithValue ("@Id", ID);
+        cmd.Parameters.AddWithValue ("@Id", ID);
 
-    //     try {
-    //         DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //         return blacklistDT;
-    //     } catch (Exception ex) {
-    //         lblInError3_6.Text += "SaveResearch6 = " + ex.Message + "<br />";
-    //         return null;
-    //     }
-    // }
+        try {
+            DataTable blacklistDT = db.ExecuteDataTable (cmd);
+            return blacklistDT;
+        } catch (Exception ex) {
+            lblInError3_6.Text += "SaveResearch6 = " + ex.Message + "<br />";
+            return null;
+        }
+    }
 
-    // protected void btnEditResearch_Click6 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click6 (object sender, EventArgs e) {
 
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea6 (Id);
-    //     if (ds != null && ds.Rows.Count > 0) {
-    //         UpdatePanel3_6.Update ();
-    //         popupAddResearch3_6.Show ();
-    //         hdf_ResearchStatus6.Value = ds.Rows[0]["id"].ToString ();
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea6 (Id);
+        if (ds != null && ds.Rows.Count > 0) {
+            UpdatePanel3_6.Update ();
+            popupAddResearch3_6.Show ();
+            hdf_ResearchStatus6.Value = ds.Rows[0]["id"].ToString ();
 
-    //         txtProjectTopic6.SelectedValue = ds.Rows[0]["projectTopic"].ToString ();
-    //         txtProjectName6.Text = ds.Rows[0]["projectName"].ToString ();
-    //         txtProjectPlan6.Text = ds.Rows[0]["projectPlan"].ToString ();
-    //         txtProjectInProgress6.Text = ds.Rows[0]["projectInProgress"].ToString ();
-    //     }
+            //   txtProjectTopic6.SelectedValue = ds.Rows[0]["projectTopic"].ToString ();
+            txtProjectName6.Text = ds.Rows[0]["projectName"].ToString ();
+            txtProjectJoint6.Text = ds.Rows[0]["projectJoint"].ToString ();
+            //    txtProjectInProgress6.Text = ds.Rows[0]["projectInProgress"].ToString ();
+        }
 
-    // }
+    }
 
-    // protected void btnDeleteResearch_Click6 (object sender, EventArgs e) {
-    //     string sql;
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea6 (Id);
-    //     string fileSrc;
-    //     string fileDelete;
+    protected void btnDeleteResearch_Click6 (object sender, EventArgs e) {
+        string sql;
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea6 (Id);
+        string fileSrc;
+        string fileDelete;
 
-    //     if (ds != null && ds.Rows.Count > 0) {
+        if (ds != null && ds.Rows.Count > 0) {
 
-    //         hdf_ResearchStatus6.Value = ds.Rows[0]["id"].ToString ();
-    //         sql = @"UPDATE EvaluateResearch3_6  SET
-    //                 projectStatus = 'D' WHERE id =  @Id";
-    //         SqlCommand cmd1 = new SqlCommand ();
-    //         cmd1.CommandText = sql;
-    //         cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus6.Value);
-    //         db.ExecuteDataTable (cmd1);
-    //         this.SearchData6 ();
-    //     }
-    //     SqlCommand com;
-    //     string str;
+            hdf_ResearchStatus6.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_6  SET
+                    projectStatus = 'D' WHERE id =  @Id";
+            SqlCommand cmd1 = new SqlCommand ();
+            cmd1.CommandText = sql;
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus6.Value);
+            db.ExecuteDataTable (cmd1);
+            this.SearchData6 ();
+        }
+        SqlCommand com;
+        string str;
 
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
 
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
-    //     string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6\\";
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-    //     fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
-    //     File.Move (fileSrc, fileDelete);
-    //     reader.Close ();
-    //     con.Close ();
-    // }
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6\\";
+        string rootpath = Request.PhysicalApplicationPath;
+        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
+        File.Move (fileSrc, fileDelete);
+        reader.Close ();
+        con.Close ();
+    }
 
-  
-    // //##########################################################end 3_6 #################################################################
-    // //#####################################################################################################################################
-    // //#####################################################################################################################################
-    // //##########################################################Strat 3_7##################################################################
+    //##########################################################end 3_6 #################################################################
+    //#####################################################################################################################################
+    //#####################################################################################################################################
+    //##########################################################Strat 3_7##################################################################
 
-    // protected void SearchData7 () {
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectStudentName]
-    //                 ,[projectThesisTopic]
-    //                 ,[projectInstitute]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDate]
-    //                 FROM [EvaluateResearch3_7] 
+    protected void SearchData7 () {
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectTopic]
+                    ,[projectJoint]
+                    ,[projectType]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[pathShare]
+                    ,[fileNameShare]
+                    ,[fileNameShareOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
+                    FROM [EvaluateResearch3_7] 
 
-    //                 WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
+                    WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
-    //     con.ConnectionString = con_string;
-    //     con.Open ();
-    //     SqlCommand cmd = new SqlCommand (sql, con);
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
 
-    //     string rId = Request.QueryString["nId"];
-    //     cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //     SqlDataAdapter da = new SqlDataAdapter (cmd);
-    //     DataSet ds = new DataSet ();
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (cmd);
+        DataSet ds = new DataSet ();
 
-    //     con.Close ();
+        con.Close ();
 
-    //     DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //     gvData7.DataSource = blacklistDT.DefaultView;
-    //     gvData7.DataBind ();
-    //     lblRecord7.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
+        DataTable blacklistDT = db.ExecuteDataTable (cmd);
+        gvData7.DataSource = blacklistDT.DefaultView;
+        gvData7.DataBind ();
+        lblRecord7.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
 
-    // }
+    }
 
-    // protected void Add3_7_Click (object sender, EventArgs e) {
-    //     UpdatePanel3_7.Update ();
-    //     popupAddResearch3_7.Show ();
-    //     this.ClearPopUp7 ();
-    // }
+    protected void Add3_7_Click (object sender, EventArgs e) {
+        UpdatePanel3_7.Update ();
+        popupAddResearch3_7.Show ();
+        this.ClearPopUp7 ();
+    }
 
-    // protected void gvData_Sorting7 (object sender, GridViewSortEventArgs e) {
-    //     SortDirection SD = GridviewSortDirection;
-    //     GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
-    // }
+    protected void gvData_Sorting7 (object sender, GridViewSortEventArgs e) {
+        SortDirection SD = GridviewSortDirection;
+        GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
+    }
 
-    // protected void gvData_PageIndexChanging7 (object sender, GridViewPageEventArgs e) {
-    //     gvData7.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
-    //     gvData7.PageIndex = e.NewPageIndex;
-    //     gvData7.DataBind ();
-    //     this.btnSubmit_Click7 (sender, e);
-    // }
-    // protected void gvData_SelectedIndexChanged7 (object sender, EventArgs e) {
+    protected void gvData_PageIndexChanging7 (object sender, GridViewPageEventArgs e) {
+        gvData7.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
+        gvData7.PageIndex = e.NewPageIndex;
+        gvData7.DataBind ();
+        this.btnSubmit_Click7 (sender, e);
+    }
+    protected void gvData_SelectedIndexChanged7 (object sender, EventArgs e) {
 
-    // }
+    }
 
-    // protected void gvData_RowDataBound7 (object sender, GridViewRowEventArgs e) {
-    //     if (e.Row.RowType == DataControlRowType.DataRow) {
-    //         String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus7")).Value);
-    //     }
+    protected void gvData_RowDataBound7 (object sender, GridViewRowEventArgs e) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus7")).Value);
+        }
 
-    // }
+    }
 
-    // public SortDirection GridviewSortDirection7 {
-    //     get {
-    //         if (ViewState["sortDirection"] == null) {
-    //             ViewState["sortDirection"] = SortDirection.Ascending;
-    //         }
-    //         return (SortDirection) ViewState["sortDirection"];
-    //     }
-    //     set {
-    //         ViewState["sortDirection"] = value;
-    //     }
-    // }
+    public SortDirection GridviewSortDirection7 {
+        get {
+            if (ViewState["sortDirection"] == null) {
+                ViewState["sortDirection"] = SortDirection.Ascending;
+            }
+            return (SortDirection) ViewState["sortDirection"];
+        }
+        set {
+            ViewState["sortDirection"] = value;
+        }
+    }
 
-    // //=============================popup=================================================
+    //=============================popup=================================================
 
-    // protected void ClearPopUp7 () {
+    protected void ClearPopUp7 () {
+        txtProjectTopic7.Text = "";
+        txtProjectType7.Text = "";
+        txtProjectJoint7.Text = "";
 
-    //     txtProjectStudentName7.Text = "";
-    //     txtProjectThesisTopic7.Text = "";
-    //     txtProjectInstitute7.Text = "";
+    }
+    protected void btnAddResearch_Click7 (object sender, EventArgs e) {
+        UpdatePanel3_7.Update ();
+        if (this.SaveResearch7 (hdf_ResearchStatus7.Value) == true) {
+            this.SearchData7 ();
+            popupAddResearch3_7.Hide ();
+        }
 
-    // }
-    // protected void btnAddResearch_Click7 (object sender, EventArgs e) {
-    //     UpdatePanel3_7.Update ();
-    //     if (this.SaveResearch7 (hdf_ResearchStatus7.Value) == true) {
-    //         this.SearchData7 ();
-    //         popupAddResearch3_7.Hide ();
-    //     }
+    }
+    protected void btnCancelResearch_Click7 (object sender, EventArgs e) {
+        UpdatePanel3_7.Update ();
+        popupAddResearch3_7.Hide ();
+    }
 
-    // }
-    // protected void btnCancelResearch_Click7 (object sender, EventArgs e) {
-    //     UpdatePanel3_7.Update ();
-    //     popupAddResearch3_7.Hide ();
-    // }
+    protected void btnSubmit_Click7 (object sender, EventArgs e) {
+        Add3_7.Visible = true;
+        this.SearchData7 ();
+    }
 
-    // protected void btnSubmit_Click7 (object sender, EventArgs e) {
-    //     Add3_7.Visible = true;
-    //     this.SearchData7 ();
-    // }
+    protected void btnReset_Click7 (object sender, EventArgs e) {
+        // ddlArea.SelectedValue = "";
+        // txtBuilder.Text = "";
+    }
 
-    // protected void btnReset_Click7 (object sender, EventArgs e) {
-    //     // ddlArea.SelectedValue = "";
-    //     // txtBuilder.Text = "";
-    // }
+    protected void btnDownload_Click7 (object sender, EventArgs e) {
+        SqlCommand com;
 
-    // protected void btnDownload_Click7 (object sender, EventArgs e) {
-    //     SqlCommand com;
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_7] 
+                    WHERE  id =  @Id ";
 
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,path + fileName AS Pathfile
-    //                 FROM [EvaluateResearch3_7] 
-    //                 WHERE  id =  @Id ";
+        com = new SqlCommand (sql, con);
 
-    //     com = new SqlCommand (sql, con);
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
 
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
-    //     com.Parameters.AddWithValue ("@Id", Id);
-    //     SqlDataAdapter da = new SqlDataAdapter (com);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string Pathfile = reader["Pathfile"].ToString ();
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
 
-    //     Response.Clear ();
-    //     byte[] Content = File.ReadAllBytes (Pathfile);
-    //     //Response.ContentType = "text/plain";
-    //     Response.ContentType = "application/octect-stream";
-    //     Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
-    //     Response.TransmitFile (Pathfile);
-    //     Response.BufferOutput = true;
-    //     Response.OutputStream.Write (Content, 0, Content.Length);
-    //     Response.WriteFile (Pathfile);
-    //     Response.Flush ();
-    //     Response.End ();
-    //     con.Close ();
+    }
 
-    // }
+    protected bool SaveResearch7 (string ID) {
+        SqlCommand com;
+        string str;
 
-    // protected bool SaveResearch7 (string ID) {
-    //     SqlCommand com;
-    //     string str;
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
 
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
 
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
 
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
+        string rId = Request.QueryString["nId"];
+        //==========================IPADDRESS ==================================
+        string strHostName = System.Net.Dns.GetHostName ();
+        IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
+        IPAddress[] addr = ipEntry.AddressList;
+        string ip = addr[1].ToString ();
+        //==========================IPADDRESS END==================================
+        //==========================upfile====================================
 
-    //     string rId = Request.QueryString["nId"];
-    //     //==========================IPADDRESS ==================================
-    //     string strHostName = System.Net.Dns.GetHostName ();
-    //     IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
-    //     IPAddress[] addr = ipEntry.AddressList;
-    //     string ip = addr[1].ToString ();
-    //     //==========================IPADDRESS END==================================
-    //     //==========================upfile====================================
-    //     string filepath;
-    //     string filepathDelete;
-    //     string filepathEdit;
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
-    //     string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
-    //     string pathEdit = "Edit\\" + path;
-    //     // filepathEdit = rootpath + pathEdit;
-    //     filepath = rootpath + path;
-    //     filepathDelete = rootpath + pathDelete;
-    //     var directoryInfo = new DirectoryInfo (filepath);
-    //     if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
-    //         Directory.CreateDirectory (filepath);
-    //         Directory.CreateDirectory (filepathDelete);
-    //         //  Directory.CreateDirectory (filepathEdit);
-    //         //directoryInfo.CreateSubdirectory("k");
-    //     }
-    //     string OldFileName = Path.GetFileName (FileUpload3_7.FileName);
-    //     string NewFileName = "Research3_7_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_7.FileName;
-    //     // string NewFileName = FileUpload3_7.FileName;
+        //======================================================================================================
+        string filepathShare;
+        string filepathDeleteShare;
+        string filepathEditShare;
+        string rootpath = Request.PhysicalApplicationPath;
+        string pathShare = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
+        string pathDeleteShare = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
+        // string pathEditShare = "Edit\\" + path;
+        // filepathEditShare = rootpath + pathEdit;
+        filepathShare = rootpath + pathShare;
+        filepathDeleteShare = rootpath + pathDeleteShare;
+        //var directoryInfoShare = new DirectoryInfo (filepath);
+        if (!Directory.Exists (filepathShare) || !Directory.Exists (filepathDeleteShare)) {
+            Directory.CreateDirectory (filepathShare);
+            Directory.CreateDirectory (filepathDeleteShare);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileNameShare = Path.GetFileName (FileUploadShare3_7.FileName);
+        string NewFileNameShare = "Research3_7_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUploadShare3_7.FileName;
+        // string NewFileName = FileUpload3_7.FileName;
 
-    //     string InsertFile = filepath + NewFileName;
-    //     //InsertFile.SaveAs
-    //     if (FileUpload3_7.HasFile) {
-    //         FileUpload3_7.SaveAs (InsertFile);
-    //     }
-    //     //hpf.SaveAs(InsertFile);
+        string InsertFileShare = filepathShare + NewFileNameShare;
+        //InsertFile.SaveAs
+        if (FileUploadShare3_7.HasFile) {
+            // FileUpload3_7_2.SaveAs (InsertFile);
+            FileUploadShare3_7.SaveAs (InsertFileShare);
+        }
+        //hpf.SaveAs(InsertFile);
 
-    //     //==========================upfile end===============================
-    //     reader.Close ();
-    //     con.Close ();
+        //==========================upfile end===============================
+        reader.Close ();
+        con.Close ();
 
-    //     string sql = "";
-    //     if (ID == "") {
+        string sql = "";
+        if (ID == "") {
 
-    //         sql = @"INSERT INTO EvaluateResearch3_7
-    //                 (masterId,  projectStudentName,  projectThesisTopic, projectInstitute, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectStudentName, @ProjectThesisTopic, @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_7)";
-    //     } else {
+            sql = @"INSERT INTO EvaluateResearch3_7
+                    (masterId,  projectTopic,  projectType, ipAddressCreate,
+                     createdBy, projectScore, projectJoint, pathShare, fileNameShare, fileNameShareOld) 
+                    VALUES
+                    (@MasterId, @ProjectTopic, @ProjectType, @IpAddress, 
+                    @CreatedBy, @Score3_7, @ProjectJoint, @PathShare, @FileNameShare, @FileNameShareOld)";
+        } else {
 
-    //         sql = @"UPDATE EvaluateResearch3_7  SET                    
-    //                 ipAdressUpdate = @IpAddress,
-    //                 updatedBy = @CreatedBy,
-    //                 projectStatus = 'I'                   
-    //                 WHERE ID = @Id
+            sql = @"UPDATE EvaluateResearch3_7  SET                    
+                    ipAdressUpdate = @IpAddress,
+                    updatedBy = @CreatedBy,
+                    projectStatus = 'I'                   
+                    WHERE ID = @Id
                     
-    //                INSERT INTO EvaluateResearch3_7
-    //                 (masterId,  projectStudentName,  projectThesisTopic, projectInstitute, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectStudentName, @ProjectThesisTopic, @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_7)";
+                    INSERT INTO EvaluateResearch3_7
+                    (masterId,  projectTopic,  projectType, ipAddressCreate,
+                     createdBy, projectScore, projectJoint, pathShare, fileNameShare, fileNameShareOld) 
+                    VALUES
+                    (@MasterId, @ProjectTopic, @ProjectType, @IpAddress, 
+                    @CreatedBy, @Score3_7, @ProjectJoint, @PathShare, @FileNameShare, @FileNameShareOld)";
 
-    //     }
+        }
 
-    //     //  db.ConnectionString = con_string;
+        //  db.ConnectionString = con_string;
 
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = sql;
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = sql;
 
-    //     try {
-    //         decimal totalScore3_7 = 50;
-    //         // string Topic3_7 = txtProjectTopic7.SelectedValue.ToString ();
-    //         // decimal plan7 = decimal.Parse (txtProjectPlan7.Text);
-    //         // decimal InProgress7 = decimal.Parse (txtProjectInProgress7.Text);
-    //         // string class7 = txtProjectClass7.SelectedValue;
+        try {
+            decimal totalScore3_7 = 0;
+            string Type3_7 = txtProjectType7.SelectedValue.ToString ();
+            decimal Joint7 = decimal.Parse (txtProjectJoint7.Text);
+            if (Type3_7 == "หัวหน้าโครงการ") {
+                totalScore3_7 = 35;
+            } else {
+                totalScore3_7 = Joint7 * 7;
+            }
 
-    //         cmd.Parameters.AddWithValue ("@Id", ID);
-    //         cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //         // cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan7.Text);
-    //         cmd.Parameters.AddWithValue ("@ProjectInstitute", txtProjectInstitute7.Text);
-    //         cmd.Parameters.AddWithValue ("@ProjectThesisTopic", txtProjectThesisTopic7.Text);
-    //         cmd.Parameters.AddWithValue ("@ProjectStudentName", txtProjectStudentName7.Text);
-    //         cmd.Parameters.AddWithValue ("@Path", filepath);
-    //         cmd.Parameters.AddWithValue ("@IpAddress", ip);
-    //         cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-    //         cmd.Parameters.AddWithValue ("@FileName", NewFileName);
-    //         cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-    //         cmd.Parameters.AddWithValue ("@Score3_7", totalScore3_7);
-    //         //cmd.Parameters.AddWithValue ("@Class", txtProjectClass7.SelectedValue);
+            cmd.Parameters.AddWithValue ("@Id", ID);
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectType", txtProjectType7.SelectedValue);
+            cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic7.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint7.Text);
+            cmd.Parameters.AddWithValue ("@PathShare", filepathShare);
+            cmd.Parameters.AddWithValue ("@IpAddress", ip);
+            cmd.Parameters.AddWithValue ("@FileNameShareOld", OldFileNameShare);
+            cmd.Parameters.AddWithValue ("@FileNameShare", NewFileNameShare);
+            cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
+            cmd.Parameters.AddWithValue ("@Score3_7", totalScore3_7);
 
-    //         // cmd.Parameters.AddWithValue ("@FileNameOld3_7", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_7", upnameOld);
 
-    //         db.ExecuteNonQuery (cmd);
+            db.ExecuteNonQuery (cmd);
 
-    //         return true;
-    //     } catch (Exception ex) {
-    //         lblInError3_7.Text += "SaveResearch7 = " + ex.Message + "<br />";
-    //         return false;
-    //     }
-    //     //finally { con.Close(); 
+            return true;
+        } catch (Exception ex) {
+            lblInError3_7.Text += "SaveResearch7 = " + ex.Message + "<br />";
+            return false;
+        }
+        //finally { con.Close(); 
 
-    // }
+    }
 
-    // protected DataTable SearchOneArea7 (string ID) {
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectStudentName]
-    //                 ,[projectThesisTopic]
-    //                 ,[projectInstitute]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDate]
+    protected DataTable SearchOneArea7 (string ID) {
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectTopic]
+                    ,[projectJoint]
+                    ,[projectType]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[pathShare]
+                    ,[fileNameShare]
+                    ,[fileNameShareOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
                                                         
-    //                 FROM [EvaluateResearch3_7] 
-
-    //                 WHERE id =  @Id ";
-
-    //     cmd.Parameters.AddWithValue ("@Id", ID);
-
-    //     try {
-    //         DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //         return blacklistDT;
-    //     } catch (Exception ex) {
-    //         lblInError3_7.Text += "SaveResearch7 = " + ex.Message + "<br />";
-    //         return null;
-    //     }
-    // }
-
-    // protected void btnEditResearch_Click7 (object sender, EventArgs e) {
-
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea7 (Id);
-    //     if (ds != null && ds.Rows.Count > 0) {
-    //         UpdatePanel3_7.Update ();
-    //         popupAddResearch3_7.Show ();
-    //         hdf_ResearchStatus7.Value = ds.Rows[0]["id"].ToString ();
-    //         txtProjectStudentName7.Text = ds.Rows[0]["projectStudentName"].ToString ();
-    //         txtProjectThesisTopic7.Text = ds.Rows[0]["projectThesisTopic"].ToString ();
-    //         txtProjectInstitute7.Text = ds.Rows[0]["projectInstitute"].ToString ();
-    //     }
-
-    // }
-
-    // protected void btnDeleteResearch_Click7 (object sender, EventArgs e) {
-    //     string sql;
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea7 (Id);
-    //     string fileSrc;
-    //     string fileDelete;
-
-    //     if (ds != null && ds.Rows.Count > 0) {
-
-    //         hdf_ResearchStatus7.Value = ds.Rows[0]["id"].ToString ();
-    //         sql = @"UPDATE EvaluateResearch3_7  SET
-    //                 projectStatus = 'D' WHERE id =  @Id";
-    //         SqlCommand cmd1 = new SqlCommand ();
-    //         cmd1.CommandText = sql;
-    //         cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus7.Value);
-    //         db.ExecuteDataTable (cmd1);
-    //         this.SearchData7 ();
-    //     }
-    //     SqlCommand com;
-    //     string str;
-
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
-
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
-    //     string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-    //     fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
-    //     File.Move (fileSrc, fileDelete);
-    //     reader.Close ();
-    //     con.Close ();
-    // }
-
-    // //##########################################################end 3_7 #################################################################
-    // //#####################################################################################################################################
-    // //#####################################################################################################################################
-    // //##########################################################Strat 3_8 ##################################################################
-
-    // protected void SearchData8 () {
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectName]
-    //                 ,[dateNumber]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDate]
-    //                 FROM [EvaluateResearch3_8] 
-
-    //                 WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
-
-    //     con.ConnectionString = con_string;
-    //     con.Open ();
-    //     SqlCommand cmd = new SqlCommand (sql, con);
-
-    //     string rId = Request.QueryString["nId"];
-    //     cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //     SqlDataAdapter da = new SqlDataAdapter (cmd);
-    //     DataSet ds = new DataSet ();
-
-    //     con.Close ();
-
-    //     DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //     gvData8.DataSource = blacklistDT.DefaultView;
-    //     gvData8.DataBind ();
-    //     lblRecord8.Text = "<span Font-Size='Small' class='tex13b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
-
-    // }
-
-    // protected void Add3_8_Click (object sender, EventArgs e) {
-    //     UpdatePanel3_8.Update ();
-    //     popupAddResearch3_8.Show ();
-    //     this.ClearPopUp8 ();
-    // }
-
-    // protected void gvData_Sorting8 (object sender, GridViewSortEventArgs e) {
-    //     SortDirection SD = GridviewSortDirection;
-    //     GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
-    // }
-
-    // protected void gvData_PageIndexChanging8 (object sender, GridViewPageEventArgs e) {
-    //     gvData8.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
-    //     gvData8.PageIndex = e.NewPageIndex;
-    //     gvData8.DataBind ();
-    //     this.btnSubmit_Click8 (sender, e);
-    // }
-    // protected void gvData_SelectedIndexChanged8 (object sender, EventArgs e) {
-
-    // }
-
-    // protected void gvData_RowDataBound8 (object sender, GridViewRowEventArgs e) {
-    //     if (e.Row.RowType == DataControlRowType.DataRow) {
-    //         String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus8")).Value);
-    //     }
-
-    // }
-
-    // public SortDirection GridviewSortDirection8 {
-    //     get {
-    //         if (ViewState["sortDirection"] == null) {
-    //             ViewState["sortDirection"] = SortDirection.Ascending;
-    //         }
-    //         return (SortDirection) ViewState["sortDirection"];
-    //     }
-    //     set {
-    //         ViewState["sortDirection"] = value;
-    //     }
-    // }
-
-    // //=============================popup=================================================
-
-    // protected void ClearPopUp8 () {
-
-    //     txtProjectName8.Text = "";
-    //     txtDateNumber8.Text = "";
-    //     //txtProjectInstitute8.Text = "";
-
-    // }
-    // protected void btnAddResearch_Click8 (object sender, EventArgs e) {
-    //     UpdatePanel3_8.Update ();
-    //     if (this.SaveResearch8 (hdf_ResearchStatus8.Value) == true) {
-    //         this.SearchData8 ();
-    //         popupAddResearch3_8.Hide ();
-    //     }
-
-    // }
-    // protected void btnCancelResearch_Click8 (object sender, EventArgs e) {
-    //     UpdatePanel3_8.Update ();
-    //     popupAddResearch3_8.Hide ();
-    // }
-
-    // protected void btnSubmit_Click8 (object sender, EventArgs e) {
-    //     Add3_8.Visible = true;
-    //     this.SearchData8 ();
-    // }
-
-    // protected void btnReset_Click8 (object sender, EventArgs e) {
-    //     // ddlArea.SelectedValue = "";
-    //     // txtBuilder.Text = "";
-    // }
-
-    // protected void btnDownload_Click8 (object sender, EventArgs e) {
-    //     SqlCommand com;
-
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,path + fileName AS Pathfile
-    //                 FROM [EvaluateResearch3_8] 
-    //                 WHERE  id =  @Id ";
-
-    //     com = new SqlCommand (sql, con);
-
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
-    //     com.Parameters.AddWithValue ("@Id", Id);
-    //     SqlDataAdapter da = new SqlDataAdapter (com);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string Pathfile = reader["Pathfile"].ToString ();
-
-    //     Response.Clear ();
-    //     byte[] Content = File.ReadAllBytes (Pathfile);
-    //     //Response.ContentType = "text/plain";
-    //     Response.ContentType = "application/octect-stream";
-    //     Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
-    //     Response.TransmitFile (Pathfile);
-    //     Response.BufferOutput = true;
-    //     Response.OutputStream.Write (Content, 0, Content.Length);
-    //     Response.WriteFile (Pathfile);
-    //     Response.Flush ();
-    //     Response.End ();
-    //     con.Close ();
-
-    // }
-
-    // protected bool SaveResearch8 (string ID) {
-    //     SqlCommand com;
-    //     string str;
-
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
-
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
-
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
-
-    //     string rId = Request.QueryString["nId"];
-    //     //==========================IPADDRESS ==================================
-    //     string strHostName = System.Net.Dns.GetHostName ();
-    //     IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
-    //     IPAddress[] addr = ipEntry.AddressList;
-    //     string ip = addr[1].ToString ();
-    //     //==========================IPADDRESS END==================================
-    //     //==========================upfile====================================
-    //     string filepath;
-    //     string filepathDelete;
-    //     string filepathEdit;
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
-    //     string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
-    //     string pathEdit = "Edit\\" + path;
-    //     // filepathEdit = rootpath + pathEdit;
-    //     filepath = rootpath + path;
-    //     filepathDelete = rootpath + pathDelete;
-    //     var directoryInfo = new DirectoryInfo (filepath);
-    //     if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
-    //         Directory.CreateDirectory (filepath);
-    //         Directory.CreateDirectory (filepathDelete);
-    //         //  Directory.CreateDirectory (filepathEdit);
-    //         //directoryInfo.CreateSubdirectory("k");
-    //     }
-    //     string OldFileName = Path.GetFileName (FileUpload3_8.FileName);
-    //     string NewFileName = "Research3_8_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_8.FileName;
-    //     // string NewFileName = FileUpload3_8.FileName;
-
-    //     string InsertFile = filepath + NewFileName;
-    //     //InsertFile.SaveAs
-    //     if (FileUpload3_8.HasFile) {
-    //         FileUpload3_8.SaveAs (InsertFile);
-    //     }
-    //     //hpf.SaveAs(InsertFile);
-
-    //     //==========================upfile end===============================
-    //     reader.Close ();
-    //     con.Close ();
-
-    //     string sql = "";
-    //     if (ID == "") {
-
-    //         sql = @"INSERT INTO EvaluateResearch3_8
-    //                 (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_8)";
-    //     } else {
-
-    //         sql = @"UPDATE EvaluateResearch3_8  SET                    
-    //                 ipAdressUpdate = @IpAddress,
-    //                 updatedBy = @CreatedBy,
-    //                 projectStatus = 'I'                   
-    //                 WHERE ID = @Id
-                    
-    //                INSERT INTO EvaluateResearch3_8
-    //                 (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_8)";
-
-    //     }
-
-    //     //  db.ConnectionString = con_string;
-
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = sql;
-
-    //     try {
-
-    //         decimal DateNumber8 = decimal.Parse (txtDateNumber8.Text);
-    //         decimal totalScore3_8 = DateNumber8 * 3;
-
-    //         cmd.Parameters.AddWithValue ("@Id", ID);
-    //         cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //         cmd.Parameters.AddWithValue ("@DateNumber", txtDateNumber8.Text);
-    //         cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName8.Text);
-    //         cmd.Parameters.AddWithValue ("@Path", filepath);
-    //         cmd.Parameters.AddWithValue ("@IpAddress", ip);
-    //         cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-    //         cmd.Parameters.AddWithValue ("@FileName", NewFileName);
-    //         cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-    //         cmd.Parameters.AddWithValue ("@Score3_8", totalScore3_8);
-
-    //         db.ExecuteNonQuery (cmd);
-
-    //         return true;
-    //     } catch (Exception ex) {
-    //         lblInError3_8.Text += "SaveResearch8 = " + ex.Message + "<br />";
-    //         return false;
-    //     }
-    //     //finally { con.Close(); 
-
-    // }
-
-    // protected DataTable SearchOneArea8 (string ID) {
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectName]
-    //                 ,[dateNumber]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDate]
-                                                        
-    //                 FROM [EvaluateResearch3_8] 
-
-    //                 WHERE id =  @Id ";
-
-    //     cmd.Parameters.AddWithValue ("@Id", ID);
-
-    //     try {
-    //         DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //         return blacklistDT;
-    //     } catch (Exception ex) {
-    //         lblInError3_8.Text += "SaveResearch8 = " + ex.Message + "<br />";
-    //         return null;
-    //     }
-    // }
-
-    // protected void btnEditResearch_Click8 (object sender, EventArgs e) {
-
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea8 (Id);
-    //     if (ds != null && ds.Rows.Count > 0) {
-    //         UpdatePanel3_8.Update ();
-    //         popupAddResearch3_8.Show ();
-    //         hdf_ResearchStatus8.Value = ds.Rows[0]["id"].ToString ();
-    //         txtProjectName8.Text = ds.Rows[0]["projectName"].ToString ();
-    //         txtDateNumber8.Text = ds.Rows[0]["dateNumber"].ToString ();
-
-    //     }
-
-    // }
-
-    // protected void btnDeleteResearch_Click8 (object sender, EventArgs e) {
-    //     string sql;
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea8 (Id);
-    //     string fileSrc;
-    //     string fileDelete;
-
-    //     if (ds != null && ds.Rows.Count > 0) {
-
-    //         hdf_ResearchStatus8.Value = ds.Rows[0]["id"].ToString ();
-    //         sql = @"UPDATE EvaluateResearch3_8  SET
-    //                 projectStatus = 'D' WHERE id =  @Id";
-    //         SqlCommand cmd1 = new SqlCommand ();
-    //         cmd1.CommandText = sql;
-    //         cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus8.Value);
-    //         db.ExecuteDataTable (cmd1);
-    //         this.SearchData8 ();
-    //     }
-    //     SqlCommand com;
-    //     string str;
-
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
-
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
-    //     string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-    //     fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
-    //     File.Move (fileSrc, fileDelete);
-    //     reader.Close ();
-    //     con.Close ();
-    // }
-
-    // //##########################################################end 3_8 #################################################################
-    // //#####################################################################################################################################
-    // //#####################################################################################################################################
-    // //##########################################################Strat 3_9 ##################################################################
-
-    // protected void SearchData9 () {
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectName]
-    //                 ,[dateNumber]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDate]
-    //                 FROM [EvaluateResearch3_9] 
-
-    //                 WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
-
-    //     con.ConnectionString = con_string;
-    //     con.Open ();
-    //     SqlCommand cmd = new SqlCommand (sql, con);
-
-    //     string rId = Request.QueryString["nId"];
-    //     cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //     SqlDataAdapter da = new SqlDataAdapter (cmd);
-    //     DataSet ds = new DataSet ();
-
-    //     con.Close ();
-
-    //     DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //     gvData9.DataSource = blacklistDT.DefaultView;
-    //     gvData9.DataBind ();
-    //     lblRecord9.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
-
-    // }
-
-    // protected void Add3_9_Click (object sender, EventArgs e) {
-    //     UpdatePanel3_9.Update ();
-    //     popupAddResearch3_9.Show ();
-    //     this.ClearPopUp9 ();
-    // }
-
-    // protected void gvData_Sorting9 (object sender, GridViewSortEventArgs e) {
-    //     SortDirection SD = GridviewSortDirection;
-    //     GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
-    // }
-
-    // protected void gvData_PageIndexChanging9 (object sender, GridViewPageEventArgs e) {
-    //     gvData9.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
-    //     gvData9.PageIndex = e.NewPageIndex;
-    //     gvData9.DataBind ();
-    //     this.btnSubmit_Click9 (sender, e);
-    // }
-    // protected void gvData_SelectedIndexChanged9 (object sender, EventArgs e) {
-
-    // }
-
-    // protected void gvData_RowDataBound9 (object sender, GridViewRowEventArgs e) {
-    //     if (e.Row.RowType == DataControlRowType.DataRow) {
-    //         String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus9")).Value);
-    //     }
-
-    // }
-
-    // public SortDirection GridviewSortDirection9 {
-    //     get {
-    //         if (ViewState["sortDirection"] == null) {
-    //             ViewState["sortDirection"] = SortDirection.Ascending;
-    //         }
-    //         return (SortDirection) ViewState["sortDirection"];
-    //     }
-    //     set {
-    //         ViewState["sortDirection"] = value;
-    //     }
-    // }
-
-    // //=============================popup=================================================
-
-    // protected void ClearPopUp9 () {
-
-    //     txtProjectName9.Text = "";
-    //     txtDateNumber9.Text = "";
-    //     //txtProjectInstitute9.Text = "";
-
-    // }
-    // protected void btnAddResearch_Click9 (object sender, EventArgs e) {
-    //     UpdatePanel3_9.Update ();
-    //     if (this.SaveResearch9 (hdf_ResearchStatus9.Value) == true) {
-    //         this.SearchData9 ();
-    //         popupAddResearch3_9.Hide ();
-    //     }
-
-    // }
-    // protected void btnCancelResearch_Click9 (object sender, EventArgs e) {
-    //     UpdatePanel3_9.Update ();
-    //     popupAddResearch3_9.Hide ();
-    // }
-
-    // protected void btnSubmit_Click9 (object sender, EventArgs e) {
-    //     Add3_9.Visible = true;
-    //     this.SearchData9 ();
-    // }
-
-    // protected void btnReset_Click9 (object sender, EventArgs e) {
-    //     // ddlArea.SelectedValue = "";
-    //     // txtBuilder.Text = "";
-    // }
-
-    // protected void btnDownload_Click9 (object sender, EventArgs e) {
-    //     SqlCommand com;
-
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     string sql = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,path + fileName AS Pathfile
-    //                 FROM [EvaluateResearch3_9] 
-    //                 WHERE  id =  @Id ";
-
-    //     com = new SqlCommand (sql, con);
-
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
-    //     com.Parameters.AddWithValue ("@Id", Id);
-    //     SqlDataAdapter da = new SqlDataAdapter (com);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string Pathfile = reader["Pathfile"].ToString ();
-
-    //     Response.Clear ();
-    //     byte[] Content = File.ReadAllBytes (Pathfile);
-    //     //Response.ContentType = "text/plain";
-    //     Response.ContentType = "application/octect-stream";
-    //     Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
-    //     Response.TransmitFile (Pathfile);
-    //     Response.BufferOutput = true;
-    //     Response.OutputStream.Write (Content, 0, Content.Length);
-    //     Response.WriteFile (Pathfile);
-    //     Response.Flush ();
-    //     Response.End ();
-    //     con.Close ();
-
-    // }
-
-    // protected bool SaveResearch9 (string ID) {
-    //     SqlCommand com;
-    //     string str;
-
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
-
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
-
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
-
-    //     string rId = Request.QueryString["nId"];
-    //     //==========================IPADDRESS ==================================
-    //     string strHostName = System.Net.Dns.GetHostName ();
-    //     IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
-    //     IPAddress[] addr = ipEntry.AddressList;
-    //     string ip = addr[1].ToString ();
-    //     //==========================IPADDRESS END==================================
-    //     //==========================upfile====================================
-    //     string filepath;
-    //     string filepathDelete;
-    //     string filepathEdit;
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9\\";
-    //     string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9\\";
-    //     string pathEdit = "Edit\\" + path;
-    //     // filepathEdit = rootpath + pathEdit;
-    //     filepath = rootpath + path;
-    //     filepathDelete = rootpath + pathDelete;
-    //     var directoryInfo = new DirectoryInfo (filepath);
-    //     if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
-    //         Directory.CreateDirectory (filepath);
-    //         Directory.CreateDirectory (filepathDelete);
-    //         //  Directory.CreateDirectory (filepathEdit);
-    //         //directoryInfo.CreateSubdirectory("k");
-    //     }
-    //     string OldFileName = Path.GetFileName (FileUpload3_9.FileName);
-    //     string NewFileName = "Research3_9_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_9.FileName;
-    //     // string NewFileName = FileUpload3_9.FileName;
-
-    //     string InsertFile = filepath + NewFileName;
-    //     //InsertFile.SaveAs
-    //     if (FileUpload3_9.HasFile) {
-    //         FileUpload3_9.SaveAs (InsertFile);
-    //     }
-    //     //hpf.SaveAs(InsertFile);
-
-    //     //==========================upfile end===============================
-    //     reader.Close ();
-    //     con.Close ();
-
-    //     string sql = "";
-    //     if (ID == "") {
-
-    //         sql = @"INSERT INTO EvaluateResearch3_9
-    //                 (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_9)";
-    //     } else {
-
-    //         sql = @"UPDATE EvaluateResearch3_9  SET                    
-    //                 ipAdressUpdate = @IpAddress,
-    //                 updatedBy = @CreatedBy,
-    //                 projectStatus = 'I'                   
-    //                 WHERE ID = @Id
-                    
-    //                INSERT INTO EvaluateResearch3_9
-    //                 (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
-    //                 fileName, createdBy, projectScore) 
-    //                 VALUES
-    //                 (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-    //                 @FileName, @CreatedBy, @Score3_9)";
-
-    //     }
-
-    //     //  db.ConnectionString = con_string;
-
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = sql;
-
-    //     try {
-
-    //         decimal DateNumber9 = decimal.Parse (txtDateNumber9.Text);
-    //         decimal totalScore3_9 = DateNumber9 * 3;
-
-    //         cmd.Parameters.AddWithValue ("@Id", ID);
-    //         cmd.Parameters.AddWithValue ("@MasterId", rId);
-    //         cmd.Parameters.AddWithValue ("@DateNumber", txtDateNumber9.Text);
-    //         cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName9.Text);
-    //         cmd.Parameters.AddWithValue ("@Path", filepath);
-    //         cmd.Parameters.AddWithValue ("@IpAddress", ip);
-    //         cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-    //         cmd.Parameters.AddWithValue ("@FileName", NewFileName);
-    //         cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-    //         cmd.Parameters.AddWithValue ("@Score3_9", totalScore3_9);
-
-    //         db.ExecuteNonQuery (cmd);
-
-    //         return true;
-    //     } catch (Exception ex) {
-    //         lblInError3_9.Text += "SaveResearch9 = " + ex.Message + "<br />";
-    //         return false;
-    //     }
-    //     //finally { con.Close(); 
-
-    // }
-
-    // protected DataTable SearchOneArea9 (string ID) {
-    //     SqlCommand cmd = new SqlCommand ();
-    //     cmd.CommandText = @"SELECT [id]
-    //                 ,[masterId]
-    //                 ,[projectName]
-    //                 ,[dateNumber]
-    //                 ,[projectScore]
-    //                 ,[projectStatus]
-    //                 ,[path]
-    //                 ,[fileName]
-    //                 ,[fileNameOld]
-    //                 ,[createdBy]
-    //                 ,[ipAddressCreate]
-    //                 ,[updatedBy]
-    //                 ,[ipAdressUpdate]
-    //                 ,[createdDate]
-                                                        
-    //                 FROM [EvaluateResearch3_9] 
-
-    //                 WHERE id =  @Id ";
-
-    //     cmd.Parameters.AddWithValue ("@Id", ID);
-
-    //     try {
-    //         DataTable blacklistDT = db.ExecuteDataTable (cmd);
-    //         return blacklistDT;
-    //     } catch (Exception ex) {
-    //         lblInError3_9.Text += "SaveResearch9 = " + ex.Message + "<br />";
-    //         return null;
-    //     }
-    // }
-
-    // protected void btnEditResearch_Click9 (object sender, EventArgs e) {
-
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea9 (Id);
-    //     if (ds != null && ds.Rows.Count > 0) {
-    //         UpdatePanel3_9.Update ();
-    //         popupAddResearch3_9.Show ();
-    //         hdf_ResearchStatus9.Value = ds.Rows[0]["id"].ToString ();
-    //         txtProjectName9.Text = ds.Rows[0]["projectName"].ToString ();
-    //         txtDateNumber9.Text = ds.Rows[0]["dateNumber"].ToString ();
-
-    //     }
-
-    // }
-
-    // protected void btnDeleteResearch_Click9 (object sender, EventArgs e) {
-    //     string sql;
-    //     GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-    //     string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
-    //     DataTable ds = this.SearchOneArea9 (Id);
-    //     string fileSrc;
-    //     string fileDelete;
-
-    //     if (ds != null && ds.Rows.Count > 0) {
-
-    //         hdf_ResearchStatus9.Value = ds.Rows[0]["id"].ToString ();
-    //         sql = @"UPDATE EvaluateResearch3_9  SET
-    //                 projectStatus = 'D' WHERE id =  @Id";
-    //         SqlCommand cmd1 = new SqlCommand ();
-    //         cmd1.CommandText = sql;
-    //         cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus9.Value);
-    //         db.ExecuteDataTable (cmd1);
-    //         this.SearchData9 ();
-    //     }
-    //     SqlCommand com;
-    //     string str;
-
-    //     SqlConnection con = new SqlConnection (con_string);
-    //     con.Open ();
-    //     str = @"select C.projectYear, C.projectRound, 
-    //                     M.acountId ,A.FirstName  + A.LastName AS FullName
-    //                     from ProjectControl AS C
-    //                     INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-    //                     INNER JOIN Account AS A ON M.acountId = A.id 
-    //                     ";
-
-    //     com = new SqlCommand (str, con);
-    //     SqlDataReader reader = com.ExecuteReader ();
-    //     reader.Read ();
-    //     string FullName = reader["FullName"].ToString ();
-    //     string AcountId = reader["acountId"].ToString ();
-    //     string projectYear = reader["projectYear"].ToString ();
-    //     string projectRound = reader["projectRound"].ToString ();
-    //     string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9\\";
-    //     string rootpath = Request.PhysicalApplicationPath;
-    //     fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-    //     fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
-    //     File.Move (fileSrc, fileDelete);
-    //     reader.Close ();
-    //     con.Close ();
-    // }
+                    FROM [EvaluateResearch3_7] 
+
+                    WHERE id =  @Id ";
+
+        cmd.Parameters.AddWithValue ("@Id", ID);
+
+        try {
+            DataTable blacklistDT = db.ExecuteDataTable (cmd);
+            return blacklistDT;
+        } catch (Exception ex) {
+            lblInError3_7.Text += "SaveResearch7 = " + ex.Message + "<br />";
+            return null;
+        }
+    }
+
+    protected void btnEditResearch_Click7 (object sender, EventArgs e) {
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea7 (Id);
+        if (ds != null && ds.Rows.Count > 0) {
+            UpdatePanel3_7.Update ();
+            popupAddResearch3_7.Show ();
+            hdf_ResearchStatus7.Value = ds.Rows[0]["id"].ToString ();
+            txtProjectTopic7.Text = ds.Rows[0]["projectTopic"].ToString ();
+            txtProjectType7.SelectedValue = ds.Rows[0]["projectType"].ToString ();
+            txtProjectJoint7.Text = ds.Rows[0]["projectJoint"].ToString ();
+
+        }
+
+    }
+
+    protected void btnDeleteResearch_Click7 (object sender, EventArgs e) {
+        string sql;
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea7 (Id);
+
+        string fileSrcPresent;
+        string fileDeletePresent;
+
+        if (ds != null && ds.Rows.Count > 0) {
+
+            hdf_ResearchStatus7.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_7  SET
+                    projectStatus = 'D' WHERE id =  @Id";
+            SqlCommand cmd1 = new SqlCommand ();
+            cmd1.CommandText = sql;
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus7.Value);
+            db.ExecuteDataTable (cmd1);
+            this.SearchData7 ();
+        }
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
+
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+
+        string pathPresent = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
+        string rootpath = Request.PhysicalApplicationPath;
+        fileSrcPresent = ds.Rows[0]["pathShare"].ToString () + ds.Rows[0]["fileNameShare"].ToString ();
+        fileDeletePresent = rootpath + pathPresent + ds.Rows[0]["fileNameShare"].ToString ();
+        File.Move (fileSrcPresent, fileDeletePresent);
+        reader.Close ();
+        con.Close ();
+    }
+
+    //##########################################################end 3_7 #################################################################
+    //#####################################################################################################################################
+    //#####################################################################################################################################
+    //##########################################################Strat 3_8 ##################################################################
+
+    protected void SearchData8 () {
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectStudentName]
+                    ,[projectThesisTopic]
+                    ,[projectInstitute]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[path]
+                    ,[fileName]
+                    ,[fileNameOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
+                    FROM [EvaluateResearch3_8] 
+
+                    WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
+
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (cmd);
+        DataSet ds = new DataSet ();
+
+        con.Close ();
+
+        DataTable blacklistDT = db.ExecuteDataTable (cmd);
+        gvData8.DataSource = blacklistDT.DefaultView;
+        gvData8.DataBind ();
+        lblRecord8.Text = "<span Font-Size='Small' class='tex13b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
+
+    }
+
+    protected void Add3_8_Click (object sender, EventArgs e) {
+        UpdatePanel3_8.Update ();
+        popupAddResearch3_8.Show ();
+        this.ClearPopUp8 ();
+    }
+
+    protected void gvData_Sorting8 (object sender, GridViewSortEventArgs e) {
+        SortDirection SD = GridviewSortDirection;
+        GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
+    }
+
+    protected void gvData_PageIndexChanging8 (object sender, GridViewPageEventArgs e) {
+        gvData8.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
+        gvData8.PageIndex = e.NewPageIndex;
+        gvData8.DataBind ();
+        this.btnSubmit_Click8 (sender, e);
+    }
+    protected void gvData_SelectedIndexChanged8 (object sender, EventArgs e) {
+
+    }
+
+    protected void gvData_RowDataBound8 (object sender, GridViewRowEventArgs e) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus8")).Value);
+        }
+
+    }
+
+    public SortDirection GridviewSortDirection8 {
+        get {
+            if (ViewState["sortDirection"] == null) {
+                ViewState["sortDirection"] = SortDirection.Ascending;
+            }
+            return (SortDirection) ViewState["sortDirection"];
+        }
+        set {
+            ViewState["sortDirection"] = value;
+        }
+    }
+
+    //=============================popup=================================================
+
+    protected void ClearPopUp8 () {
+
+        txtProjectStudentName8.Text = "";
+        txtProjectThesisTopic8.Text = "";
+        txtProjectInstitute8.Text = "";
+
+    }
+    protected void btnAddResearch_Click8 (object sender, EventArgs e) {
+        UpdatePanel3_8.Update ();
+        if (this.SaveResearch8 (hdf_ResearchStatus8.Value) == true) {
+            this.SearchData8 ();
+            popupAddResearch3_8.Hide ();
+        }
+
+    }
+    protected void btnCancelResearch_Click8 (object sender, EventArgs e) {
+        UpdatePanel3_8.Update ();
+        popupAddResearch3_8.Hide ();
+    }
+
+    protected void btnSubmit_Click8 (object sender, EventArgs e) {
+        Add3_8.Visible = true;
+        this.SearchData8 ();
+    }
+
+    protected void btnReset_Click8 (object sender, EventArgs e) {
+        // ddlArea.SelectedValue = "";
+        // txtBuilder.Text = "";
+    }
+
+    protected void btnDownload_Click8 (object sender, EventArgs e) {
+        SqlCommand com;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,path + fileName AS Pathfile
+                    FROM [EvaluateResearch3_8] 
+                    WHERE  id =  @Id ";
+
+        com = new SqlCommand (sql, con);
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
+
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
+
+    }
+
+    protected bool SaveResearch8 (string ID) {
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
+
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
+
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+
+        string rId = Request.QueryString["nId"];
+        //==========================IPADDRESS ==================================
+        string strHostName = System.Net.Dns.GetHostName ();
+        IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
+        IPAddress[] addr = ipEntry.AddressList;
+        string ip = addr[1].ToString ();
+        //==========================IPADDRESS END==================================
+        //==========================upfile====================================
+        string filepath;
+        string filepathDelete;
+        string filepathEdit;
+        string rootpath = Request.PhysicalApplicationPath;
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
+        string pathEdit = "Edit\\" + path;
+        // filepathEdit = rootpath + pathEdit;
+        filepath = rootpath + path;
+        filepathDelete = rootpath + pathDelete;
+        var directoryInfo = new DirectoryInfo (filepath);
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
+            Directory.CreateDirectory (filepath);
+            Directory.CreateDirectory (filepathDelete);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName = Path.GetFileName (FileUpload3_8.FileName);
+        string NewFileName = "Research3_8_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_8.FileName;
+        // string NewFileName = FileUpload3_8.FileName;
+
+        string InsertFile = filepath + NewFileName;
+        //InsertFile.SaveAs
+        if (FileUpload3_8.HasFile) {
+            FileUpload3_8.SaveAs (InsertFile);
+        }
+        //hpf.SaveAs(InsertFile);
+
+        //==========================upfile end===============================
+        reader.Close ();
+        con.Close ();
+
+        string sql = "";
+        if (ID == "") {
+
+            sql = @"INSERT INTO EvaluateResearch3_8
+                    (masterId,  projectThesisTopic,  projectStudentName, projectInstitute, path, ipAddressCreate, fileNameOld,
+                    fileName, createdBy, projectScore) 
+                    VALUES
+                    (@MasterId,  @ProjectThesisTopic, @ProjectStudentName, @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_8)";
+        } else {
+
+            sql = @"UPDATE EvaluateResearch3_8  SET                    
+                    ipAdressUpdate = @IpAddress,
+                    updatedBy = @CreatedBy,
+                    projectStatus = 'I'                   
+                    WHERE ID = @Id
+
+                   INSERT INTO EvaluateResearch3_8
+                    (masterId,  projectThesisTopic,  projectStudentName, projectInstitute, path, ipAddressCreate, fileNameOld,
+                    fileName, createdBy, projectScore) 
+                    VALUES
+                    (@MasterId, @ProjectThesisTopic, @ProjectStudentName,  @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_8)";
+
+        }
+
+        //  db.ConnectionString = con_string;
+
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = sql;
+
+        try {
+
+            // decimal DateNumber8 = decimal.Parse (txtDateNumber8.Text);
+            decimal totalScore3_8 = 50;
+
+            cmd.Parameters.AddWithValue ("@Id", ID);
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectStudentName", txtProjectStudentName8.Text);
+            cmd.Parameters.AddWithValue ("@ProjectThesisTopic", txtProjectThesisTopic8.Text);
+            cmd.Parameters.AddWithValue ("@ProjectInstitute", txtProjectInstitute8.Text);
+            cmd.Parameters.AddWithValue ("@Path", filepath);
+            cmd.Parameters.AddWithValue ("@IpAddress", ip);
+            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
+            cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+            cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
+            cmd.Parameters.AddWithValue ("@Score3_8", totalScore3_8);
+
+            db.ExecuteNonQuery (cmd);
+
+            return true;
+        } catch (Exception ex) {
+            lblInError3_8.Text += "SaveResearch8 = " + ex.Message + "<br />";
+            return false;
+        }
+        //finally { con.Close(); 
+
+    }
+
+    protected DataTable SearchOneArea8 (string ID) {
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectStudentName]
+                    ,[projectThesisTopic]
+                    ,[projectInstitute]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[path]
+                    ,[fileName]
+                    ,[fileNameOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
+
+                    FROM [EvaluateResearch3_8] 
+
+                    WHERE id =  @Id ";
+
+        cmd.Parameters.AddWithValue ("@Id", ID);
+
+        try {
+            DataTable blacklistDT = db.ExecuteDataTable (cmd);
+            return blacklistDT;
+        } catch (Exception ex) {
+            lblInError3_8.Text += "SaveResearch8 = " + ex.Message + "<br />";
+            return null;
+        }
+    }
+
+    protected void btnEditResearch_Click8 (object sender, EventArgs e) {
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea8 (Id);
+        if (ds != null && ds.Rows.Count > 0) {
+            UpdatePanel3_8.Update ();
+            popupAddResearch3_8.Show ();
+            hdf_ResearchStatus8.Value = ds.Rows[0]["id"].ToString ();
+            txtProjectStudentName8.Text = ds.Rows[0]["projectStudentName"].ToString ();
+            txtProjectThesisTopic8.Text = ds.Rows[0]["projectThesisTopic"].ToString ();
+            txtProjectInstitute8.Text = ds.Rows[0]["projectInstitute"].ToString ();
+
+        }
+
+    }
+
+    protected void btnDeleteResearch_Click8 (object sender, EventArgs e) {
+        string sql;
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea8 (Id);
+        string fileSrc;
+        string fileDelete;
+
+        if (ds != null && ds.Rows.Count > 0) {
+
+            hdf_ResearchStatus8.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_8  SET
+                    projectStatus = 'D' WHERE id =  @Id";
+            SqlCommand cmd1 = new SqlCommand ();
+            cmd1.CommandText = sql;
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus8.Value);
+            db.ExecuteDataTable (cmd1);
+            this.SearchData8 ();
+        }
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
+
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
+        string rootpath = Request.PhysicalApplicationPath;
+        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
+        File.Move (fileSrc, fileDelete);
+        reader.Close ();
+        con.Close ();
+    }
+
+    //##########################################################end 3_8 #################################################################
+    //#####################################################################################################################################
+    //#####################################################################################################################################
+    //##########################################################Strat 3_9 ##################################################################
+
+    protected void SearchData9 () {
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectInstituteName]
+                    ,[projectJoint]
+                    ,[projectAmount]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[pathShare]
+                    ,[path]
+                    ,[fileNameShare]
+                    ,[fileName]
+                    ,[fileNameShareOld]
+                    ,[fileNameOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
+                    FROM [EvaluateResearch3_9] 
+
+                    WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
+
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (cmd);
+        DataSet ds = new DataSet ();
+
+        con.Close ();
+
+        DataTable blacklistDT = db.ExecuteDataTable (cmd);
+        gvData9.DataSource = blacklistDT.DefaultView;
+        gvData9.DataBind ();
+        lblRecord9.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
+
+    }
+
+    protected void Add3_9_Click (object sender, EventArgs e) {
+        UpdatePanel3_9.Update ();
+        popupAddResearch3_9.Show ();
+        this.ClearPopUp9 ();
+    }
+
+    protected void gvData_Sorting9 (object sender, GridViewSortEventArgs e) {
+        SortDirection SD = GridviewSortDirection;
+        GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
+    }
+
+    protected void gvData_PageIndexChanging9 (object sender, GridViewPageEventArgs e) {
+        gvData9.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
+        gvData9.PageIndex = e.NewPageIndex;
+        gvData9.DataBind ();
+        this.btnSubmit_Click9 (sender, e);
+    }
+    protected void gvData_SelectedIndexChanged9 (object sender, EventArgs e) {
+
+    }
+
+    protected void gvData_RowDataBound9 (object sender, GridViewRowEventArgs e) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus9")).Value);
+        }
+
+    }
+
+    public SortDirection GridviewSortDirection9 {
+        get {
+            if (ViewState["sortDirection"] == null) {
+                ViewState["sortDirection"] = SortDirection.Ascending;
+            }
+            return (SortDirection) ViewState["sortDirection"];
+        }
+        set {
+            ViewState["sortDirection"] = value;
+        }
+    }
+
+    //=============================popup=================================================
+
+    protected void ClearPopUp9 () {
+
+        txtProjectInstituteName9.Text = "";
+        txtProjectAmount9.Text = "";
+        txtProjectJoint9.Text = "";
+
+    }
+    protected void btnAddResearch_Click9 (object sender, EventArgs e) {
+        UpdatePanel3_9.Update ();
+        if (this.SaveResearch9 (hdf_ResearchStatus9.Value) == true) {
+            this.SearchData9 ();
+            popupAddResearch3_9.Hide ();
+        }
+
+    }
+    protected void btnCancelResearch_Click9 (object sender, EventArgs e) {
+        UpdatePanel3_9.Update ();
+        popupAddResearch3_9.Hide ();
+    }
+
+    protected void btnSubmit_Click9 (object sender, EventArgs e) {
+        Add3_9.Visible = true;
+        this.SearchData9 ();
+    }
+
+    protected void btnReset_Click9 (object sender, EventArgs e) {
+        // ddlArea.SelectedValue = "";
+        // txtBuilder.Text = "";
+    }
+
+    protected void btnDownload_Click9_1 (object sender, EventArgs e) {
+        SqlCommand com;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_9] 
+                    WHERE  id =  @Id ";
+
+        com = new SqlCommand (sql, con);
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
+
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
+
+    }
+
+    protected void btnDownload_Click9_2 (object sender, EventArgs e) {
+        SqlCommand com;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,path + fileName AS Pathfile
+                    FROM [EvaluateResearch3_9] 
+                    WHERE  id =  @Id ";
+
+        com = new SqlCommand (sql, con);
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
+
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
+
+    }
+
+    protected bool SaveResearch9 (string ID) {
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
+
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
+
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+
+        string rId = Request.QueryString["nId"];
+        //==========================IPADDRESS ==================================
+        string strHostName = System.Net.Dns.GetHostName ();
+        IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
+        IPAddress[] addr = ipEntry.AddressList;
+        string ip = addr[1].ToString ();
+        //==========================IPADDRESS END==================================
+        //==========================upfile====================================
+        string filepath;
+        string filepathDelete;
+        string filepathEdit;
+        string rootpath = Request.PhysicalApplicationPath;
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_2\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_2\\";
+        string pathEdit = "Edit\\" + path;
+        // filepathEdit = rootpath + pathEdit;
+        filepath = rootpath + path;
+        filepathDelete = rootpath + pathDelete;
+        var directoryInfo = new DirectoryInfo (filepath);
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
+            Directory.CreateDirectory (filepath);
+            Directory.CreateDirectory (filepathDelete);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName = Path.GetFileName (FileUpload3_9_2.FileName);
+        string NewFileName = "Research3_9_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_9_2.FileName;
+        // string NewFileName = FileUpload3_9.FileName;
+
+        string InsertFile = filepath + NewFileName;
+        //InsertFile.SaveAs
+        if (FileUpload3_9_2.HasFile) {
+            FileUpload3_9_2.SaveAs (InsertFile);
+        }
+        //hpf.SaveAs(InsertFile);
+
+        //==========================upfile end===============================
+        string filepath1;
+        string filepathDelete1;
+
+        string rootpath1 = Request.PhysicalApplicationPath;
+        string path1 = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_1\\";
+        string pathDelete1 = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_1\\";
+        string pathEdit1 = "Edit\\" + path;
+        // filepathEdit = rootpath + pathEdit;
+        filepath1 = rootpath1 + path1;
+        filepathDelete1 = rootpath1 + pathDelete1;
+        var directoryInfo1 = new DirectoryInfo (filepath1);
+        if (!Directory.Exists (filepath1) || !Directory.Exists (filepathDelete1)) {
+            Directory.CreateDirectory (filepath1);
+            Directory.CreateDirectory (filepathDelete1);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName1 = Path.GetFileName (FileUpload3_9_1.FileName);
+        string NewFileName1 = "Research3_9_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_9_1.FileName;
+        // string NewFileName = FileUpload3_9.FileName;
+
+        string InsertFile1 = filepath1 + NewFileName1;
+        //InsertFile.SaveAs
+        if (FileUpload3_9_1.HasFile) {
+            FileUpload3_9_1.SaveAs (InsertFile1);
+        }
+        //=============================================================================
+        reader.Close ();
+        con.Close ();
+
+        string sql = "";
+        if (ID == "") {
+
+            sql = @"INSERT INTO EvaluateResearch3_9
+                    (masterId,  path, ipAddressCreate, fileNameOld, projectInstituteName , projectJoint, projectAmount,
+                    fileName, createdBy, projectScore, pathShare, fileNameShare, fileNameShareOld) 
+                    VALUES
+                    (@MasterId, @Path, @IpAddress, @FileNameOld, @ProjectInstituteName, @ProjectJoint, @ProjectAmount,
+                    @FileName, @CreatedBy, @Score3_9, @PathShare, @FileNameShare, @FileNameShareOld)";
+        } else {
+
+            sql = @"UPDATE EvaluateResearch3_9  SET                    
+                    ipAdressUpdate = @IpAddress,
+                    updatedBy = @CreatedBy,
+                    projectStatus = 'I'                   
+                    WHERE ID = @Id
+
+                    INSERT INTO EvaluateResearch3_9
+                    (masterId,  path, ipAddressCreate, fileNameOld, projectInstituteName , projectJoint, projectAmount,
+                    fileName, createdBy, projectScore, pathShare, fileNameShare, fileNameShareOld) 
+                    VALUES
+                    (@MasterId, @Path, @IpAddress, @FileNameOld, @ProjectInstituteName, @ProjectJoint, @ProjectAmount,
+                    @FileName, @CreatedBy, @Score3_9, @PathShare, @FileNameShare, @FileNameShareOld)";
+
+        }
+
+        //  db.ConnectionString = con_string;
+
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = sql;
+
+        try {
+
+            decimal Amount = decimal.Parse (txtProjectAmount9.Text);
+            decimal Joint = decimal.Parse (txtProjectJoint9.Text);
+            decimal totalScore3_9 = 0;
+
+            totalScore3_9 = (((Amount / 100000) * 10) * Joint) / 100;
+            cmd.Parameters.AddWithValue ("@Id", ID);
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectAmount", txtProjectAmount9.Text);
+            cmd.Parameters.AddWithValue ("@ProjectInstituteName", txtProjectInstituteName9.Text);
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint9.Text);
+            cmd.Parameters.AddWithValue ("@Path", filepath);
+            cmd.Parameters.AddWithValue ("@PathShare", filepath1);
+            cmd.Parameters.AddWithValue ("@IpAddress", ip);
+            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
+            cmd.Parameters.AddWithValue ("@FileNameShare", NewFileName1);
+            cmd.Parameters.AddWithValue ("@FileNameShareOld", OldFileName1);
+            cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+            cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
+            cmd.Parameters.AddWithValue ("@Score3_9", totalScore3_9);
+
+            db.ExecuteNonQuery (cmd);
+
+            return true;
+        } catch (Exception ex) {
+            lblInError3_9.Text += "SaveResearch9 = " + ex.Message + "<br />";
+            return false;
+        }
+        //finally { con.Close(); 
+
+    }
+
+    protected DataTable SearchOneArea9 (string ID) {
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectInstituteName]
+                    ,[projectJoint]
+                    ,[projectAmount]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[pathShare]
+                    ,[path]
+                    ,[fileNameShare]
+                    ,[fileName]
+                    ,[fileNameShareOld]
+                    ,[fileNameOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
+
+                    FROM [EvaluateResearch3_9] 
+
+                    WHERE id =  @Id ";
+
+        cmd.Parameters.AddWithValue ("@Id", ID);
+
+        try {
+            DataTable blacklistDT = db.ExecuteDataTable (cmd);
+            return blacklistDT;
+        } catch (Exception ex) {
+            lblInError3_9.Text += "SaveResearch9 = " + ex.Message + "<br />";
+            return null;
+        }
+    }
+
+    protected void btnEditResearch_Click9 (object sender, EventArgs e) {
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea9 (Id);
+        if (ds != null && ds.Rows.Count > 0) {
+            UpdatePanel3_9.Update ();
+            popupAddResearch3_9.Show ();
+            hdf_ResearchStatus9.Value = ds.Rows[0]["id"].ToString ();
+            txtProjectInstituteName9.Text = ds.Rows[0]["projectInstituteName"].ToString ();
+            txtProjectJoint9.Text = ds.Rows[0]["projectJoint"].ToString ();
+            txtProjectAmount9.Text = ds.Rows[0]["projectAmount"].ToString ();
+
+        }
+
+    }
+
+    protected void btnDeleteResearch_Click9 (object sender, EventArgs e) {
+        string sql;
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea9 (Id);
+        string fileSrc;
+        string fileDelete;
+        string fileSrc1;
+        string fileDelete1;
+
+        if (ds != null && ds.Rows.Count > 0) {
+
+            hdf_ResearchStatus9.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_9  SET
+                    projectStatus = 'D' WHERE id =  @Id";
+            SqlCommand cmd1 = new SqlCommand ();
+            cmd1.CommandText = sql;
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus9.Value);
+            db.ExecuteDataTable (cmd1);
+            this.SearchData9 ();
+        }
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
+
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_1\\";
+        string path1 = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_2\\";
+        string rootpath = Request.PhysicalApplicationPath;
+        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path1 + ds.Rows[0]["fileName"].ToString ();
+        File.Move (fileSrc, fileDelete);
+
+        fileSrc1 = ds.Rows[0]["pathShare"].ToString () + ds.Rows[0]["fileNameShare"].ToString ();
+        fileDelete1 = rootpath + path + ds.Rows[0]["fileNameShare"].ToString ();
+        File.Move (fileSrc1, fileDelete1);
+        reader.Close ();
+        con.Close ();
+    }
 
     //##########################################################end 3_9 #################################################################
     //#####################################################################################################################################
