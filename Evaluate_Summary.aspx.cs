@@ -67,15 +67,83 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
     }
 
     protected void SearchData () {
-        string sql = @"SELECT [id]
-                    ,[ddlType]
-                    ,[ddlValue]
-                    ,[ddlDisplay]
-                    ,[ddlStatus]
-                    ,[ddlOrder]
-                    FROM [MasterDDL] 
+        string sql = @"SELECT DISTINCT E1_1.id, E1_1.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                C.projectYear, C.projectRound, SUM1_1.score1_1, A.Position,  A.Department, E1_1.createdBy,
+                'งาน Local contact (Experimental setup, Sample preparation, and Measurement)' as E1_11
+                FROM EvaluateSevice1_1 AS E1_1
+                INNER JOIN EvaluateMaster AS M ON M.id = E1_1.masterId 
+                INNER JOIN Account AS A ON A.id = M.acountId
+                INNER JOIN ProjectControl AS C ON C.id = M.roundId
+                INNER JOIN 
+                    (SELECT masterId,sum(projectScore) as score1_1
+                    FROM EvaluateSevice1_1
+                    WHERE projectStatus = 'A'
+                    GROUP BY masterId) AS  SUM1_1 ON E1_1.masterId = SUM1_1.masterId
+                WHERE M.acountId = E1_1.createdBy AND E1_1.masterId = @MasterId AND E1_1.id = 180
 
-                    WHERE  ddlType = 'Summary-1_1'";
+                UNION ALL
+
+                SELECT DISTINCT E1_2.id, E1_2.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                C.projectYear, C.projectRound, SUM1_2.score1_2, A.Position, A.Department, E1_2.createdBy, 
+                'งานให้บริการภาคอุตสาหกรรม' as E1_11
+                FROM EvaluateSevice1_2 AS E1_2
+                INNER JOIN EvaluateMaster AS M ON M.id = E1_2.masterId 
+                INNER JOIN Account AS A ON A.id = M.acountId
+                INNER JOIN ProjectControl AS C ON C.id = M.roundId
+                INNER JOIN 
+                    (SELECT masterId,sum(projectScore) as score1_2
+                    FROM EvaluateSevice1_2
+                    WHERE projectStatus = 'A'
+                    GROUP BY masterId) AS  SUM1_2 ON E1_2.masterId = SUM1_2.masterId
+                WHERE M.acountId = E1_2.createdBy AND E1_2.masterId = @MasterId AND E1_2.id = 26
+
+                UNION ALL
+
+                SELECT DISTINCT E1_3.id, E1_3.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                C.projectYear, C.projectRound, SUM1_3.score1_3, A.Position, A.Department, E1_3.createdBy,
+                'งานเป็นที่ปรึกษาให้กับผู้ใช้บริการแสงซินโครตรอน / ภาคอุตสาหกรรม' as E1_11
+                FROM EvaluateSevice1_3 AS E1_3
+                INNER JOIN EvaluateMaster AS M ON M.id = E1_3.masterId 
+                INNER JOIN Account AS A ON A.id = M.acountId
+                INNER JOIN ProjectControl AS C ON C.id = M.roundId
+                INNER JOIN 
+                    (SELECT masterId,sum(projectScore) as score1_3
+                    FROM EvaluateSevice1_3
+                    WHERE projectStatus = 'A'
+                    GROUP BY masterId) AS  SUM1_3 ON E1_3.masterId = SUM1_3.masterId
+                WHERE M.acountId = E1_3.createdBy AND E1_3.masterId = @MasterId AND E1_3.id = 39
+                
+				 UNION ALL
+
+                SELECT DISTINCT E1_4.id, E1_4.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                C.projectYear, C.projectRound, SUM1_4.score1_4, A.Position, A.Department, E1_4.createdBy,
+                'Technical manual (*)' as E1_11
+                FROM EvaluateSevice1_4 AS E1_4
+                INNER JOIN EvaluateMaster AS M ON M.id = E1_4.masterId 
+                INNER JOIN Account AS A ON A.id = M.acountId
+                INNER JOIN ProjectControl AS C ON C.id = M.roundId
+                INNER JOIN 
+                    (SELECT masterId,sum(projectScore) as score1_4
+                    FROM EvaluateSevice1_4
+                    WHERE projectStatus = 'A'
+                    GROUP BY masterId) AS  SUM1_4 ON E1_4.masterId = SUM1_4.masterId
+                WHERE M.acountId = E1_4.createdBy AND E1_4.masterId = @MasterId AND E1_4.id = 20
+
+				UNION ALL
+
+                SELECT DISTINCT E1_5.id, E1_5.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                C.projectYear, C.projectRound, SUM1_5.score1_5, A.Position, A.Department, E1_5.createdBy,
+                'Standard protocol (คู่มือกระบวนการดำเนินงาน)' as E1_11
+                FROM EvaluateSevice1_5 AS E1_5
+                INNER JOIN EvaluateMaster AS M ON M.id = E1_5.masterId 
+                INNER JOIN Account AS A ON A.id = M.acountId
+                INNER JOIN ProjectControl AS C ON C.id = M.roundId
+                INNER JOIN 
+                    (SELECT masterId,sum(projectScore) as score1_5
+                    FROM EvaluateSevice1_5
+                    WHERE projectStatus = 'A'
+                    GROUP BY masterId) AS  SUM1_5 ON E1_5.masterId = SUM1_5.masterId
+                WHERE M.acountId = E1_5.createdBy AND E1_5.masterId = @MasterId AND E1_5.id = 3";
 
         con.ConnectionString = con_string;
         con.Open ();
@@ -85,14 +153,20 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
         cmd.Parameters.AddWithValue ("@MasterId", rId);
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
-
+        SqlDataReader reader = cmd.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string Position = reader["Position"].ToString ();
+        string Department = reader["Department"].ToString ();
         con.Close ();
 
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
         gvData.DataSource = blacklistDT.DefaultView;
         gvData.DataBind ();
         lblRecord.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
-
+        lbl_FullName.Text = FullName;
+        lbl_Position.Text = Position;
+        lbl_Department.Text = Department;
     }
 
     protected void Add2_1_Click (object sender, EventArgs e) {

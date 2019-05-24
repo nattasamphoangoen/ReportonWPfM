@@ -218,9 +218,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -229,7 +234,6 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -413,9 +417,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -596,9 +605,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -607,7 +621,6 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -789,9 +802,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1005,9 +1023,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1016,7 +1039,6 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1222,9 +1244,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1410,9 +1437,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1421,7 +1453,6 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1494,7 +1525,7 @@ public partial class Evaluate_Other : System.Web.UI.Page {
 
         try {
             double totalScore7_4 = 0;
-            double number = double.Parse(txtdateNumber4.Text);
+            double number = double.Parse (txtdateNumber4.Text);
             totalScore7_4 = number * 2;
 
             cmd.Parameters.AddWithValue ("@Id", ID);
@@ -1575,8 +1606,6 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData4.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea4 (Id);
-        string fileSrc;
-        string fileDelete;
 
         if (ds != null && ds.Rows.Count > 0) {
 
@@ -1589,6 +1618,8 @@ public partial class Evaluate_Other : System.Web.UI.Page {
             db.ExecuteDataTable (cmd1);
             this.SearchData4 ();
         }
+        string fileSrc;
+        string fileDelete;
         SqlCommand com;
         string str;
 
@@ -1599,9 +1630,14 @@ public partial class Evaluate_Other : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
