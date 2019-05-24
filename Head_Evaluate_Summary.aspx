@@ -134,10 +134,7 @@
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">
-                                <asp:Label ID="lbl_FullName" runat="server" Text=''>
-                                </asp:Label>
-                            </strong>
+                            <strong style="color: #2300a1" class="h4">_______________________ </strong>
                         </td>
                     </tr>
 
@@ -148,20 +145,14 @@
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">
-                                <asp:Label ID="lbl_Position" runat="server" Text=''>
-                                </asp:Label>
-                            </strong>
+                            <strong style="color: #2300a1" class="h4">_______________________ </strong>
                         </td>
-                        <td>&nbsp;</td>
                         <td valign="top" align="center">
                             <strong style="color: #000000" class="h4">ระดับ Level : </strong>
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">.........
-
-                            </strong>
+                            <strong style="color: #2300a1" class="h4">_______ </strong>
                         </td>
                     </tr>
                     <br />
@@ -171,10 +162,7 @@
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">
-                                <asp:Label ID="lbl_Department" runat="server" Text=''>
-                                </asp:Label>
-                            </strong>
+                            <strong style="color: #2300a1" class="h4">สถานีวิจัย </strong>
                         </td>
                     </tr>
                     <br />
@@ -303,7 +291,7 @@
 
                 <br />
                 <br />
-
+                
 
                 <table align="center" width="100%">
                     <tr>
@@ -344,12 +332,25 @@
                                         <ItemStyle Width="1px" />
                                     </asp:TemplateField>
 
-                                    <asp:BoundField HeaderText="1. งานให้บริการ (ภาควิชาการ, ภาคอุตสาหกรรม)"
-                                        DataField="E1_11" ItemStyle-Width="50px">
-                                        <ItemStyle Width="50px" Font-Size="Small" />
-                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText ="Hello World">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblHello" runat ="server" Text ="Hello"/>
+                                        </ItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblWorld" runat ="server" Text ="World"/>
+                                        </ItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblHello1" runat ="server" Text ="Hello"/>
+                                        </ItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblWorld1" runat ="server" Text ="World"/>
+                                        </ItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblWorld2" runat ="server" Text ="World"/>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                                    <asp:BoundField HeaderText="คะแนน" DataField="score1_1" ItemStyle-Width="50px">
+                                    <asp:BoundField HeaderText="คะแนน" DataField="ddlOrder" ItemStyle-Width="50px">
                                         <ItemStyle Width="50px" Font-Size="Small" />
                                     </asp:BoundField>
 

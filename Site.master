@@ -130,7 +130,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a runat="server" href="~/User_Search">เพิ่มข้อมูล % สัดส่วนภาระงานแต่ละโครงการ</a></li>
                                     <li><a runat="server" href="~/Evaluate_User">แบบรายงานผลการปฏิบัติงาน (Report on Work Performance)</a></li>
-                                    <li><a runat="server" href="~/Evaluate_User">ตรวจสอบแบบรายงานผลการปฏิบัติงาน (หัวหน้า)</a></li>
+                                    <li><a runat="server" href="~/Head_Evaluate_User">ตรวจสอบแบบรายงานผลการปฏิบัติงาน (หัวหน้า)</a></li>
                                 </ul>
                             </li>
                         </ul>

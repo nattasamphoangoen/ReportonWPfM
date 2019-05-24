@@ -7,15 +7,15 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using ClassLibrary;
-//2
-public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
-    //=============================DevelMaint2_1 =================================================
+//3
+public partial class Head_Evaluate_Research : System.Web.UI.Page {
+    //=============================Research3_1 =================================================
     Authorize A = new Authorize ();
     SqlConnection con = new SqlConnection ();
     protected string con_string = WebConfigurationManager.ConnectionStrings["SLRIConnectionString"].ConnectionString;
 
     DataTable dtShowData;
-    DataTable dtShowData2;
+    DataTable dtShowData3;
     SortTable ST = new SortTable ();
     ConnectDB db = new ConnectDB ();
 
@@ -32,39 +32,38 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         this.SearchData8 ();
         this.SearchData9 ();
         this.SearchData5 ();
-        this.SearchData6_1 ();
-        this.SearchData6_2 ();
+        this.SearchData6 ();
 
     }
 
     protected void report1_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_ServiceWork.aspx?nID=" + rId);
+        Response.Redirect ("~/Head_Evaluate_ServiceWork.aspx?nID=" + rId);
 
     }
-    protected void report3_Click (object sender, EventArgs e) {
+    protected void report2_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Research.aspx?nID=" + rId);
+        Response.Redirect ("~/Head_Evaluate_Develop_Mainten.aspx?nID=" + rId);
 
     }
     protected void report4_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Promotion_work.aspx?nID=" + rId);
+        Response.Redirect ("~/Head_Evaluate_Promotion_work.aspx?nID=" + rId);
 
     }
     protected void report5_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_AcademicServices.aspx?nID=" + rId);
+        Response.Redirect ("~/Head_Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
     protected void report6_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Management.aspx?nID=" + rId);
+        Response.Redirect ("~/Head_Evaluate_Management.aspx?nID=" + rId);
 
     }
     protected void report7_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Other.aspx?nID=" + rId);
+        Response.Redirect ("~/Head_Evaluate_Other.aspx?nID=" + rId);
 
     }
     protected void reportSummary_Click (object sender, EventArgs e) {
@@ -72,7 +71,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
     }
-
     protected void SearchData () {
         string sql = @"SELECT [id]
                     ,[masterId]
@@ -89,7 +87,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
-                    FROM [EvaluateDevelopMainten2_1] 
+                    FROM [EvaluateResearch3_1] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -111,9 +109,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void Add2_1_Click (object sender, EventArgs e) {
-        UpdatePanel2_1.Update ();
-        popupAddDevelMaint2_1.Show ();
+    protected void Add3_1_Click (object sender, EventArgs e) {
+        UpdatePanel3_1.Update ();
+        popupAddResearch3_1.Show ();
         this.ClearPopUp ();
     }
 
@@ -159,21 +157,21 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         txtProjectQ.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click (object sender, EventArgs e) {
-        UpdatePanel2_1.Update ();
-        if (this.SaveDevelMaint (hdf_DevelMaintStatus.Value) == true) {
+    protected void btnAddResearch_Click (object sender, EventArgs e) {
+        UpdatePanel3_1.Update ();
+        if (this.SaveResearch (hdf_ResearchStatus.Value) == true) {
             this.SearchData ();
-            popupAddDevelMaint2_1.Hide ();
+            popupAddResearch3_1.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click (object sender, EventArgs e) {
-        UpdatePanel2_1.Update ();
-        popupAddDevelMaint2_1.Hide ();
+    protected void btnCancelResearch_Click (object sender, EventArgs e) {
+        UpdatePanel3_1.Update ();
+        popupAddResearch3_1.Hide ();
     }
 
     protected void btnSubmit_Click (object sender, EventArgs e) {
-        Add2_1.Visible = true;
+        Add3_1.Visible = true;
         this.SearchData ();
     }
 
@@ -190,7 +188,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_1] 
+                    FROM [EvaluateResearch3_1] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -218,7 +216,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint (string ID) {
+    protected bool SaveResearch (string ID) {
         SqlCommand com;
         string str;
 
@@ -229,14 +227,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -245,7 +238,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -257,8 +250,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-1\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-1\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-1\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-1\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -270,14 +263,14 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             // Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_1.FileName);
-        string NewFileName = "DevelMaint2_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_1.FileName;
-        // string NewFileName = FileUpload2_1.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_1.FileName);
+        string NewFileName = "Research3_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_1.FileName;
+        // string NewFileName = FileUpload3_1.FileName;
 
         string InsertFile = filepath + NewFileName;
         //InsertFile.SaveAs
-        if (FileUpload2_1.HasFile) {
-            FileUpload2_1.SaveAs (InsertFile);
+        if (FileUpload3_1.HasFile) {
+            FileUpload3_1.SaveAs (InsertFile);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -288,26 +281,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_1
+            sql = @"INSERT INTO EvaluateResearch3_1
                     (masterId,  projectTopic,  projectType, projectQ, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @ProjectQ, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_1)";
+                    @FileName, @CreatedBy, @Score3_1)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_1  SET                    
+            sql = @"UPDATE EvaluateResearch3_1  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
                     
-                   INSERT INTO EvaluateDevelopMainten2_1
+                   INSERT INTO EvaluateResearch3_1
                     (masterId,  projectTopic,  projectType, projectQ, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @ProjectQ, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_1)";
+                    @FileName, @CreatedBy, @Score3_1)";
 
         }
 
@@ -317,30 +310,30 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = sql;
 
         try {
-            decimal totalScore2_1 = 0;
-            string Type2_1 = txtProjectType.SelectedValue.ToString ();
-            string Q2_1 = txtProjectQ.SelectedValue.ToString ();
+            decimal totalScore3_1 = 0;
+            string Type3_1 = txtProjectType.SelectedValue.ToString ();
+            string Q3_1 = txtProjectQ.SelectedValue.ToString ();
             string SType;
-            if (Type2_1 == "First author                                                                                        " ||
-                Type2_1 == "Corresponding author                                                                                ") {
-                if (Q2_1 == "Q1                                                                                                  ") {
-                    totalScore2_1 = 100;
-                } else if (Q2_1 == "Q2                                                                                                  ") {
-                    totalScore2_1 = 95;
-                } else if (Q2_1 == "Q3                                                                                                  ") {
-                    totalScore2_1 = 90;
-                } else if (Q2_1 == "Q4                                                                                                  ") {
-                    totalScore2_1 = 85;
+            if (Type3_1 == "First author                                                                                        " ||
+                Type3_1 == "Corresponding author                                                                                ") {
+                if (Q3_1 == "Q1                                                                                                  ") {
+                    totalScore3_1 = 100;
+                } else if (Q3_1 == "Q2                                                                                                  ") {
+                    totalScore3_1 = 95;
+                } else if (Q3_1 == "Q3                                                                                                  ") {
+                    totalScore3_1 = 90;
+                } else if (Q3_1 == "Q4                                                                                                  ") {
+                    totalScore3_1 = 85;
                 }
             } else {
-                if (Q2_1 == "Q1                                                                                                  ") {
-                    totalScore2_1 = 40;
-                } else if (Q2_1 == "Q2                                                                                                  ") {
-                    totalScore2_1 = 38;
-                } else if (Q2_1 == "Q3                                                                                                  ") {
-                    totalScore2_1 = 36;
-                } else if (Q2_1 == "Q4                                                                                                  ") {
-                    totalScore2_1 = 34;
+                if (Q3_1 == "Q1                                                                                                  ") {
+                    totalScore3_1 = 40;
+                } else if (Q3_1 == "Q2                                                                                                  ") {
+                    totalScore3_1 = 38;
+                } else if (Q3_1 == "Q3                                                                                                  ") {
+                    totalScore3_1 = 36;
+                } else if (Q3_1 == "Q4                                                                                                  ") {
+                    totalScore3_1 = 34;
                 }
             }
 
@@ -354,7 +347,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
             cmd.Parameters.AddWithValue ("@FileName", NewFileName);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_1", totalScore2_1);
+            cmd.Parameters.AddWithValue ("@Score3_1", totalScore3_1);
 
             // cmd.Parameters.AddWithValue ("@FileNameOld1_1", upnameOld);
 
@@ -362,7 +355,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
             return true;
         } catch (Exception ex) {
-            lblInError2_1.Text += "SaveDevelMaint = " + ex.Message + "<br />";
+            lblInError3_1.Text += "SaveResearch = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -387,7 +380,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         ,[updatedBy]
                         ,[ipAdressUpdate]
                                         
-                    FROM [EvaluateDevelopMainten2_1] 
+                    FROM [EvaluateResearch3_1] 
 
                     WHERE id =  @Id ";
 
@@ -397,20 +390,20 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_1.Text += "SaveDevelMaint = " + ex.Message + "<br />";
+            lblInError3_1.Text += "SaveResearch = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click (object sender, EventArgs e) {
+    protected void btnEditResearch_Click (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_1.Update ();
-            popupAddDevelMaint2_1.Show ();
-            hdf_DevelMaintStatus.Value = ds.Rows[0]["id"].ToString ();
+            UpdatePanel3_1.Update ();
+            popupAddResearch3_1.Show ();
+            hdf_ResearchStatus.Value = ds.Rows[0]["id"].ToString ();
             txtProjectTopic.Text = ds.Rows[0]["projectTopic"].ToString ();
             txtProjectType.SelectedValue = ds.Rows[0]["projectType"].ToString ();
             txtProjectQ.SelectedValue = ds.Rows[0]["projectQ"].ToString ();
@@ -420,7 +413,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void btnDeleteDevelMaint_Click (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData.DataKeys[row.RowIndex]["id"].ToString ();
@@ -430,14 +423,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_1  SET
+            hdf_ResearchStatus.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_1  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus.Value);
             db.ExecuteDataTable (cmd1);
             this.SearchData ();
+            ClearPopUp ();
         }
         SqlCommand com;
         string str;
@@ -449,35 +443,32 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-       
         SqlDataReader reader = com.ExecuteReader ();
+
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-1\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab6-1\\";
 
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
         fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
         File.Move (fileSrc, fileDelete);
+        SearchData ();
         reader.Close ();
         con.Close ();
 
     }
 
-    //##########################################################end 2_1 ###################################################################################
+    //##########################################################end 3_1 ###################################################################################
     //####################################################################################################################################################
     //######################################################################################################################################################
-    //##########################################################Strat 2_2######################################################################################
+    //##########################################################Strat 3_2######################################################################################
 
     protected void SearchData2 () {
         string sql = @"SELECT [id]
@@ -493,7 +484,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
-                    FROM [EvaluateDevelopMainten2_2] 
+                    FROM [EvaluateResearch3_2] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -515,10 +506,10 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void Add2_2_Click (object sender, EventArgs e) {
-        UpdatePanel2_2.Update ();
-        popupAddDevelMaint2_2.Show ();
-        this.ClearPopUp2 ();
+    protected void Add3_2_Click (object sender, EventArgs e) {
+        UpdatePanel3_2.Update ();
+        popupAddResearch3_2.Show ();
+        this.ClearPopUp3 ();
     }
 
     protected void gvData_Sorting2 (object sender, GridViewSortEventArgs e) {
@@ -562,21 +553,21 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         txtProjectType2.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click2 (object sender, EventArgs e) {
-        UpdatePanel2_2.Update ();
-        if (this.SaveDevelMaint2 (hdf_DevelMaintStatus2.Value) == true) {
+    protected void btnAddResearch_Click2 (object sender, EventArgs e) {
+        UpdatePanel3_2.Update ();
+        if (this.SaveResearch2 (hdf_ResearchStatus2.Value) == true) {
             this.SearchData2 ();
-            popupAddDevelMaint2_2.Hide ();
+            popupAddResearch3_2.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click2 (object sender, EventArgs e) {
-        UpdatePanel2_2.Update ();
-        popupAddDevelMaint2_2.Hide ();
+    protected void btnCancelResearch_Click2 (object sender, EventArgs e) {
+        UpdatePanel3_2.Update ();
+        popupAddResearch3_2.Hide ();
     }
 
     protected void btnSubmit_Click2 (object sender, EventArgs e) {
-        Add2_2.Visible = true;
+        Add3_2.Visible = true;
         this.SearchData2 ();
     }
 
@@ -593,7 +584,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_2] 
+                    FROM [EvaluateResearch3_2] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -621,7 +612,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint2 (string ID) {
+    protected bool SaveResearch2 (string ID) {
         SqlCommand com;
         string str;
 
@@ -632,14 +623,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -648,7 +634,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -660,8 +646,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-2\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-2\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-2\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-2\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -673,14 +659,14 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_2.FileName);
-        string NewFileName = "DevelMaint2_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_2.FileName;
-        // string NewFileName = FileUpload2_2.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_2.FileName);
+        string NewFileName = "Research3_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_2.FileName;
+        // string NewFileName = FileUpload3_2.FileName;
 
         string InsertFile = filepath + NewFileName;
         //InsertFile.SaveAs
-        if (FileUpload2_2.HasFile) {
-            FileUpload2_2.SaveAs (InsertFile);
+        if (FileUpload3_2.HasFile) {
+            FileUpload3_2.SaveAs (InsertFile);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -691,26 +677,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_2
+            sql = @"INSERT INTO EvaluateResearch3_2
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_2)";
+                    @FileName, @CreatedBy, @Score3_2)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_2  SET                    
+            sql = @"UPDATE EvaluateResearch3_2  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
                     
-                   INSERT INTO EvaluateDevelopMainten2_2
+                   INSERT INTO EvaluateResearch3_2
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_2)";
+                    @FileName, @CreatedBy, @Score3_2)";
 
         }
 
@@ -720,15 +706,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = sql;
 
         try {
-            decimal totalScore2_2 = 0;
-            string Type2_2 = txtProjectType2.SelectedValue.ToString ();
+            decimal totalScore3_2 = 0;
+            string Type3_2 = txtProjectType2.SelectedValue.ToString ();
 
             string SType;
-            if (Type2_2 == "First author                                                                                        " ||
-                Type2_2 == "Corresponding author                                                                                ") {
-                totalScore2_2 = 70;
+            if (Type3_2 == "First author                                                                                        " ||
+                Type3_2 == "Corresponding author                                                                                ") {
+                totalScore3_2 = 70;
             } else {
-                totalScore2_2 = 28;
+                totalScore3_2 = 28;
             }
 
             cmd.Parameters.AddWithValue ("@Id", ID);
@@ -740,15 +726,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
             cmd.Parameters.AddWithValue ("@FileName", NewFileName);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_2", totalScore2_2);
+            cmd.Parameters.AddWithValue ("@Score3_2", totalScore3_2);
 
-            // cmd.Parameters.AddWithValue ("@FileNameOld2_2", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_2", upnameOld);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_2.Text += "SaveDevelMaint2 = " + ex.Message + "<br />";
+            lblInError3_2.Text += "SaveResearch2 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -771,7 +757,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                       ,[updatedBy]
                       ,[ipAdressUpdate]
                                                         
-                    FROM [EvaluateDevelopMainten2_2] 
+                    FROM [EvaluateResearch3_2] 
 
                     WHERE id =  @Id ";
 
@@ -781,20 +767,20 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_2.Text += "SaveDevelMaint2 = " + ex.Message + "<br />";
+            lblInError3_2.Text += "SaveResearch2 = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click2 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click2 (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData2.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea2 (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_2.Update ();
-            popupAddDevelMaint2_2.Show ();
-            hdf_DevelMaintStatus2.Value = ds.Rows[0]["id"].ToString ();
+            UpdatePanel3_2.Update ();
+            popupAddResearch3_2.Show ();
+            hdf_ResearchStatus2.Value = ds.Rows[0]["id"].ToString ();
             txtProjectTopic2.Text = ds.Rows[0]["projectTopic"].ToString ();
             txtProjectType2.SelectedValue = ds.Rows[0]["projectType"].ToString ();
             // txtProjectQ.Text = ds.Rows[0]["projectQ"].ToString ();
@@ -804,7 +790,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void btnDeleteDevelMaint_Click2 (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click2 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData2.DataKeys[row.RowIndex]["id"].ToString ();
@@ -814,12 +800,12 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus2.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_2  SET
+            hdf_ResearchStatus2.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_2  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus2.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus2.Value);
             db.ExecuteDataTable (cmd1);
             this.SearchData2 ();
         }
@@ -833,14 +819,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-       
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -848,7 +829,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-2\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-2\\";
 
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
@@ -859,10 +840,10 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    //##########################################################end 2_2 ####################################################################################
+    //##########################################################end 3_2 ####################################################################################
     //######################################################################################################################################################
     //######################################################################################################################################################
-    //##########################################################Strat 2_3###################################################################################
+    //##########################################################Strat 3_3###################################################################################
 
     protected void SearchData3 () {
         string sql = @"SELECT [id]
@@ -878,7 +859,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
-                    FROM [EvaluateDevelopMainten2_3] 
+                    FROM [EvaluateResearch3_3] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -900,9 +881,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void Add2_3_Click (object sender, EventArgs e) {
-        UpdatePanel2_3.Update ();
-        popupAddDevelMaint2_3.Show ();
+    protected void Add3_3_Click (object sender, EventArgs e) {
+        UpdatePanel3_3.Update ();
+        popupAddResearch3_3.Show ();
         this.ClearPopUp3 ();
     }
 
@@ -947,21 +928,21 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         txtProjectType3.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click3 (object sender, EventArgs e) {
-        UpdatePanel2_3.Update ();
-        if (this.SaveDevelMaint3 (hdf_DevelMaintStatus3.Value) == true) {
+    protected void btnAddResearch_Click3 (object sender, EventArgs e) {
+        UpdatePanel3_3.Update ();
+        if (this.SaveResearch3 (hdf_ResearchStatus3.Value) == true) {
             this.SearchData3 ();
-            popupAddDevelMaint2_3.Hide ();
+            popupAddResearch3_3.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click3 (object sender, EventArgs e) {
-        UpdatePanel2_3.Update ();
-        popupAddDevelMaint2_3.Hide ();
+    protected void btnCancelResearch_Click3 (object sender, EventArgs e) {
+        UpdatePanel3_3.Update ();
+        popupAddResearch3_3.Hide ();
     }
 
     protected void btnSubmit_Click3 (object sender, EventArgs e) {
-        Add2_3.Visible = true;
+        Add3_3.Visible = true;
         this.SearchData3 ();
     }
 
@@ -978,7 +959,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_3] 
+                    FROM [EvaluateResearch3_3] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -1006,7 +987,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint3 (string ID) {
+    protected bool SaveResearch3 (string ID) {
         SqlCommand com;
         string str;
 
@@ -1017,14 +998,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1033,7 +1009,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1045,8 +1021,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-3\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-3\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-3\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-3\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -1058,14 +1034,14 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_3.FileName);
-        string NewFileName = "DevelMaint2_3_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_3.FileName;
-        // string NewFileName = FileUpload2_3.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_3.FileName);
+        string NewFileName = "Research3_3_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_3.FileName;
+        // string NewFileName = FileUpload3_3.FileName;
 
         string InsertFile = filepath + NewFileName;
         //InsertFile.SaveAs
-        if (FileUpload2_3.HasFile) {
-            FileUpload2_3.SaveAs (InsertFile);
+        if (FileUpload3_3.HasFile) {
+            FileUpload3_3.SaveAs (InsertFile);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -1076,26 +1052,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_3
+            sql = @"INSERT INTO EvaluateResearch3_3
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_3)";
+                    @FileName, @CreatedBy, @Score3_3)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_3  SET                    
+            sql = @"UPDATE EvaluateResearch3_3  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
                     
-                   INSERT INTO EvaluateDevelopMainten2_3
+                   INSERT INTO EvaluateResearch3_3
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_3)";
+                    @FileName, @CreatedBy, @Score3_3)";
 
         }
 
@@ -1105,16 +1081,16 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = sql;
 
         try {
-            decimal totalScore2_3 = 0;
-            string Type2_3 = txtProjectType3.SelectedValue.ToString ();
+            decimal totalScore3_3 = 0;
+            string Type3_3 = txtProjectType3.SelectedValue.ToString ();
 
             string SType;
-            if (Type2_3 == "สิทธิบัตร (ตปท.)                                                                                    ") {
-                totalScore2_3 = 100;
-            } else if (Type2_3 == "อนุสิทธิบัตร                                                                                        ") {
-                totalScore2_3 = 70;
+            if (Type3_3 == "สิทธิบัตร (ตปท.)                                                                                    ") {
+                totalScore3_3 = 100;
+            } else if (Type3_3 == "อนุสิทธิบัตร                                                                                        ") {
+                totalScore3_3 = 70;
             } else {
-                totalScore2_3 = 90;
+                totalScore3_3 = 90;
             }
 
             cmd.Parameters.AddWithValue ("@Id", ID);
@@ -1126,15 +1102,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
             cmd.Parameters.AddWithValue ("@FileName", NewFileName);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_3", totalScore2_3);
+            cmd.Parameters.AddWithValue ("@Score3_3", totalScore3_3);
 
-            // cmd.Parameters.AddWithValue ("@FileNameOld2_3", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_3", upnameOld);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_3.Text += "SaveDevelMaint3 = " + ex.Message + "<br />";
+            lblInError3_3.Text += "SaveResearch3 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -1157,7 +1133,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                                                         
-                    FROM [EvaluateDevelopMainten2_3] 
+                    FROM [EvaluateResearch3_3] 
 
                     WHERE id =  @Id ";
 
@@ -1167,20 +1143,20 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_3.Text += "SaveDevelMaint3 = " + ex.Message + "<br />";
+            lblInError3_3.Text += "SaveResearch3 = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click3 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click3 (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData3.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea3 (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_3.Update ();
-            popupAddDevelMaint2_3.Show ();
-            hdf_DevelMaintStatus3.Value = ds.Rows[0]["id"].ToString ();
+            UpdatePanel3_3.Update ();
+            popupAddResearch3_3.Show ();
+            hdf_ResearchStatus3.Value = ds.Rows[0]["id"].ToString ();
             txtProjectTopic3.Text = ds.Rows[0]["projectTopic"].ToString ();
             txtProjectType3.SelectedValue = ds.Rows[0]["projectType"].ToString ();
             // txtProjectQ.Text = ds.Rows[0]["projectQ"].ToString ();
@@ -1190,7 +1166,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void btnDeleteDevelMaint_Click3 (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click3 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData3.DataKeys[row.RowIndex]["id"].ToString ();
@@ -1200,12 +1176,12 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus3.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_3  SET
+            hdf_ResearchStatus3.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_3  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus3.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus3.Value);
             db.ExecuteDataTable (cmd1);
             this.SearchData3 ();
         }
@@ -1219,14 +1195,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1234,7 +1205,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-3\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-3\\";
 
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
@@ -1245,10 +1216,10 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    //##########################################################end 2_3 ##############################################################
+    //##########################################################end 3_3 ##############################################################
     //################################################################################################################################
     //################################################################################################################################
-    //##########################################################Strat 2_4#############################################################
+    //##########################################################Strat 3_4#############################################################
 
     protected void SearchData4 () {
         string sql = @"SELECT [id]
@@ -1266,7 +1237,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
-                    FROM [EvaluateDevelopMainten2_4] 
+                    FROM [EvaluateResearch3_4] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -1288,9 +1259,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void Add2_4_Click (object sender, EventArgs e) {
-        UpdatePanel2_4.Update ();
-        popupAddDevelMaint2_4.Show ();
+    protected void Add3_4_Click (object sender, EventArgs e) {
+        UpdatePanel3_4.Update ();
+        popupAddResearch3_4.Show ();
         this.ClearPopUp4 ();
     }
 
@@ -1337,21 +1308,21 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         txtProjectLevel4.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click4 (object sender, EventArgs e) {
-        UpdatePanel2_4.Update ();
-        if (this.SaveDevelMaint4 (hdf_DevelMaintStatus4.Value) == true) {
+    protected void btnAddResearch_Click4 (object sender, EventArgs e) {
+        UpdatePanel3_4.Update ();
+        if (this.SaveResearch4 (hdf_ResearchStatus4.Value) == true) {
             this.SearchData4 ();
-            popupAddDevelMaint2_4.Hide ();
+            popupAddResearch3_4.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click4 (object sender, EventArgs e) {
-        UpdatePanel2_4.Update ();
-        popupAddDevelMaint2_4.Hide ();
+    protected void btnCancelResearch_Click4 (object sender, EventArgs e) {
+        UpdatePanel3_4.Update ();
+        popupAddResearch3_4.Hide ();
     }
 
     protected void btnSubmit_Click4 (object sender, EventArgs e) {
-        Add2_4.Visible = true;
+        Add3_4.Visible = true;
         this.SearchData4 ();
     }
 
@@ -1368,7 +1339,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_4] 
+                    FROM [EvaluateResearch3_4] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -1396,7 +1367,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint4 (string ID) {
+    protected bool SaveResearch4 (string ID) {
         SqlCommand com;
         string str;
 
@@ -1407,14 +1378,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1423,7 +1389,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-      
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1435,8 +1401,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-4\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-4\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-4\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-4\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -1448,14 +1414,14 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_4.FileName);
-        string NewFileName = "DevelMaint2_4_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_4.FileName;
-        // string NewFileName = FileUpload2_4.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_4.FileName);
+        string NewFileName = "Research3_4_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_4.FileName;
+        // string NewFileName = FileUpload3_4.FileName;
 
         string InsertFile = filepath + NewFileName;
         //InsertFile.SaveAs
-        if (FileUpload2_4.HasFile) {
-            FileUpload2_4.SaveAs (InsertFile);
+        if (FileUpload3_4.HasFile) {
+            FileUpload3_4.SaveAs (InsertFile);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -1466,26 +1432,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_4
+            sql = @"INSERT INTO EvaluateResearch3_4
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore, projectLevel, projectAgency) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_4, @ProjectLevel, @ProjectAgency)";
+                    @FileName, @CreatedBy, @Score3_4, @ProjectLevel, @ProjectAgency)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_4  SET                    
+            sql = @"UPDATE EvaluateResearch3_4  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
                     
-                   INSERT INTO EvaluateDevelopMainten2_4
+                   INSERT INTO EvaluateResearch3_4
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore, projectLevel, projectAgency) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_4, @ProjectLevel, @ProjectAgency)";
+                    @FileName, @CreatedBy, @Score3_4, @ProjectLevel, @ProjectAgency)";
 
         }
 
@@ -1495,21 +1461,21 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = sql;
 
         try {
-            decimal totalScore2_4 = 0;
-            string Type2_4 = txtProjectType4.SelectedValue.ToString ();
-            string Level2_4 = txtProjectLevel4.SelectedValue.ToString ();
+            decimal totalScore3_4 = 0;
+            string Type3_4 = txtProjectType4.SelectedValue.ToString ();
+            string Level3_4 = txtProjectLevel4.SelectedValue.ToString ();
 
-            if (Level2_4 == "ไทย                                                                                                 ") {
-                if (Type2_4 == "Oral Presentation                                                                                   ") {
-                    totalScore2_4 = 15;
+            if (Level3_4 == "ไทย                                                                                                 ") {
+                if (Type3_4 == "Oral Presentation                                                                                   ") {
+                    totalScore3_4 = 15;
                 } else {
-                    totalScore2_4 = 10;
+                    totalScore3_4 = 10;
                 }
             } else {
-                if (Type2_4 == "Oral Presentation                                                                                   ") {
-                    totalScore2_4 = 25;
+                if (Type3_4 == "Oral Presentation                                                                                   ") {
+                    totalScore3_4 = 35;
                 } else {
-                    totalScore2_4 = 15;
+                    totalScore3_4 = 15;
                 }
             }
 
@@ -1524,15 +1490,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
             cmd.Parameters.AddWithValue ("@FileName", NewFileName);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_4", totalScore2_4);
+            cmd.Parameters.AddWithValue ("@Score3_4", totalScore3_4);
 
-            // cmd.Parameters.AddWithValue ("@FileNameOld2_4", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_4", upnameOld);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_4.Text += "SaveDevelMaint4 = " + ex.Message + "<br />";
+            lblInError3_4.Text += "SaveResearch4 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -1557,7 +1523,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                                                         
-                    FROM [EvaluateDevelopMainten2_4] 
+                    FROM [EvaluateResearch3_4] 
 
                     WHERE id =  @Id ";
 
@@ -1567,20 +1533,20 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_4.Text += "SaveDevelMaint4 = " + ex.Message + "<br />";
+            lblInError3_4.Text += "SaveResearch4 = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click4 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click4 (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData4.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea4 (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_4.Update ();
-            popupAddDevelMaint2_4.Show ();
-            hdf_DevelMaintStatus4.Value = ds.Rows[0]["id"].ToString ();
+            UpdatePanel3_4.Update ();
+            popupAddResearch3_4.Show ();
+            hdf_ResearchStatus4.Value = ds.Rows[0]["id"].ToString ();
             txtProjectTopic4.Text = ds.Rows[0]["projectTopic"].ToString ();
             txtProjectType4.SelectedValue = ds.Rows[0]["projectType"].ToString ();
             txtProjectLevel4.SelectedValue = ds.Rows[0]["projectLevel"].ToString ();
@@ -1590,7 +1556,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void btnDeleteDevelMaint_Click4 (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click4 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData4.DataKeys[row.RowIndex]["id"].ToString ();
@@ -1600,12 +1566,12 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus4.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_4  SET
+            hdf_ResearchStatus4.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_4  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus4.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus4.Value);
             db.ExecuteDataTable (cmd1);
             this.SearchData4 ();
         }
@@ -1619,21 +1585,16 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-     
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-4\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-4\\";
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
         fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
@@ -1642,27 +1603,31 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         con.Close ();
     }
 
-    //##########################################################end 2_4 ################################################################
+    //##########################################################end 3_4 ################################################################
     //##################################################################################################################################
     //##################################################################################################################################
-    //##########################################################Strat 2_5###############################################################
+    //##########################################################Strat 3_5###############################################################
+
     protected void SearchData5 () {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,[projectTopic]
+                    ,[projectJoint]
                     ,[projectType]
-                    ,[projectClass]
                     ,[projectScore]
                     ,[projectStatus]
+                    ,[pathShare]
                     ,[path]
+                    ,[fileNameShare]
                     ,[fileName]
+                    ,[fileNameShareOld]
                     ,[fileNameOld]
                     ,[createdBy]
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                     ,[createdDate]
-                    FROM [EvaluateDevelopMainten2_5] 
+                    FROM [EvaluateResearch3_5] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -1684,9 +1649,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void Add2_5_Click (object sender, EventArgs e) {
-        UpdatePanel2_5.Update ();
-        popupAddDevelMaint2_5.Show ();
+    protected void Add3_5_Click (object sender, EventArgs e) {
+        UpdatePanel3_5.Update ();
+        popupAddResearch3_5.Show ();
         this.ClearPopUp5 ();
     }
 
@@ -1729,24 +1694,24 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void ClearPopUp5 () {
         txtProjectTopic5.Text = "";
         txtProjectType5.Text = "";
-        txtProjectClass5.Text = "";
+        txtProjectJoint5.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click5 (object sender, EventArgs e) {
-        UpdatePanel2_5.Update ();
-        if (this.SaveDevelMaint5 (hdf_DevelMaintStatus5.Value) == true) {
+    protected void btnAddResearch_Click5 (object sender, EventArgs e) {
+        UpdatePanel3_5.Update ();
+        if (this.SaveResearch5 (hdf_ResearchStatus5.Value) == true) {
             this.SearchData5 ();
-            popupAddDevelMaint2_5.Hide ();
+            popupAddResearch3_5.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click5 (object sender, EventArgs e) {
-        UpdatePanel2_5.Update ();
-        popupAddDevelMaint2_5.Hide ();
+    protected void btnCancelResearch_Click5 (object sender, EventArgs e) {
+        UpdatePanel3_5.Update ();
+        popupAddResearch3_5.Hide ();
     }
 
     protected void btnSubmit_Click5 (object sender, EventArgs e) {
-        Add2_5.Visible = true;
+        Add3_5.Visible = true;
         this.SearchData5 ();
     }
 
@@ -1755,7 +1720,42 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         // txtBuilder.Text = "";
     }
 
-    protected void btnDownload_Click5 (object sender, EventArgs e) {
+    protected void btnDownload_Click5_1 (object sender, EventArgs e) {
+        SqlCommand com;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_5] 
+                    WHERE  id =  @Id ";
+
+        com = new SqlCommand (sql, con);
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData5.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
+
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
+
+    }
+    protected void btnDownload_Click5_2 (object sender, EventArgs e) {
         SqlCommand com;
 
         SqlConnection con = new SqlConnection (con_string);
@@ -1763,7 +1763,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_5] 
+                    FROM [EvaluateResearch3_5] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -1791,7 +1791,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint5 (string ID) {
+    protected bool SaveResearch5 (string ID) {
         SqlCommand com;
         string str;
 
@@ -1802,14 +1802,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1818,7 +1813,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1830,8 +1825,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-5\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-5\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_2\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_2\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -1843,14 +1838,38 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_5.FileName);
-        string NewFileName = "DevelMaint2_5_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_5.FileName;
-        // string NewFileName = FileUpload2_5.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_5_2.FileName);
+        string NewFileName = "Research3_5_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_5_2.FileName;
+        // string NewFileName = FileUpload3_5.FileName;
 
         string InsertFile = filepath + NewFileName;
+        //======================================================================================================
+        string filepathShare;
+        string filepathDeleteShare;
+        string filepathEditShare;
+        string rootpathShare = Request.PhysicalApplicationPath;
+        string pathShare = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tabShare3-5_1\\";
+        string pathDeleteShare = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tabShare3-5_1\\";
+        string pathEditShare = "Edit\\" + path;
+        // filepathEditShare = rootpath + pathEdit;
+        filepathShare = rootpath + pathShare;
+        filepathDeleteShare = rootpath + pathDeleteShare;
+        //var directoryInfoShare = new DirectoryInfo (filepath);
+        if (!Directory.Exists (filepathShare) || !Directory.Exists (filepathDeleteShare)) {
+            Directory.CreateDirectory (filepathShare);
+            Directory.CreateDirectory (filepathDeleteShare);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileNameShare = Path.GetFileName (FileUploadShare3_5_1.FileName);
+        string NewFileNameShare = "Research3_5_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUploadShare3_5_1.FileName;
+        // string NewFileName = FileUpload3_5.FileName;
+
+        string InsertFileShare = filepathShare + NewFileNameShare;
         //InsertFile.SaveAs
-        if (FileUpload2_5.HasFile) {
-            FileUpload2_5.SaveAs (InsertFile);
+        if (FileUpload3_5_2.HasFile || FileUploadShare3_5_1.HasFile) {
+            FileUpload3_5_2.SaveAs (InsertFile);
+            FileUploadShare3_5_1.SaveAs (InsertFileShare);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -1861,26 +1880,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_5
+            sql = @"INSERT INTO EvaluateResearch3_5
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore, projectClass) 
+                    fileName, createdBy, projectScore, projectJoint, pathShare, fileNameShare, fileNameShareOld) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_5, @ProjectClass)";
+                    @FileName, @CreatedBy, @Score3_5, @ProjectJoint, @PathShare, @FileNameShare, @FileNameShareOld)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_5  SET                    
+            sql = @"UPDATE EvaluateResearch3_5  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
                     
-                   INSERT INTO EvaluateDevelopMainten2_5
+                    INSERT INTO EvaluateResearch3_5
                     (masterId,  projectTopic,  projectType, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore, projectClass) 
+                    fileName, createdBy, projectScore, projectJoint, pathShare, fileNameShare, fileNameShareOld) 
                     VALUES
                     (@MasterId, @ProjectTopic, @ProjectType, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_5, @ProjectClass)";
+                    @FileName, @CreatedBy, @Score3_5, @ProjectJoint, @PathShare, @FileNameShare, @FileNameShareOld)";
 
         }
 
@@ -1890,54 +1909,41 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = sql;
 
         try {
-            decimal totalScore2_5 = 0;
-            string Type2_5 = txtProjectType5.SelectedValue.ToString ();
-            string Class2_5 = txtProjectClass5.SelectedValue.ToString ();
-
-            if (Type2_5 == "Main auther                                                                                         ") {
-                if (Class2_5 == "Class A                                                                                             ") {
-                    totalScore2_5 = 25;
-                } else if (Class2_5 == "Class B                                                                                             ") {
-                    totalScore2_5 = 20;
-                } else if (Class2_5 == "Class C                                                                                             ") {
-                    totalScore2_5 = 15;
-                } else if (Class2_5 == "Class D                                                                                             ") {
-                    totalScore2_5 = 10;
-                } else {
-                    totalScore2_5 = 5;
-                }
+            decimal totalScore3_5 = 0;
+            string Type3_5 = txtProjectType5.SelectedValue.ToString ();
+            decimal Joint5 = decimal.Parse (txtProjectJoint5.Text);
+            if (Type3_5 == "Main auther") {
+                totalScore3_5 = 60;
             } else {
-                if (Class2_5 == "Class A                                                                                             ") {
-                    totalScore2_5 = 20;
-                } else if (Class2_5 == "Class B                                                                                             ") {
-                    totalScore2_5 = 16;
-                } else if (Class2_5 == "Class C                                                                                             ") {
-                    totalScore2_5 = 12;
-                } else if (Class2_5 == "Class D                                                                                             ") {
-                    totalScore2_5 = 8;
+                if (Joint5 >= 1 && Joint5 <= 10) {
+                    totalScore3_5 = 10;
                 } else {
-                    totalScore2_5 = 4;
+                    totalScore3_5 = Joint5;
                 }
             }
+
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectType", txtProjectType5.SelectedValue);
             cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic5.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass5.SelectedValue);
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint5.Text);
             cmd.Parameters.AddWithValue ("@Path", filepath);
+            cmd.Parameters.AddWithValue ("@PathShare", filepathShare);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
             cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+            cmd.Parameters.AddWithValue ("@FileNameShareOld", OldFileNameShare);
+            cmd.Parameters.AddWithValue ("@FileNameShare", NewFileNameShare);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_5", totalScore2_5);
+            cmd.Parameters.AddWithValue ("@Score3_5", totalScore3_5);
 
-            // cmd.Parameters.AddWithValue ("@FileNameOld2_5", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_5", upnameOld);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_5.Text += "SaveDevelMaint5 = " + ex.Message + "<br />";
+            lblInError3_5.Text += "SaveResearch5 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -1949,12 +1955,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = @"SELECT [id]
                     ,[masterId]
                     ,[projectTopic]
+                    ,[projectJoint]
                     ,[projectType]
-                    ,[projectClass]
                     ,[projectScore]
                     ,[projectStatus]
+                    ,[pathShare]
                     ,[path]
+                    ,[fileNameShare]
                     ,[fileName]
+                    ,[fileNameShareOld]
                     ,[fileNameOld]
                     ,[createdBy]
                     ,[ipAddressCreate]
@@ -1962,7 +1971,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAdressUpdate]
                     ,[createdDate]
                                                         
-                    FROM [EvaluateDevelopMainten2_5] 
+                    FROM [EvaluateResearch3_5] 
 
                     WHERE id =  @Id ";
 
@@ -1972,44 +1981,46 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_5.Text += "SaveDevelMaint5 = " + ex.Message + "<br />";
+            lblInError3_5.Text += "SaveResearch5 = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click5 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click5 (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData5.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea5 (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_5.Update ();
-            popupAddDevelMaint2_5.Show ();
-            hdf_DevelMaintStatus5.Value = ds.Rows[0]["id"].ToString ();
+            UpdatePanel3_5.Update ();
+            popupAddResearch3_5.Show ();
+            hdf_ResearchStatus5.Value = ds.Rows[0]["id"].ToString ();
             txtProjectTopic5.Text = ds.Rows[0]["projectTopic"].ToString ();
             txtProjectType5.SelectedValue = ds.Rows[0]["projectType"].ToString ();
-            txtProjectClass5.SelectedValue = ds.Rows[0]["projectClass"].ToString ();
+            txtProjectJoint5.Text = ds.Rows[0]["projectJoint"].ToString ();
 
         }
 
     }
 
-    protected void btnDeleteDevelMaint_Click5 (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click5 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData5.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea5 (Id);
         string fileSrc;
         string fileDelete;
+        string fileSrcPresent;
+        string fileDeletePresent;
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus5.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_5  SET
+            hdf_ResearchStatus5.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_5  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus5.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus5.Value);
             db.ExecuteDataTable (cmd1);
             this.SearchData5 ();
         }
@@ -2023,52 +2034,52 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-    
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-5\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_2\\";
+        string pathPresent = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-5_1\\";
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
         fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
+        fileSrcPresent = ds.Rows[0]["pathShare"].ToString () + ds.Rows[0]["fileNameShare"].ToString ();
+        fileDeletePresent = rootpath + pathPresent + ds.Rows[0]["fileNameShare"].ToString ();
         File.Move (fileSrc, fileDelete);
+        File.Move (fileSrcPresent, fileDeletePresent);
         reader.Close ();
         con.Close ();
     }
 
-    //##########################################################end 2_5 ##################################################################
+    //##########################################################end 3_5 ##################################################################
     //####################################################################################################################################
     //#####################################################################################################################################
-    //##########################################################Strat 2_6_1################################################################
+    //##########################################################Strat 3_6################################################################
 
-    protected void SearchData6_1 () {
+    protected void SearchData6 () {
         string sql = @"SELECT [id]
                     ,[masterId]
-                    ,[projectTopic]
                     ,[projectName]
-                    ,[projectPlan]
-                    ,[projectInProgress]
+                    ,[projectJoint]
                     ,[projectScore]
                     ,[projectStatus]
+                    ,[pathShare]
                     ,[path]
+                    ,[fileNameShare]
                     ,[fileName]
+                    ,[fileNameShareOld]
                     ,[fileNameOld]
                     ,[createdBy]
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
-                    ,[createdDaye]
-                    FROM [EvaluateDevelopMainten2_6_1] 
+                    ,[createdDate]
+                    FROM [EvaluateResearch3_6] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -2084,41 +2095,41 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         con.Close ();
 
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
-        gvData6_1.DataSource = blacklistDT.DefaultView;
-        gvData6_1.DataBind ();
-        lblRecord6_1.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
+        gvData6.DataSource = blacklistDT.DefaultView;
+        gvData6.DataBind ();
+        lblRecord6.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
 
     }
 
-    protected void Add2_6_1_Click (object sender, EventArgs e) {
-        UpdatePanel2_6_1.Update ();
-        popupAddDevelMaint2_6_1.Show ();
-        this.ClearPopUp6_1 ();
+    protected void Add3_6_Click (object sender, EventArgs e) {
+        UpdatePanel3_6.Update ();
+        popupAddResearch3_6.Show ();
+        this.ClearPopUp6 ();
     }
 
-    protected void gvData_Sorting6_1 (object sender, GridViewSortEventArgs e) {
+    protected void gvData_Sorting6 (object sender, GridViewSortEventArgs e) {
         SortDirection SD = GridviewSortDirection;
         GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
     }
 
-    protected void gvData_PageIndexChanging6_1 (object sender, GridViewPageEventArgs e) {
-        gvData6_1.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
-        gvData6_1.PageIndex = e.NewPageIndex;
-        gvData6_1.DataBind ();
-        this.btnSubmit_Click6_1 (sender, e);
+    protected void gvData_PageIndexChanging6 (object sender, GridViewPageEventArgs e) {
+        gvData6.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
+        gvData6.PageIndex = e.NewPageIndex;
+        gvData6.DataBind ();
+        this.btnSubmit_Click6 (sender, e);
     }
-    protected void gvData_SelectedIndexChanged6_1 (object sender, EventArgs e) {
+    protected void gvData_SelectedIndexChanged6 (object sender, EventArgs e) {
 
     }
 
-    protected void gvData_RowDataBound6_1 (object sender, GridViewRowEventArgs e) {
+    protected void gvData_RowDataBound6 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6_1")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6")).Value);
         }
 
     }
 
-    public SortDirection GridviewSortDirection6_1 {
+    public SortDirection GridviewSortDirection6 {
         get {
             if (ViewState["sortDirection"] == null) {
                 ViewState["sortDirection"] = SortDirection.Ascending;
@@ -2132,32 +2143,31 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     //=============================popup=================================================
 
-    protected void ClearPopUp6_1 () {
-        txtProjectTopic6_1.SelectedValue = "";
-        txtProjectName6_1.Text = "";
-        txtProjectPlan6_1.Text = "";
-        txtProjectInProgress6_1.Text = "";
+    protected void ClearPopUp6 () {
+
+        txtProjectName6.Text = "";
+        txtProjectJoint6.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click6_1 (object sender, EventArgs e) {
-        UpdatePanel2_6_1.Update ();
-        if (this.SaveDevelMaint6_1 (hdf_DevelMaintStatus6_1.Value) == true) {
-            this.SearchData6_1 ();
-            popupAddDevelMaint2_6_1.Hide ();
+    protected void btnAddResearch_Click6 (object sender, EventArgs e) {
+        UpdatePanel3_6.Update ();
+        if (this.SaveResearch6 (hdf_ResearchStatus6.Value) == true) {
+            this.SearchData6 ();
+            popupAddResearch3_6.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click6_1 (object sender, EventArgs e) {
-        UpdatePanel2_6_1.Update ();
-        popupAddDevelMaint2_6_1.Hide ();
+    protected void btnCancelResearch_Click6 (object sender, EventArgs e) {
+        UpdatePanel3_6.Update ();
+        popupAddResearch3_6.Hide ();
     }
 
-    protected void btnSubmit_Click6_1 (object sender, EventArgs e) {
-        Add2_6_1.Visible = true;
-        this.SearchData6_1 ();
+    protected void btnSubmit_Click6 (object sender, EventArgs e) {
+        Add3_6.Visible = true;
+        this.SearchData6 ();
     }
 
-    protected void btnReset_Click6_1 (object sender, EventArgs e) {
+    protected void btnReset_Click6 (object sender, EventArgs e) {
         // ddlArea.SelectedValue = "";
         // txtBuilder.Text = "";
     }
@@ -2169,14 +2179,14 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         con.Open ();
         string sql = @"SELECT [id]
                     ,[masterId]
-                    ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_6_1] 
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_6] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData6_1.DataKeys[row.RowIndex]["id"].ToString ();
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
         com.Parameters.AddWithValue ("@Id", Id);
         SqlDataAdapter da = new SqlDataAdapter (com);
         SqlDataReader reader = com.ExecuteReader ();
@@ -2197,364 +2207,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         con.Close ();
 
     }
-
-    protected bool SaveDevelMaint6_1 (string ID) {
-        SqlCommand com;
-        string str;
-
-        SqlConnection con = new SqlConnection (con_string);
-        con.Open ();
-        str = @"select C.projectYear, C.projectRound, 
-                        M.acountId ,A.FirstName  + A.LastName AS FullName
-                        from ProjectControl AS C
-                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-                        INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
-                        ";
-
-        com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
-        SqlDataReader reader = com.ExecuteReader ();
-
-        reader.Read ();
-        string FullName = reader["FullName"].ToString ();
-        string AcountId = reader["acountId"].ToString ();
-        string projectYear = reader["projectYear"].ToString ();
-        string projectRound = reader["projectRound"].ToString ();
-
-   
-        //==========================IPADDRESS ==================================
-        string strHostName = System.Net.Dns.GetHostName ();
-        IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
-        IPAddress[] addr = ipEntry.AddressList;
-        string ip = addr[1].ToString ();
-        //==========================IPADDRESS END==================================
-        //==========================upfile====================================
-        string filepath;
-        string filepathDelete;
-        string filepathEdit;
-        string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-6_1\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-6_1\\";
-        string pathEdit = "Edit\\" + path;
-        // filepathEdit = rootpath + pathEdit;
-        filepath = rootpath + path;
-        filepathDelete = rootpath + pathDelete;
-        var directoryInfo = new DirectoryInfo (filepath);
-        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
-            Directory.CreateDirectory (filepath);
-            Directory.CreateDirectory (filepathDelete);
-            //  Directory.CreateDirectory (filepathEdit);
-            //directoryInfo.CreateSubdirectory("k");
-        }
-        string OldFileName = Path.GetFileName (FileUpload2_6_1.FileName);
-        string NewFileName = "DevelMaint2_6_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_6_1.FileName;
-        // string NewFileName = FileUpload2_6_1.FileName;
-
-        string InsertFile = filepath + NewFileName;
-        //InsertFile.SaveAs
-        if (FileUpload2_6_1.HasFile) {
-            FileUpload2_6_1.SaveAs (InsertFile);
-        }
-        //hpf.SaveAs(InsertFile);
-
-        //==========================upfile end===============================
-        reader.Close ();
-        con.Close ();
-
-        string sql = "";
-        if (ID == "") {
-
-            sql = @"INSERT INTO EvaluateDevelopMainten2_6_1
-                    (masterId,  projectTopic,  projectName, projectPlan, projectInProgress, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore) 
-                    VALUES
-                    (@MasterId, @ProjectTopic, @ProjectName, @ProjectPlan, @ProjectInProgress, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_6_1)";
-        } else {
-
-            sql = @"UPDATE EvaluateDevelopMainten2_6_1  SET                    
-                    ipAdressUpdate = @IpAddress,
-                    updatedBy = @CreatedBy,
-                    projectStatus = 'I'                   
-                    WHERE ID = @Id
-                    
-                   INSERT INTO EvaluateDevelopMainten2_6_1
-                    (masterId,  projectTopic,  projectName, projectPlan, projectInProgress, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore) 
-                    VALUES
-                    (@MasterId, @ProjectTopic, @ProjectName, @ProjectPlan, @ProjectInProgress, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_6_1)";
-
-        }
-
-        //  db.ConnectionString = con_string;
-
-        SqlCommand cmd = new SqlCommand ();
-        cmd.CommandText = sql;
-
-        try {
-            decimal totalScore2_6_1 = 0;
-            string Topic2_6_1 = txtProjectTopic6_1.SelectedValue.ToString ();
-            decimal plan6_1 = decimal.Parse (txtProjectPlan6_1.Text);
-            decimal InProgress6_1 = decimal.Parse (txtProjectInProgress6_1.Text);
-            if (Topic2_6_1 == "ออกแบบระบบลำเลียงแสง                                                                                ") {
-                totalScore2_6_1 = (InProgress6_1 * 100) / plan6_1;
-            } else {
-                totalScore2_6_1 = (InProgress6_1 * 70) / plan6_1;
-            }
-
-            cmd.Parameters.AddWithValue ("@Id", ID);
-            cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan6_1.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic6_1.SelectedValue.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectInProgress", txtProjectInProgress6_1.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6_1.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@Path", filepath);
-            cmd.Parameters.AddWithValue ("@IpAddress", ip);
-            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-            cmd.Parameters.AddWithValue ("@FileName", NewFileName);
-            cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_6_1", totalScore2_6_1);
-
-            // cmd.Parameters.AddWithValue ("@FileNameOld2_6_1", upnameOld);
-
-            db.ExecuteNonQuery (cmd);
-
-            return true;
-        } catch (Exception ex) {
-            lblInError2_6_1.Text += "SaveDevelMaint6_1 = " + ex.Message + "<br />";
-            return false;
-        }
-        //finally { con.Close(); 
-
-    }
-
-    protected DataTable SearchOneArea6_1 (string ID) {
-        SqlCommand cmd = new SqlCommand ();
-        cmd.CommandText = @"SELECT [id]
-                    ,[masterId]
-                    ,[projectTopic]
-                    ,[projectName]
-                    ,[projectPlan]
-                    ,[projectInProgress]
-                    ,[projectScore]
-                    ,[projectStatus]
-                    ,[path]
-                    ,[fileName]
-                    ,[fileNameOld]
-                    ,[createdBy]
-                    ,[ipAddressCreate]
-                    ,[updatedBy]
-                    ,[ipAdressUpdate]
-                    ,[createdDaye]
-                                                        
-                    FROM [EvaluateDevelopMainten2_6_1] 
-
-                    WHERE id =  @Id ";
-
-        cmd.Parameters.AddWithValue ("@Id", ID);
-
-        try {
-            DataTable blacklistDT = db.ExecuteDataTable (cmd);
-            return blacklistDT;
-        } catch (Exception ex) {
-            lblInError2_6_1.Text += "SaveDevelMaint6_1 = " + ex.Message + "<br />";
-            return null;
-        }
-    }
-
-    protected void btnEditDevelMaint_Click6_1 (object sender, EventArgs e) {
-
-        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData6_1.DataKeys[row.RowIndex]["id"].ToString ();
-        DataTable ds = this.SearchOneArea6_1 (Id);
-        if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_6_1.Update ();
-            popupAddDevelMaint2_6_1.Show ();
-            hdf_DevelMaintStatus6_1.Value = ds.Rows[0]["id"].ToString ();
-
-            txtProjectTopic6_1.SelectedValue = ds.Rows[0]["projectTopic"].ToString ();
-            txtProjectName6_1.Text = ds.Rows[0]["projectName"].ToString ();
-            txtProjectPlan6_1.Text = ds.Rows[0]["projectPlan"].ToString ();
-            txtProjectInProgress6_1.Text = ds.Rows[0]["projectInProgress"].ToString ();
-        }
-
-    }
-
-    protected void btnDeleteDevelMaint_Click6_1 (object sender, EventArgs e) {
-        string sql;
-        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData6_1.DataKeys[row.RowIndex]["id"].ToString ();
-        DataTable ds = this.SearchOneArea6_1 (Id);
-        string fileSrc;
-        string fileDelete;
-
-        if (ds != null && ds.Rows.Count > 0) {
-
-            hdf_DevelMaintStatus6_1.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_6_1  SET
-                    projectStatus = 'D' WHERE id =  @Id";
-            SqlCommand cmd1 = new SqlCommand ();
-            cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus6_1.Value);
-            db.ExecuteDataTable (cmd1);
-            this.SearchData6_1 ();
-        }
-        SqlCommand com;
-        string str;
-
-        SqlConnection con = new SqlConnection (con_string);
-        con.Open ();
-        str = @"select C.projectYear, C.projectRound, 
-                        M.acountId ,A.FirstName  + A.LastName AS FullName
-                        from ProjectControl AS C
-                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-                        INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
-                        ";
-
-        com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-     
-        SqlDataReader reader = com.ExecuteReader ();
-        reader.Read ();
-        string FullName = reader["FullName"].ToString ();
-        string AcountId = reader["acountId"].ToString ();
-        string projectYear = reader["projectYear"].ToString ();
-        string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-6_1\\";
-        string rootpath = Request.PhysicalApplicationPath;
-        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
-        File.Move (fileSrc, fileDelete);
-        reader.Close ();
-        con.Close ();
-    }
-
-    //##########################################################end 2_6_1 ################################################################
-    //####################################################################################################################################
-    //####################################################################################################################################
-    //##########################################################Strat 2_6_2###############################################################
-
-    protected void SearchData6_2 () {
-        string sql = @"SELECT [id]
-                    ,[masterId]
-                    ,[projectTopic]
-                    ,[projectClass]
-                    ,[projectName]
-                    ,[projectPlan]
-                    ,[projectInProgress]
-                    ,[projectScore]
-                    ,[projectStatus]
-                    ,[path]
-                    ,[fileName]
-                    ,[fileNameOld]
-                    ,[createdBy]
-                    ,[ipAddressCreate]
-                    ,[updatedBy]
-                    ,[ipAdressUpdate]
-                    ,[createdDate]
-                    FROM [EvaluateDevelopMainten2_6_2] 
-
-                    WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
-
-        con.ConnectionString = con_string;
-        con.Open ();
-        SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
-        cmd.Parameters.AddWithValue ("@MasterId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (cmd);
-        DataSet ds = new DataSet ();
-
-        con.Close ();
-
-        DataTable blacklistDT = db.ExecuteDataTable (cmd);
-        gvData6_2.DataSource = blacklistDT.DefaultView;
-        gvData6_2.DataBind ();
-        lblRecord6_2.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
-
-    }
-
-    protected void Add2_6_2_Click (object sender, EventArgs e) {
-        UpdatePanel2_6_2.Update ();
-        popupAddDevelMaint2_6_2.Show ();
-        this.ClearPopUp6_2 ();
-    }
-
-    protected void gvData_Sorting6_2 (object sender, GridViewSortEventArgs e) {
-        SortDirection SD = GridviewSortDirection;
-        GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
-    }
-
-    protected void gvData_PageIndexChanging6_2 (object sender, GridViewPageEventArgs e) {
-        gvData6_2.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
-        gvData6_2.PageIndex = e.NewPageIndex;
-        gvData6_2.DataBind ();
-        this.btnSubmit_Click6_2 (sender, e);
-    }
-    protected void gvData_SelectedIndexChanged6_2 (object sender, EventArgs e) {
-
-    }
-
-    protected void gvData_RowDataBound6_2 (object sender, GridViewRowEventArgs e) {
-        if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6_2")).Value);
-        }
-
-    }
-
-    public SortDirection GridviewSortDirection6_2 {
-        get {
-            if (ViewState["sortDirection"] == null) {
-                ViewState["sortDirection"] = SortDirection.Ascending;
-            }
-            return (SortDirection) ViewState["sortDirection"];
-        }
-        set {
-            ViewState["sortDirection"] = value;
-        }
-    }
-
-    //=============================popup=================================================
-
-    protected void ClearPopUp6_2 () {
-        txtProjectTopic6_2.SelectedValue = "";
-        txtProjectName6_2.Text = "";
-        txtProjectPlan6_2.Text = "";
-        txtProjectInProgress6_2.Text = "";
-        txtProjectClass6_2.SelectedValue = "";
-
-    }
-    protected void btnAddDevelMaint_Click6_2 (object sender, EventArgs e) {
-        UpdatePanel2_6_2.Update ();
-        if (this.SaveDevelMaint6_2 (hdf_DevelMaintStatus6_2.Value) == true) {
-            this.SearchData6_2 ();
-            popupAddDevelMaint2_6_2.Hide ();
-        }
-
-    }
-    protected void btnCancelDevelMaint_Click6_2 (object sender, EventArgs e) {
-        UpdatePanel2_6_2.Update ();
-        popupAddDevelMaint2_6_2.Hide ();
-    }
-
-    protected void btnSubmit_Click6_2 (object sender, EventArgs e) {
-        Add2_6_2.Visible = true;
-        this.SearchData6_2 ();
-    }
-
-    protected void btnReset_Click6_2 (object sender, EventArgs e) {
-        // ddlArea.SelectedValue = "";
-        // txtBuilder.Text = "";
-    }
-
     protected void btnDownload_Click6_2 (object sender, EventArgs e) {
         SqlCommand com;
 
@@ -2563,13 +2215,13 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_6_2] 
+                    FROM [EvaluateResearch3_6] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData6_2.DataKeys[row.RowIndex]["id"].ToString ();
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
         com.Parameters.AddWithValue ("@Id", Id);
         SqlDataAdapter da = new SqlDataAdapter (com);
         SqlDataReader reader = com.ExecuteReader ();
@@ -2591,7 +2243,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint6_2 (string ID) {
+    protected bool SaveResearch6 (string ID) {
         SqlCommand com;
         string str;
 
@@ -2602,14 +2254,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -2618,7 +2265,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -2630,8 +2277,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-6_2\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-6_2\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_1\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_1\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -2643,17 +2290,43 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_6_2.FileName);
-        string NewFileName = "DevelMaint2_6_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_6_2.FileName;
-        // string NewFileName = FileUpload2_6_2.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_6_1.FileName);
+        string NewFileName = "Research3_6_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_6_1.FileName;
+        // string NewFileName = FileUpload3_6.FileName;
 
         string InsertFile = filepath + NewFileName;
         //InsertFile.SaveAs
-        if (FileUpload2_6_2.HasFile) {
-            FileUpload2_6_2.SaveAs (InsertFile);
+        if (FileUpload3_6_1.HasFile) {
+            FileUpload3_6_1.SaveAs (InsertFile);
         }
         //hpf.SaveAs(InsertFile);
+        //==========================================================
+        string filepath1;
+        string filepathDelete1;
+        string filepathEdit1;
+        string rootpath1 = Request.PhysicalApplicationPath;
+        string path1 = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_2\\";
+        string pathDelete1 = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6_2\\";
+        string pathEdit1 = "Edit\\" + path;
+        // filepathEdit = rootpath + pathEdit;
+        filepath1 = rootpath1 + path1;
+        filepathDelete1 = rootpath1 + pathDelete1;
+        var directoryInfo1 = new DirectoryInfo (filepath1);
+        if (!Directory.Exists (filepath1) || !Directory.Exists (filepathDelete1)) {
+            Directory.CreateDirectory (filepath1);
+            Directory.CreateDirectory (filepathDelete1);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName1 = Path.GetFileName (FileUpload3_6_2.FileName);
+        string NewFileName1 = "Research3_6_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_6_2.FileName;
+        // string NewFileName = FileUpload3_6.FileName;
 
+        string InsertFile1 = filepath1 + NewFileName1;
+        //InsertFile.SaveAs
+        if (FileUpload3_6_2.HasFile) {
+            FileUpload3_6_2.SaveAs (InsertFile1);
+        }
         //==========================upfile end===============================
         reader.Close ();
         con.Close ();
@@ -2661,26 +2334,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_6_2
-                    (masterId,  projectTopic,  projectName, projectPlan, projectInProgress, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore, projectClass) 
+            sql = @"INSERT INTO EvaluateResearch3_6
+                    (masterId,  projectName, projectJOint, path, ipAddressCreate, fileNameOld,
+                    fileName, createdBy, projectScore, pathShare, fileNameShareOld ,fileNameShare) 
                     VALUES
-                    (@MasterId, @ProjectTopic, @ProjectName, @ProjectPlan, @ProjectInProgress, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_6_2, @Class)";
+                    (@MasterId, @ProjectName, @ProjectJoint, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_6, @PathShare, @FileNameShareOld, @FileNameShare)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_6_2  SET                    
+            sql = @"UPDATE EvaluateResearch3_6  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
                     
-                   INSERT INTO EvaluateDevelopMainten2_6_2
-                    (masterId,  projectTopic,  projectName, projectPlan, projectInProgress, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore, projectClass) 
+                   INSERT INTO EvaluateResearch3_6
+                    (masterId,  projectName, projectJOint, path, ipAddressCreate, fileNameOld,
+                    fileName, createdBy, projectScore, pathShare, fileNameShareOld ,fileNameShare) 
                     VALUES
-                    (@MasterId, @ProjectTopic, @ProjectName, @ProjectPlan, @ProjectInProgress, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_6_2, @Class)";
+                    (@MasterId, @ProjectName, @ProjectJoint, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_6,@PathShare, @FileNameShareOld, @FileNameShare)";
 
         }
 
@@ -2690,70 +2363,52 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = sql;
 
         try {
-            decimal totalScore2_6_2 = 0;
-            string Topic2_6_2 = txtProjectTopic6_2.SelectedValue.ToString ();
-            decimal plan6_2 = decimal.Parse (txtProjectPlan6_2.Text);
-            decimal InProgress6_2 = decimal.Parse (txtProjectInProgress6_2.Text);
-            string class6_2 = txtProjectClass6_2.SelectedValue;
-
-            if (Topic2_6_2 == "ออกแบบเครื่องมือตรวจวัดและอุปกรณ์ต่างๆ                                                              ") {
-                if (class6_2 == "Class A                                                                                             ") {
-                    totalScore2_6_2 = (InProgress6_2 * 30) / plan6_2;
-                } else if (class6_2 == "Class B                                                                                             ") {
-                    totalScore2_6_2 = (InProgress6_2 * 20) / plan6_2;
-                } else {
-                    totalScore2_6_2 = (InProgress6_2 * 10) / plan6_2;
-                }
-            } else {
-                if (class6_2 == "Class A                                                                                             ") {
-                    totalScore2_6_2 = (InProgress6_2 * 50) / plan6_2;
-                } else if (class6_2 == "Class B                                                                                             ") {
-                    totalScore2_6_2 = (InProgress6_2 * 40) / plan6_2;
-                } else {
-                    totalScore2_6_2 = (InProgress6_2 * 30) / plan6_2;
-                }
-            }
+            double totalScore3_6 = 0;
+            // string Topic3_6 = txtProjectTopic6.SelectedValue.ToString ();
+            double Joint6 = double.Parse (txtProjectJoint6.Text);
+            // decimal InProgress6 = decimal.Parse (txtProjectInProgress6.Text);
+            totalScore3_6 = Joint6 * 0.7;
 
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan6_2.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic6_2.SelectedValue);
-            cmd.Parameters.AddWithValue ("@ProjectInProgress", txtProjectInProgress6_2.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6_2.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@Path", filepath);
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint6.Text);
+            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName6.Text);
+            cmd.Parameters.AddWithValue ("@Path", filepath1);
+            cmd.Parameters.AddWithValue ("@PathShare", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
-            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-            cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName1);
+            cmd.Parameters.AddWithValue ("@FileName", NewFileName1);
+            cmd.Parameters.AddWithValue ("@FileNameShareOld", OldFileName);
+            cmd.Parameters.AddWithValue ("@FileNameShare", NewFileName);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_6_2", totalScore2_6_2);
-            cmd.Parameters.AddWithValue ("@Class", txtProjectClass6_2.SelectedValue);
+            cmd.Parameters.AddWithValue ("@Score3_6", totalScore3_6);
 
-            // cmd.Parameters.AddWithValue ("@FileNameOld2_6_2", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_6", upnameOld);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_6_2.Text += "SaveDevelMaint6_2 = " + ex.Message + "<br />";
+            lblInError3_6.Text += "SaveResearch6 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
 
     }
 
-    protected DataTable SearchOneArea6_2 (string ID) {
+    protected DataTable SearchOneArea6 (string ID) {
         SqlCommand cmd = new SqlCommand ();
         cmd.CommandText = @"SELECT [id]
                     ,[masterId]
-                    ,[projectTopic]
-                    ,[projectClass]
                     ,[projectName]
-                    ,[projectPlan]
-                    ,[projectInProgress]
+                    ,[projectJoint]
                     ,[projectScore]
                     ,[projectStatus]
+                    ,[pathShare]
                     ,[path]
+                    ,[fileNameShare]
                     ,[fileName]
+                    ,[fileNameShareOld]
                     ,[fileNameOld]
                     ,[createdBy]
                     ,[ipAddressCreate]
@@ -2761,7 +2416,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAdressUpdate]
                     ,[createdDate]
                                                         
-                    FROM [EvaluateDevelopMainten2_6_2] 
+                    FROM [EvaluateResearch3_6] 
 
                     WHERE id =  @Id ";
 
@@ -2771,48 +2426,47 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_6_2.Text += "SaveDevelMaint6_2 = " + ex.Message + "<br />";
+            lblInError3_6.Text += "SaveResearch6 = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click6_2 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click6 (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData6_2.DataKeys[row.RowIndex]["id"].ToString ();
-        DataTable ds = this.SearchOneArea6_2 (Id);
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea6 (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_6_2.Update ();
-            popupAddDevelMaint2_6_2.Show ();
-            hdf_DevelMaintStatus6_2.Value = ds.Rows[0]["id"].ToString ();
+            UpdatePanel3_6.Update ();
+            popupAddResearch3_6.Show ();
+            hdf_ResearchStatus6.Value = ds.Rows[0]["id"].ToString ();
 
-            txtProjectTopic6_2.SelectedValue = ds.Rows[0]["projectTopic"].ToString ();
-            txtProjectName6_2.Text = ds.Rows[0]["projectName"].ToString ();
-            txtProjectPlan6_2.Text = ds.Rows[0]["projectPlan"].ToString ();
-            txtProjectInProgress6_2.Text = ds.Rows[0]["projectInProgress"].ToString ();
-            txtProjectClass6_2.SelectedValue = ds.Rows[0]["projectClass"].ToString ();
+            //   txtProjectTopic6.SelectedValue = ds.Rows[0]["projectTopic"].ToString ();
+            txtProjectName6.Text = ds.Rows[0]["projectName"].ToString ();
+            txtProjectJoint6.Text = ds.Rows[0]["projectJoint"].ToString ();
+            //    txtProjectInProgress6.Text = ds.Rows[0]["projectInProgress"].ToString ();
         }
 
     }
 
-    protected void btnDeleteDevelMaint_Click6_2 (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click6 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData6_2.DataKeys[row.RowIndex]["id"].ToString ();
-        DataTable ds = this.SearchOneArea6_2 (Id);
+        string Id = gvData6.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea6 (Id);
         string fileSrc;
         string fileDelete;
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus6_2.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_6_2  SET
+            hdf_ResearchStatus6.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_6  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus6_2.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus6.Value);
             db.ExecuteDataTable (cmd1);
-            this.SearchData6_2 ();
+            this.SearchData6 ();
         }
         SqlCommand com;
         string str;
@@ -2824,21 +2478,16 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-    
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-6_2\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-6\\";
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
         fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
@@ -2847,28 +2496,28 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         con.Close ();
     }
 
-    //##########################################################end 2_6_2 #################################################################
+    //##########################################################end 3_6 #################################################################
     //#####################################################################################################################################
     //#####################################################################################################################################
-    //##########################################################Strat 2_7##################################################################
+    //##########################################################Strat 3_7##################################################################
 
     protected void SearchData7 () {
         string sql = @"SELECT [id]
                     ,[masterId]
-                    ,[projectStudentName]
-                    ,[projectThesisTopic]
-                    ,[projectInstitute]
+                    ,[projectTopic]
+                    ,[projectJoint]
+                    ,[projectType]
                     ,[projectScore]
                     ,[projectStatus]
-                    ,[path]
-                    ,[fileName]
-                    ,[fileNameOld]
+                    ,[pathShare]
+                    ,[fileNameShare]
+                    ,[fileNameShareOld]
                     ,[createdBy]
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                     ,[createdDate]
-                    FROM [EvaluateDevelopMainten2_7] 
+                    FROM [EvaluateResearch3_7] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -2890,9 +2539,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void Add2_7_Click (object sender, EventArgs e) {
-        UpdatePanel2_7.Update ();
-        popupAddDevelMaint2_7.Show ();
+    protected void Add3_7_Click (object sender, EventArgs e) {
+        UpdatePanel3_7.Update ();
+        popupAddResearch3_7.Show ();
         this.ClearPopUp7 ();
     }
 
@@ -2933,27 +2582,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     //=============================popup=================================================
 
     protected void ClearPopUp7 () {
-
-        txtProjectStudentName7.Text = "";
-        txtProjectThesisTopic7.Text = "";
-        txtProjectInstitute7.Text = "";
+        txtProjectTopic7.Text = "";
+        txtProjectType7.Text = "";
+        txtProjectJoint7.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click7 (object sender, EventArgs e) {
-        UpdatePanel2_7.Update ();
-        if (this.SaveDevelMaint7 (hdf_DevelMaintStatus7.Value) == true) {
+    protected void btnAddResearch_Click7 (object sender, EventArgs e) {
+        UpdatePanel3_7.Update ();
+        if (this.SaveResearch7 (hdf_ResearchStatus7.Value) == true) {
             this.SearchData7 ();
-            popupAddDevelMaint2_7.Hide ();
+            popupAddResearch3_7.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click7 (object sender, EventArgs e) {
-        UpdatePanel2_7.Update ();
-        popupAddDevelMaint2_7.Hide ();
+    protected void btnCancelResearch_Click7 (object sender, EventArgs e) {
+        UpdatePanel3_7.Update ();
+        popupAddResearch3_7.Hide ();
     }
 
     protected void btnSubmit_Click7 (object sender, EventArgs e) {
-        Add2_7.Visible = true;
+        Add3_7.Visible = true;
         this.SearchData7 ();
     }
 
@@ -2969,8 +2617,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         con.Open ();
         string sql = @"SELECT [id]
                     ,[masterId]
-                    ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_7] 
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_7] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -2998,7 +2646,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint7 (string ID) {
+    protected bool SaveResearch7 (string ID) {
         SqlCommand com;
         string str;
 
@@ -3009,14 +2657,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -3025,7 +2668,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3033,31 +2676,34 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string ip = addr[1].ToString ();
         //==========================IPADDRESS END==================================
         //==========================upfile====================================
-        string filepath;
-        string filepathDelete;
-        string filepathEdit;
+
+        //======================================================================================================
+        string filepathShare;
+        string filepathDeleteShare;
+        string filepathEditShare;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-7\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-7\\";
-        string pathEdit = "Edit\\" + path;
-        // filepathEdit = rootpath + pathEdit;
-        filepath = rootpath + path;
-        filepathDelete = rootpath + pathDelete;
-        var directoryInfo = new DirectoryInfo (filepath);
-        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
-            Directory.CreateDirectory (filepath);
-            Directory.CreateDirectory (filepathDelete);
+        string pathShare = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
+        string pathDeleteShare = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
+        // string pathEditShare = "Edit\\" + path;
+        // filepathEditShare = rootpath + pathEdit;
+        filepathShare = rootpath + pathShare;
+        filepathDeleteShare = rootpath + pathDeleteShare;
+        //var directoryInfoShare = new DirectoryInfo (filepath);
+        if (!Directory.Exists (filepathShare) || !Directory.Exists (filepathDeleteShare)) {
+            Directory.CreateDirectory (filepathShare);
+            Directory.CreateDirectory (filepathDeleteShare);
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_7.FileName);
-        string NewFileName = "DevelMaint2_7_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_7.FileName;
-        // string NewFileName = FileUpload2_7.FileName;
+        string OldFileNameShare = Path.GetFileName (FileUploadShare3_7.FileName);
+        string NewFileNameShare = "Research3_7_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUploadShare3_7.FileName;
+        // string NewFileName = FileUpload3_7.FileName;
 
-        string InsertFile = filepath + NewFileName;
+        string InsertFileShare = filepathShare + NewFileNameShare;
         //InsertFile.SaveAs
-        if (FileUpload2_7.HasFile) {
-            FileUpload2_7.SaveAs (InsertFile);
+        if (FileUploadShare3_7.HasFile) {
+            // FileUpload3_7_2.SaveAs (InsertFile);
+            FileUploadShare3_7.SaveAs (InsertFileShare);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -3068,26 +2714,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_7
-                    (masterId,  projectStudentName,  projectThesisTopic, projectInstitute, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore) 
+            sql = @"INSERT INTO EvaluateResearch3_7
+                    (masterId,  projectTopic,  projectType, ipAddressCreate,
+                     createdBy, projectScore, projectJoint, pathShare, fileNameShare, fileNameShareOld) 
                     VALUES
-                    (@MasterId, @ProjectStudentName, @ProjectThesisTopic, @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_7)";
+                    (@MasterId, @ProjectTopic, @ProjectType, @IpAddress, 
+                    @CreatedBy, @Score3_7, @ProjectJoint, @PathShare, @FileNameShare, @FileNameShareOld)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_7  SET                    
+            sql = @"UPDATE EvaluateResearch3_7  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
                     
-                   INSERT INTO EvaluateDevelopMainten2_7
-                    (masterId,  projectStudentName,  projectThesisTopic, projectInstitute, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore) 
+                    INSERT INTO EvaluateResearch3_7
+                    (masterId,  projectTopic,  projectType, ipAddressCreate,
+                     createdBy, projectScore, projectJoint, pathShare, fileNameShare, fileNameShareOld) 
                     VALUES
-                    (@MasterId, @ProjectStudentName, @ProjectThesisTopic, @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_7)";
+                    (@MasterId, @ProjectTopic, @ProjectType, @IpAddress, 
+                    @CreatedBy, @Score3_7, @ProjectJoint, @PathShare, @FileNameShare, @FileNameShareOld)";
 
         }
 
@@ -3097,33 +2743,34 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = sql;
 
         try {
-            decimal totalScore2_7 = 50;
-            // string Topic2_7 = txtProjectTopic7.SelectedValue.ToString ();
-            // decimal plan7 = decimal.Parse (txtProjectPlan7.Text);
-            // decimal InProgress7 = decimal.Parse (txtProjectInProgress7.Text);
-            // string class7 = txtProjectClass7.SelectedValue;
+            decimal totalScore3_7 = 0;
+            string Type3_7 = txtProjectType7.SelectedValue.ToString ();
+            decimal Joint7 = decimal.Parse (txtProjectJoint7.Text);
+            if (Type3_7 == "หัวหน้าโครงการ") {
+                totalScore3_7 = 35;
+            } else {
+                totalScore3_7 = Joint7 * 7;
+            }
 
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-            // cmd.Parameters.AddWithValue ("@ProjectPlan", txtProjectPlan7.Text);
-            cmd.Parameters.AddWithValue ("@ProjectInstitute", txtProjectInstitute7.Text);
-            cmd.Parameters.AddWithValue ("@ProjectThesisTopic", txtProjectThesisTopic7.Text);
-            cmd.Parameters.AddWithValue ("@ProjectStudentName", txtProjectStudentName7.Text);
-            cmd.Parameters.AddWithValue ("@Path", filepath);
+            cmd.Parameters.AddWithValue ("@ProjectType", txtProjectType7.SelectedValue);
+            cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic7.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint7.Text);
+            cmd.Parameters.AddWithValue ("@PathShare", filepathShare);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
-            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-            cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+            cmd.Parameters.AddWithValue ("@FileNameShareOld", OldFileNameShare);
+            cmd.Parameters.AddWithValue ("@FileNameShare", NewFileNameShare);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_7", totalScore2_7);
-            //cmd.Parameters.AddWithValue ("@Class", txtProjectClass7.SelectedValue);
+            cmd.Parameters.AddWithValue ("@Score3_7", totalScore3_7);
 
-            // cmd.Parameters.AddWithValue ("@FileNameOld2_7", upnameOld);
+            // cmd.Parameters.AddWithValue ("@FileNameOld3_7", upnameOld);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_7.Text += "SaveDevelMaint7 = " + ex.Message + "<br />";
+            lblInError3_7.Text += "SaveResearch7 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -3133,6 +2780,109 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected DataTable SearchOneArea7 (string ID) {
         SqlCommand cmd = new SqlCommand ();
         cmd.CommandText = @"SELECT [id]
+                    ,[masterId]
+                    ,[projectTopic]
+                    ,[projectJoint]
+                    ,[projectType]
+                    ,[projectScore]
+                    ,[projectStatus]
+                    ,[pathShare]
+                    ,[fileNameShare]
+                    ,[fileNameShareOld]
+                    ,[createdBy]
+                    ,[ipAddressCreate]
+                    ,[updatedBy]
+                    ,[ipAdressUpdate]
+                    ,[createdDate]
+                                                        
+                    FROM [EvaluateResearch3_7] 
+
+                    WHERE id =  @Id ";
+
+        cmd.Parameters.AddWithValue ("@Id", ID);
+
+        try {
+            DataTable blacklistDT = db.ExecuteDataTable (cmd);
+            return blacklistDT;
+        } catch (Exception ex) {
+            lblInError3_7.Text += "SaveResearch7 = " + ex.Message + "<br />";
+            return null;
+        }
+    }
+
+    protected void btnEditResearch_Click7 (object sender, EventArgs e) {
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea7 (Id);
+        if (ds != null && ds.Rows.Count > 0) {
+            UpdatePanel3_7.Update ();
+            popupAddResearch3_7.Show ();
+            hdf_ResearchStatus7.Value = ds.Rows[0]["id"].ToString ();
+            txtProjectTopic7.Text = ds.Rows[0]["projectTopic"].ToString ();
+            txtProjectType7.SelectedValue = ds.Rows[0]["projectType"].ToString ();
+            txtProjectJoint7.Text = ds.Rows[0]["projectJoint"].ToString ();
+
+        }
+
+    }
+
+    protected void btnDeleteResearch_Click7 (object sender, EventArgs e) {
+        string sql;
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
+        DataTable ds = this.SearchOneArea7 (Id);
+
+        string fileSrcPresent;
+        string fileDeletePresent;
+
+        if (ds != null && ds.Rows.Count > 0) {
+
+            hdf_ResearchStatus7.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_7  SET
+                    projectStatus = 'D' WHERE id =  @Id";
+            SqlCommand cmd1 = new SqlCommand ();
+            cmd1.CommandText = sql;
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus7.Value);
+            db.ExecuteDataTable (cmd1);
+            this.SearchData7 ();
+        }
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        ";
+
+        com = new SqlCommand (str, con);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+
+        string pathPresent = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-7\\";
+        string rootpath = Request.PhysicalApplicationPath;
+        fileSrcPresent = ds.Rows[0]["pathShare"].ToString () + ds.Rows[0]["fileNameShare"].ToString ();
+        fileDeletePresent = rootpath + pathPresent + ds.Rows[0]["fileNameShare"].ToString ();
+        File.Move (fileSrcPresent, fileDeletePresent);
+        reader.Close ();
+        con.Close ();
+    }
+
+    //##########################################################end 3_7 #################################################################
+    //#####################################################################################################################################
+    //#####################################################################################################################################
+    //##########################################################Strat 3_8 ##################################################################
+
+    protected void SearchData8 () {
+        string sql = @"SELECT [id]
                     ,[masterId]
                     ,[projectStudentName]
                     ,[projectThesisTopic]
@@ -3147,111 +2897,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                     ,[createdDate]
-                                                        
-                    FROM [EvaluateDevelopMainten2_7] 
-
-                    WHERE id =  @Id ";
-
-        cmd.Parameters.AddWithValue ("@Id", ID);
-
-        try {
-            DataTable blacklistDT = db.ExecuteDataTable (cmd);
-            return blacklistDT;
-        } catch (Exception ex) {
-            lblInError2_7.Text += "SaveDevelMaint7 = " + ex.Message + "<br />";
-            return null;
-        }
-    }
-
-    protected void btnEditDevelMaint_Click7 (object sender, EventArgs e) {
-
-        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
-        DataTable ds = this.SearchOneArea7 (Id);
-        if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_7.Update ();
-            popupAddDevelMaint2_7.Show ();
-            hdf_DevelMaintStatus7.Value = ds.Rows[0]["id"].ToString ();
-            txtProjectStudentName7.Text = ds.Rows[0]["projectStudentName"].ToString ();
-            txtProjectThesisTopic7.Text = ds.Rows[0]["projectThesisTopic"].ToString ();
-            txtProjectInstitute7.Text = ds.Rows[0]["projectInstitute"].ToString ();
-        }
-
-    }
-
-    protected void btnDeleteDevelMaint_Click7 (object sender, EventArgs e) {
-        string sql;
-        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
-        string Id = gvData7.DataKeys[row.RowIndex]["id"].ToString ();
-        DataTable ds = this.SearchOneArea7 (Id);
-        string fileSrc;
-        string fileDelete;
-
-        if (ds != null && ds.Rows.Count > 0) {
-
-            hdf_DevelMaintStatus7.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_7  SET
-                    projectStatus = 'D' WHERE id =  @Id";
-            SqlCommand cmd1 = new SqlCommand ();
-            cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus7.Value);
-            db.ExecuteDataTable (cmd1);
-            this.SearchData7 ();
-        }
-        SqlCommand com;
-        string str;
-
-        SqlConnection con = new SqlConnection (con_string);
-        con.Open ();
-        str = @"select C.projectYear, C.projectRound, 
-                        M.acountId ,A.FirstName  + A.LastName AS FullName
-                        from ProjectControl AS C
-                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
-                        INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
-                        ";
-
-        com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-    
-        SqlDataReader reader = com.ExecuteReader ();
-        reader.Read ();
-        string FullName = reader["FullName"].ToString ();
-        string AcountId = reader["acountId"].ToString ();
-        string projectYear = reader["projectYear"].ToString ();
-        string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-7\\";
-        string rootpath = Request.PhysicalApplicationPath;
-        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
-        File.Move (fileSrc, fileDelete);
-        reader.Close ();
-        con.Close ();
-    }
-
-    //##########################################################end 2_7 #################################################################
-    //#####################################################################################################################################
-    //#####################################################################################################################################
-    //##########################################################Strat 2_8 ##################################################################
-
-    protected void SearchData8 () {
-        string sql = @"SELECT [id]
-                    ,[masterId]
-                    ,[projectName]
-                    ,[dateNumber]
-                    ,[projectScore]
-                    ,[projectStatus]
-                    ,[path]
-                    ,[fileName]
-                    ,[fileNameOld]
-                    ,[createdBy]
-                    ,[ipAddressCreate]
-                    ,[updatedBy]
-                    ,[ipAdressUpdate]
-                    ,[createdDate]
-                    FROM [EvaluateDevelopMainten2_8] 
+                    FROM [EvaluateResearch3_8] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -3269,13 +2915,13 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
         gvData8.DataSource = blacklistDT.DefaultView;
         gvData8.DataBind ();
-        lblRecord8.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
+        lblRecord8.Text = "<span Font-Size='Small' class='tex13b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
 
     }
 
-    protected void Add2_8_Click (object sender, EventArgs e) {
-        UpdatePanel2_8.Update ();
-        popupAddDevelMaint2_8.Show ();
+    protected void Add3_8_Click (object sender, EventArgs e) {
+        UpdatePanel3_8.Update ();
+        popupAddResearch3_8.Show ();
         this.ClearPopUp8 ();
     }
 
@@ -3317,26 +2963,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     protected void ClearPopUp8 () {
 
-        txtProjectName8.Text = "";
-        txtDateNumber8.Text = "";
-        //txtProjectInstitute8.Text = "";
+        txtProjectStudentName8.Text = "";
+        txtProjectThesisTopic8.Text = "";
+        txtProjectInstitute8.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click8 (object sender, EventArgs e) {
-        UpdatePanel2_8.Update ();
-        if (this.SaveDevelMaint8 (hdf_DevelMaintStatus8.Value) == true) {
+    protected void btnAddResearch_Click8 (object sender, EventArgs e) {
+        UpdatePanel3_8.Update ();
+        if (this.SaveResearch8 (hdf_ResearchStatus8.Value) == true) {
             this.SearchData8 ();
-            popupAddDevelMaint2_8.Hide ();
+            popupAddResearch3_8.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click8 (object sender, EventArgs e) {
-        UpdatePanel2_8.Update ();
-        popupAddDevelMaint2_8.Hide ();
+    protected void btnCancelResearch_Click8 (object sender, EventArgs e) {
+        UpdatePanel3_8.Update ();
+        popupAddResearch3_8.Hide ();
     }
 
     protected void btnSubmit_Click8 (object sender, EventArgs e) {
-        Add2_8.Visible = true;
+        Add3_8.Visible = true;
         this.SearchData8 ();
     }
 
@@ -3353,7 +2999,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_8] 
+                    FROM [EvaluateResearch3_8] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -3381,7 +3027,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint8 (string ID) {
+    protected bool SaveResearch8 (string ID) {
         SqlCommand com;
         string str;
 
@@ -3392,14 +3038,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -3408,7 +3049,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-      
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3420,8 +3061,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-8\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-8\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -3433,14 +3074,14 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_8.FileName);
-        string NewFileName = "DevelMaint2_8_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_8.FileName;
-        // string NewFileName = FileUpload2_8.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_8.FileName);
+        string NewFileName = "Research3_8_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_8.FileName;
+        // string NewFileName = FileUpload3_8.FileName;
 
         string InsertFile = filepath + NewFileName;
         //InsertFile.SaveAs
-        if (FileUpload2_8.HasFile) {
-            FileUpload2_8.SaveAs (InsertFile);
+        if (FileUpload3_8.HasFile) {
+            FileUpload3_8.SaveAs (InsertFile);
         }
         //hpf.SaveAs(InsertFile);
 
@@ -3451,26 +3092,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_8
-                    (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
+            sql = @"INSERT INTO EvaluateResearch3_8
+                    (masterId,  projectThesisTopic,  projectStudentName, projectInstitute, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
-                    (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_8)";
+                    (@MasterId,  @ProjectThesisTopic, @ProjectStudentName, @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_8)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_8  SET                    
+            sql = @"UPDATE EvaluateResearch3_8  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
-                    
-                   INSERT INTO EvaluateDevelopMainten2_8
-                    (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
+
+                   INSERT INTO EvaluateResearch3_8
+                    (masterId,  projectThesisTopic,  projectStudentName, projectInstitute, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore) 
                     VALUES
-                    (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_8)";
+                    (@MasterId, @ProjectThesisTopic, @ProjectStudentName,  @ProjectInstitute, @Path, @IpAddress, @FileNameOld,
+                    @FileName, @CreatedBy, @Score3_8)";
 
         }
 
@@ -3481,25 +3122,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         try {
 
-            decimal DateNumber8 = decimal.Parse (txtDateNumber8.Text);
-            decimal totalScore2_8 = DateNumber8 * 2;
+            // decimal DateNumber8 = decimal.Parse (txtDateNumber8.Text);
+            decimal totalScore3_8 = 50;
 
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@DateNumber", txtDateNumber8.Text);
-            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName8.Text);
+            cmd.Parameters.AddWithValue ("@ProjectStudentName", txtProjectStudentName8.Text);
+            cmd.Parameters.AddWithValue ("@ProjectThesisTopic", txtProjectThesisTopic8.Text);
+            cmd.Parameters.AddWithValue ("@ProjectInstitute", txtProjectInstitute8.Text);
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
             cmd.Parameters.AddWithValue ("@FileName", NewFileName);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_8", totalScore2_8);
+            cmd.Parameters.AddWithValue ("@Score3_8", totalScore3_8);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_8.Text += "SaveDevelMaint8 = " + ex.Message + "<br />";
+            lblInError3_8.Text += "SaveResearch8 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -3510,8 +3152,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         SqlCommand cmd = new SqlCommand ();
         cmd.CommandText = @"SELECT [id]
                     ,[masterId]
-                    ,[projectName]
-                    ,[dateNumber]
+                    ,[projectStudentName]
+                    ,[projectThesisTopic]
+                    ,[projectInstitute]
                     ,[projectScore]
                     ,[projectStatus]
                     ,[path]
@@ -3522,8 +3165,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                     ,[createdDate]
-                                                        
-                    FROM [EvaluateDevelopMainten2_8] 
+
+                    FROM [EvaluateResearch3_8] 
 
                     WHERE id =  @Id ";
 
@@ -3533,28 +3176,29 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_8.Text += "SaveDevelMaint8 = " + ex.Message + "<br />";
+            lblInError3_8.Text += "SaveResearch8 = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click8 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click8 (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea8 (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_8.Update ();
-            popupAddDevelMaint2_8.Show ();
-            hdf_DevelMaintStatus8.Value = ds.Rows[0]["id"].ToString ();
-            txtProjectName8.Text = ds.Rows[0]["projectName"].ToString ();
-            txtDateNumber8.Text = ds.Rows[0]["dateNumber"].ToString ();
+            UpdatePanel3_8.Update ();
+            popupAddResearch3_8.Show ();
+            hdf_ResearchStatus8.Value = ds.Rows[0]["id"].ToString ();
+            txtProjectStudentName8.Text = ds.Rows[0]["projectStudentName"].ToString ();
+            txtProjectThesisTopic8.Text = ds.Rows[0]["projectThesisTopic"].ToString ();
+            txtProjectInstitute8.Text = ds.Rows[0]["projectInstitute"].ToString ();
 
         }
 
     }
 
-    protected void btnDeleteDevelMaint_Click8 (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click8 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData8.DataKeys[row.RowIndex]["id"].ToString ();
@@ -3564,12 +3208,12 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus8.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_8  SET
+            hdf_ResearchStatus8.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_8  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus8.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus8.Value);
             db.ExecuteDataTable (cmd1);
             this.SearchData8 ();
         }
@@ -3583,21 +3227,16 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-      
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-8\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-8\\";
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
         fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
@@ -3606,27 +3245,31 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         con.Close ();
     }
 
-    //##########################################################end 2_8 #################################################################
+    //##########################################################end 3_8 #################################################################
     //#####################################################################################################################################
     //#####################################################################################################################################
-    //##########################################################Strat 2_9 ##################################################################
+    //##########################################################Strat 3_9 ##################################################################
 
     protected void SearchData9 () {
         string sql = @"SELECT [id]
                     ,[masterId]
-                    ,[projectName]
-                    ,[dateNumber]
+                    ,[projectInstituteName]
+                    ,[projectJoint]
+                    ,[projectAmount]
                     ,[projectScore]
                     ,[projectStatus]
+                    ,[pathShare]
                     ,[path]
+                    ,[fileNameShare]
                     ,[fileName]
+                    ,[fileNameShareOld]
                     ,[fileNameOld]
                     ,[createdBy]
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                     ,[createdDate]
-                    FROM [EvaluateDevelopMainten2_9] 
+                    FROM [EvaluateResearch3_9] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
 
@@ -3648,9 +3291,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected void Add2_9_Click (object sender, EventArgs e) {
-        UpdatePanel2_9.Update ();
-        popupAddDevelMaint2_9.Show ();
+    protected void Add3_9_Click (object sender, EventArgs e) {
+        UpdatePanel3_9.Update ();
+        popupAddResearch3_9.Show ();
         this.ClearPopUp9 ();
     }
 
@@ -3692,26 +3335,26 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     protected void ClearPopUp9 () {
 
-        txtProjectName9.Text = "";
-        txtDateNumber9.Text = "";
-        //txtProjectInstitute9.Text = "";
+        txtProjectInstituteName9.Text = "";
+        txtProjectAmount9.Text = "";
+        txtProjectJoint9.Text = "";
 
     }
-    protected void btnAddDevelMaint_Click9 (object sender, EventArgs e) {
-        UpdatePanel2_9.Update ();
-        if (this.SaveDevelMaint9 (hdf_DevelMaintStatus9.Value) == true) {
+    protected void btnAddResearch_Click9 (object sender, EventArgs e) {
+        UpdatePanel3_9.Update ();
+        if (this.SaveResearch9 (hdf_ResearchStatus9.Value) == true) {
             this.SearchData9 ();
-            popupAddDevelMaint2_9.Hide ();
+            popupAddResearch3_9.Hide ();
         }
 
     }
-    protected void btnCancelDevelMaint_Click9 (object sender, EventArgs e) {
-        UpdatePanel2_9.Update ();
-        popupAddDevelMaint2_9.Hide ();
+    protected void btnCancelResearch_Click9 (object sender, EventArgs e) {
+        UpdatePanel3_9.Update ();
+        popupAddResearch3_9.Hide ();
     }
 
     protected void btnSubmit_Click9 (object sender, EventArgs e) {
-        Add2_9.Visible = true;
+        Add3_9.Visible = true;
         this.SearchData9 ();
     }
 
@@ -3720,15 +3363,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         // txtBuilder.Text = "";
     }
 
-    protected void btnDownload_Click9 (object sender, EventArgs e) {
+    protected void btnDownload_Click9_1 (object sender, EventArgs e) {
         SqlCommand com;
 
         SqlConnection con = new SqlConnection (con_string);
         con.Open ();
         string sql = @"SELECT [id]
                     ,[masterId]
-                    ,path + fileName AS Pathfile
-                    FROM [EvaluateDevelopMainten2_9] 
+                    ,pathShare + fileNameShare AS Pathfile
+                    FROM [EvaluateResearch3_9] 
                     WHERE  id =  @Id ";
 
         com = new SqlCommand (sql, con);
@@ -3756,7 +3399,43 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
-    protected bool SaveDevelMaint9 (string ID) {
+    protected void btnDownload_Click9_2 (object sender, EventArgs e) {
+        SqlCommand com;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        string sql = @"SELECT [id]
+                    ,[masterId]
+                    ,path + fileName AS Pathfile
+                    FROM [EvaluateResearch3_9] 
+                    WHERE  id =  @Id ";
+
+        com = new SqlCommand (sql, con);
+
+        GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
+        string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
+        com.Parameters.AddWithValue ("@Id", Id);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string Pathfile = reader["Pathfile"].ToString ();
+
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        //Response.ContentType = "text/plain";
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.OutputStream.Write (Content, 0, Content.Length);
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
+
+    }
+
+    protected bool SaveResearch9 (string ID) {
         SqlCommand com;
         string str;
 
@@ -3767,14 +3446,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -3783,7 +3457,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
+        string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3795,8 +3469,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string filepathDelete;
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
-        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-9\\";
-        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-9\\";
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_2\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_2\\";
         string pathEdit = "Edit\\" + path;
         // filepathEdit = rootpath + pathEdit;
         filepath = rootpath + path;
@@ -3808,44 +3482,71 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             //  Directory.CreateDirectory (filepathEdit);
             //directoryInfo.CreateSubdirectory("k");
         }
-        string OldFileName = Path.GetFileName (FileUpload2_9.FileName);
-        string NewFileName = "DevelMaint2_9_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload2_9.FileName;
-        // string NewFileName = FileUpload2_9.FileName;
+        string OldFileName = Path.GetFileName (FileUpload3_9_2.FileName);
+        string NewFileName = "Research3_9_2_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_9_2.FileName;
+        // string NewFileName = FileUpload3_9.FileName;
 
         string InsertFile = filepath + NewFileName;
         //InsertFile.SaveAs
-        if (FileUpload2_9.HasFile) {
-            FileUpload2_9.SaveAs (InsertFile);
+        if (FileUpload3_9_2.HasFile) {
+            FileUpload3_9_2.SaveAs (InsertFile);
         }
         //hpf.SaveAs(InsertFile);
 
         //==========================upfile end===============================
+        string filepath1;
+        string filepathDelete1;
+
+        string rootpath1 = Request.PhysicalApplicationPath;
+        string path1 = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_1\\";
+        string pathDelete1 = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_1\\";
+        string pathEdit1 = "Edit\\" + path;
+        // filepathEdit = rootpath + pathEdit;
+        filepath1 = rootpath1 + path1;
+        filepathDelete1 = rootpath1 + pathDelete1;
+        var directoryInfo1 = new DirectoryInfo (filepath1);
+        if (!Directory.Exists (filepath1) || !Directory.Exists (filepathDelete1)) {
+            Directory.CreateDirectory (filepath1);
+            Directory.CreateDirectory (filepathDelete1);
+            //  Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName1 = Path.GetFileName (FileUpload3_9_1.FileName);
+        string NewFileName1 = "Research3_9_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload3_9_1.FileName;
+        // string NewFileName = FileUpload3_9.FileName;
+
+        string InsertFile1 = filepath1 + NewFileName1;
+        //InsertFile.SaveAs
+        if (FileUpload3_9_1.HasFile) {
+            FileUpload3_9_1.SaveAs (InsertFile1);
+        }
+        //=============================================================================
         reader.Close ();
         con.Close ();
 
         string sql = "";
         if (ID == "") {
 
-            sql = @"INSERT INTO EvaluateDevelopMainten2_9
-                    (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore) 
+            sql = @"INSERT INTO EvaluateResearch3_9
+                    (masterId,  path, ipAddressCreate, fileNameOld, projectInstituteName , projectJoint, projectAmount,
+                    fileName, createdBy, projectScore, pathShare, fileNameShare, fileNameShareOld) 
                     VALUES
-                    (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_9)";
+                    (@MasterId, @Path, @IpAddress, @FileNameOld, @ProjectInstituteName, @ProjectJoint, @ProjectAmount,
+                    @FileName, @CreatedBy, @Score3_9, @PathShare, @FileNameShare, @FileNameShareOld)";
         } else {
 
-            sql = @"UPDATE EvaluateDevelopMainten2_9  SET                    
+            sql = @"UPDATE EvaluateResearch3_9  SET                    
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
                     projectStatus = 'I'                   
                     WHERE ID = @Id
-                    
-                   INSERT INTO EvaluateDevelopMainten2_9
-                    (masterId,  projectName,  dateNumber, path, ipAddressCreate, fileNameOld,
-                    fileName, createdBy, projectScore) 
+
+                    INSERT INTO EvaluateResearch3_9
+                    (masterId,  path, ipAddressCreate, fileNameOld, projectInstituteName , projectJoint, projectAmount,
+                    fileName, createdBy, projectScore, pathShare, fileNameShare, fileNameShareOld) 
                     VALUES
-                    (@MasterId, @ProjectName, @DateNumber, @Path, @IpAddress, @FileNameOld,
-                    @FileName, @CreatedBy, @Score2_9)";
+                    (@MasterId, @Path, @IpAddress, @FileNameOld, @ProjectInstituteName, @ProjectJoint, @ProjectAmount,
+                    @FileName, @CreatedBy, @Score3_9, @PathShare, @FileNameShare, @FileNameShareOld)";
 
         }
 
@@ -3856,25 +3557,31 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         try {
 
-            decimal DateNumber9 = decimal.Parse (txtDateNumber9.Text);
-            decimal totalScore2_9 = DateNumber9 * 2;
+            decimal Amount = decimal.Parse (txtProjectAmount9.Text);
+            decimal Joint = decimal.Parse (txtProjectJoint9.Text);
+            decimal totalScore3_9 = 0;
 
+            totalScore3_9 = (((Amount / 100000) * 10) * Joint) / 100;
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@DateNumber", txtDateNumber9.Text);
-            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName9.Text);
+            cmd.Parameters.AddWithValue ("@ProjectAmount", txtProjectAmount9.Text);
+            cmd.Parameters.AddWithValue ("@ProjectInstituteName", txtProjectInstituteName9.Text);
+            cmd.Parameters.AddWithValue ("@ProjectJoint", txtProjectJoint9.Text);
             cmd.Parameters.AddWithValue ("@Path", filepath);
+            cmd.Parameters.AddWithValue ("@PathShare", filepath1);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
+            cmd.Parameters.AddWithValue ("@FileNameShare", NewFileName1);
+            cmd.Parameters.AddWithValue ("@FileNameShareOld", OldFileName1);
             cmd.Parameters.AddWithValue ("@FileName", NewFileName);
             cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-            cmd.Parameters.AddWithValue ("@Score2_9", totalScore2_9);
+            cmd.Parameters.AddWithValue ("@Score3_9", totalScore3_9);
 
             db.ExecuteNonQuery (cmd);
 
             return true;
         } catch (Exception ex) {
-            lblInError2_9.Text += "SaveDevelMaint9 = " + ex.Message + "<br />";
+            lblInError3_9.Text += "SaveResearch9 = " + ex.Message + "<br />";
             return false;
         }
         //finally { con.Close(); 
@@ -3885,20 +3592,24 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         SqlCommand cmd = new SqlCommand ();
         cmd.CommandText = @"SELECT [id]
                     ,[masterId]
-                    ,[projectName]
-                    ,[dateNumber]
+                    ,[projectInstituteName]
+                    ,[projectJoint]
+                    ,[projectAmount]
                     ,[projectScore]
                     ,[projectStatus]
+                    ,[pathShare]
                     ,[path]
+                    ,[fileNameShare]
                     ,[fileName]
+                    ,[fileNameShareOld]
                     ,[fileNameOld]
                     ,[createdBy]
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
                     ,[createdDate]
-                                                        
-                    FROM [EvaluateDevelopMainten2_9] 
+
+                    FROM [EvaluateResearch3_9] 
 
                     WHERE id =  @Id ";
 
@@ -3908,43 +3619,46 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             DataTable blacklistDT = db.ExecuteDataTable (cmd);
             return blacklistDT;
         } catch (Exception ex) {
-            lblInError2_9.Text += "SaveDevelMaint9 = " + ex.Message + "<br />";
+            lblInError3_9.Text += "SaveResearch9 = " + ex.Message + "<br />";
             return null;
         }
     }
 
-    protected void btnEditDevelMaint_Click9 (object sender, EventArgs e) {
+    protected void btnEditResearch_Click9 (object sender, EventArgs e) {
 
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea9 (Id);
         if (ds != null && ds.Rows.Count > 0) {
-            UpdatePanel2_9.Update ();
-            popupAddDevelMaint2_9.Show ();
-            hdf_DevelMaintStatus9.Value = ds.Rows[0]["id"].ToString ();
-            txtProjectName9.Text = ds.Rows[0]["projectName"].ToString ();
-            txtDateNumber9.Text = ds.Rows[0]["dateNumber"].ToString ();
+            UpdatePanel3_9.Update ();
+            popupAddResearch3_9.Show ();
+            hdf_ResearchStatus9.Value = ds.Rows[0]["id"].ToString ();
+            txtProjectInstituteName9.Text = ds.Rows[0]["projectInstituteName"].ToString ();
+            txtProjectJoint9.Text = ds.Rows[0]["projectJoint"].ToString ();
+            txtProjectAmount9.Text = ds.Rows[0]["projectAmount"].ToString ();
 
         }
 
     }
 
-    protected void btnDeleteDevelMaint_Click9 (object sender, EventArgs e) {
+    protected void btnDeleteResearch_Click9 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData9.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea9 (Id);
         string fileSrc;
         string fileDelete;
+        string fileSrc1;
+        string fileDelete1;
 
         if (ds != null && ds.Rows.Count > 0) {
 
-            hdf_DevelMaintStatus9.Value = ds.Rows[0]["id"].ToString ();
-            sql = @"UPDATE EvaluateDevelopMainten2_9  SET
+            hdf_ResearchStatus9.Value = ds.Rows[0]["id"].ToString ();
+            sql = @"UPDATE EvaluateResearch3_9  SET
                     projectStatus = 'D' WHERE id =  @Id";
             SqlCommand cmd1 = new SqlCommand ();
             cmd1.CommandText = sql;
-            cmd1.Parameters.AddWithValue ("@Id", hdf_DevelMaintStatus9.Value);
+            cmd1.Parameters.AddWithValue ("@Id", hdf_ResearchStatus9.Value);
             db.ExecuteDataTable (cmd1);
             this.SearchData9 ();
         }
@@ -3958,30 +3672,31 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
-                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
-        com.Parameters.AddWithValue ("@MId", rId);
-        SqlDataAdapter da = new SqlDataAdapter (com);
-      
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
-        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab2-9\\";
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_1\\";
+        string path1 = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab3-9_2\\";
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path1 + ds.Rows[0]["fileName"].ToString ();
         File.Move (fileSrc, fileDelete);
+
+        fileSrc1 = ds.Rows[0]["pathShare"].ToString () + ds.Rows[0]["fileNameShare"].ToString ();
+        fileDelete1 = rootpath + path + ds.Rows[0]["fileNameShare"].ToString ();
+        File.Move (fileSrc1, fileDelete1);
         reader.Close ();
         con.Close ();
     }
 
-    //##########################################################end 2_9 #################################################################
+    //##########################################################end 3_9 #################################################################
     //#####################################################################################################################################
     //#####################################################################################################################################
+
 }
