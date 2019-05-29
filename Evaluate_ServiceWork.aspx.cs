@@ -43,6 +43,11 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
     }
+    protected void report1_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Evaluate_ServiceWork.aspx?nID=" + rId);
+
+    }
     protected void report2_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
         Response.Redirect ("~/Evaluate_Develop_Mainten.aspx?nID=" + rId);

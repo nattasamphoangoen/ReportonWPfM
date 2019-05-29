@@ -43,54 +43,60 @@
                         <tr>
                             <td>
                                 <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal"
-                                        src="Images/Summary.png" width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal"
+                                        src="Images/file.png" width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n1.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n1.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n2.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n2.png"
+                                        width="20" />
+                                </asp:LinkButton>
+                            </td>
+
+                            <td>
+                                <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/three.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n4.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n5.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n5.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n6.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n7.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n7.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
                         </tr>
-
                     </div>
                 </div>
 
@@ -916,6 +922,13 @@
                                                     OnClick="btnCancelResearch_Click3" />
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <td align="center" colspan="6">
+                                                <asp:Label ID="lblInE3_3" runat="server" Text="เอกสารลิขสิทธิ์/สิทธิบัตร" ForeColor="Red">
+                                                </asp:Label>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -938,6 +951,7 @@
                             <table align="center" width="100%">
                                 <tr>
                                     <h5 class="h5" align="left">4. Oral (ตปท./ไทย) / Poster Presentation (ตปท./ไทย)</h5>
+                                    <span class="h5" style="color: Red"> *เฉพาะผู้นำเสนอเท่านั้น</span>
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="Left">
@@ -2070,7 +2084,7 @@
                                         </tr>
                                         <tr>
                                             <td valign="top" align="right">
-                                                <span style="color: Red">*</span> <strong
+                                                <span style="color: Red">* (1-50) </span> <strong
                                                     style="color: #003359">%ที่ร่วม :</strong>
                                             </td>
                                             <td valign="top" width="150" colspan="2">
@@ -2148,6 +2162,8 @@
                                 <tr>
                                     <h5 class="h5" align="left">8. วิทยานิพนธ์
                                         (ที่เป็นอาจารย์ที่ปรึกษา/อาจารย์ที่ปรึกษาร่วม) (Claim ได้ครั้งเดียว)</h5>
+                                        <span class="h5" style="color: Red"> *เฉพาะนิสิตนักศึกษาที่ได้รับการพิจารณาแล้ว</span>
+                                    
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="Left">
@@ -2508,7 +2524,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
-                                                <asp:TemplateField HeaderText="เอกสารแนบ (ให้ทุน)  " ShowHeader="False"
+                                                <asp:TemplateField HeaderText="เอกสารแนบ (ให้ทุน/รายได้จากหน่วยงานภายนอก)  " ShowHeader="False"
                                                     ItemStyle-Width="80px">
                                                     <ItemStyle Width="80px" Font-Size="Small" />
                                                     <ItemTemplate>
@@ -2680,7 +2696,7 @@
                                         <tr>
                                             <td valign="top" align="right">
                                                 <span style="color: Red">*</span> <strong
-                                                    style="color: #003359">เอกสารแนบ (ให้ทุน) :</strong>
+                                                    style="color: #003359">เอกสารแนบ (ให้ทุน/รายได้จากหน่วยงานภายนอก) :</strong>
                                             </td>
                                             <td valign="top" width="150" colspan="2">
                                                 <asp:FileUpload ID="FileUpload3_9_2" runat="server" />

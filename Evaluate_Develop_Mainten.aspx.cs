@@ -37,9 +37,19 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
     }
 
+    protected void reportSummary_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
+
+    }
     protected void report1_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
         Response.Redirect ("~/Evaluate_ServiceWork.aspx?nID=" + rId);
+
+    }
+    protected void report2_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Evaluate_Develop_Mainten.aspx?nID=" + rId);
 
     }
     protected void report3_Click (object sender, EventArgs e) {
@@ -65,11 +75,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void report7_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
         Response.Redirect ("~/Evaluate_Other.aspx?nID=" + rId);
-
-    }
-    protected void reportSummary_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
     }
 
@@ -245,7 +250,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -456,7 +460,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -648,7 +652,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -840,7 +843,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1033,7 +1036,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1226,7 +1228,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-        
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1423,7 +1425,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-      
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1626,7 +1627,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-     
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -1818,7 +1819,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1908,15 +1908,15 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                 }
             } else {
                 if (Class2_5 == "Class A                                                                                             ") {
-                    totalScore2_5 = 20;
+                    totalScore2_5 = 25;
                 } else if (Class2_5 == "Class B                                                                                             ") {
-                    totalScore2_5 = 16;
+                    totalScore2_5 = 20;
                 } else if (Class2_5 == "Class C                                                                                             ") {
-                    totalScore2_5 = 12;
+                    totalScore2_5 = 15;
                 } else if (Class2_5 == "Class D                                                                                             ") {
-                    totalScore2_5 = 8;
+                    totalScore2_5 = 10;
                 } else {
-                    totalScore2_5 = 4;
+                    totalScore2_5 = 5;
                 }
             }
             cmd.Parameters.AddWithValue ("@Id", ID);
@@ -2030,7 +2030,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-    
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -2225,7 +2225,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-   
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -2421,7 +2420,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-     
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -2618,7 +2617,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -2831,7 +2829,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-    
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -3025,7 +3023,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3215,7 +3212,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-    
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -3408,7 +3405,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-      
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3590,7 +3586,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-      
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -3783,7 +3779,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3965,7 +3960,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-      
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();

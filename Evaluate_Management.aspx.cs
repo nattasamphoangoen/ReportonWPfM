@@ -51,6 +51,11 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         Response.Redirect ("~/Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
+    protected void report6_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Evaluate_Management.aspx?nID=" + rId);
+
+    }
     protected void report7_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
         Response.Redirect ("~/Evaluate_Other.aspx?nID=" + rId);
@@ -232,7 +237,6 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -419,7 +423,7 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-        
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -612,7 +616,6 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -689,6 +692,8 @@ public partial class Evaluate_Management : System.Web.UI.Page {
             double number = double.Parse (txtProjectNumber2.Text);
             if (beamline == "BL3.2Ub: PEEM") {
                 totalScore6_1_2 = 2 * number;
+            } else if (beamline == "BL7.2W: MX") {
+                totalScore6_1_2 = 3 * number;
             } else {
                 totalScore6_1_2 = 1.5 * number;
             }
@@ -804,7 +809,7 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-        
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -997,7 +1002,6 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-      
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1189,7 +1193,7 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-      
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();

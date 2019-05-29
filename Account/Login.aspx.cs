@@ -110,7 +110,7 @@ public partial class Account_Login : System.Web.UI.Page
                     //A.ActionLog(PageCode, "Logon System", "Logon success", Session["ACCOUNT_ID"].ToString());
                     A.ActionLog("Account", Session["AccountId"].ToString(), "Login-Success");
 
-                    Response.Redirect("~/User_Search.aspx");
+                    Response.Redirect("~/Home.aspx");
 
                     //if (string.IsNullOrEmpty(Request.QueryString["n"]) && string.IsNullOrEmpty(Request.QueryString["p"]))
                     //{

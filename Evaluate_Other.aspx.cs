@@ -57,6 +57,12 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         Response.Redirect ("~/Evaluate_Management.aspx?nID=" + rId);
 
     }
+    protected void report7_Click(object sender, EventArgs e)
+    {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect("~/Evaluate_Other.aspx?nID=" + rId);
+
+    }
     protected void reportSummary_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
         Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
