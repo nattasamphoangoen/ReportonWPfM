@@ -1,76 +1,66 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using System;
-using System.Web;
-using System.Web.UI;
-using WebSite2;
-
-using System.Data;
-using System.Configuration;
+﻿using System;
 using System.Collections;
-using System.Web.Security;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
-using System.Web.Configuration;
 using System.Security.Cryptography;
 using System.Text;
-using ClassLibrary;
 using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Configuration;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using ClassLibrary;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using WebSite2;
 
-public partial class Evaluate_User : System.Web.UI.Page
-{
-   Authorize A = new Authorize();
-    SqlConnection con = new SqlConnection();
+public partial class Evaluate_User : System.Web.UI.Page {
+    Authorize A = new Authorize ();
+    SqlConnection con = new SqlConnection ();
     protected string con_string = WebConfigurationManager.ConnectionStrings["SLRIConnectionString"].ConnectionString;
 
     DataTable dtShowData;
-    SortTable ST = new SortTable();
+    SortTable ST = new SortTable ();
 
-    ConnectDB db = new ConnectDB();
+    ConnectDB db = new ConnectDB ();
 
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        if (Session["AccountId"] == null || Session["AccountId"].ToString() == "" || Session["USERTYPE"].ToString() != "A")
-        {
-            Response.Redirect("Account/Login.aspx");
+    protected void Page_Load (object sender, EventArgs e) {
+        if (Session["AccountId"] == null || Session["AccountId"].ToString () == "" || Session["USERTYPE"].ToString () != "A") {
+            Response.Redirect ("Account/Login.aspx");
         }
 
-        if (!IsPostBack)
-        {
-            A.ActionLog("ACCOUNTS", "", "View");
-            dtShowData = new DataTable();
-            dtShowData = this.CreateTableShowData();
+        if (!IsPostBack) {
+            A.ActionLog ("ACCOUNTS", "", "View");
+            dtShowData = new DataTable ();
+            dtShowData = this.CreateTableShowData ();
             ViewState["dtShowData"] = dtShowData;
-            this.SearchData((DataTable)ViewState["dtShowData"]);
+            this.SearchData ((DataTable) ViewState["dtShowData"]);
         }
 
     }
-    private DataTable CreateTableShowData()
-    {
-        DataTable dtShowData = new DataTable();
+    private DataTable CreateTableShowData () {
+        DataTable dtShowData = new DataTable ();
 
-        ST.AddColToTable(dtShowData, "MId", "System.String");
-        ST.AddColToTable(dtShowData, "acountId", "System.String");
-        ST.AddColToTable(dtShowData, "projectYear", "System.String");
-        ST.AddColToTable(dtShowData, "projectRound", "System.String");
-        ST.AddColToTable(dtShowData, "projectUserStatus", "System.String");
-      
-              
-                
+        ST.AddColToTable (dtShowData, "MId", "System.String");
+        ST.AddColToTable (dtShowData, "acountId", "System.String");
+        ST.AddColToTable (dtShowData, "projectYear", "System.String");
+        ST.AddColToTable (dtShowData, "projectRound", "System.String");
+        ST.AddColToTable (dtShowData, "projectUserStatus", "System.String");
+
         return dtShowData;
     }
 
-    protected void btSearch_Click(object sender, EventArgs e)
-    {
+    protected void btSearch_Click (object sender, EventArgs e) {
         //A.ActionLog("Receive", "", "Search");
         //btnSurveyAdd.Visible = true;
-        this.SearchData((DataTable)ViewState["dtShowData"]);
+        this.SearchData ((DataTable) ViewState["dtShowData"]);
     }
 
-    protected void SearchData(DataTable myTable)
-    {
+    protected void SearchData (DataTable myTable) {
         string sql = @"SELECT M.id as Mid, M.acountId, C.projectYear, C.projectRound,
                                 CASE WHEN C.projectUserStatus = 'W' THEN 'เปิด' 
                                 WHEN C.projectUserStatus = 'C' THEN 'ปิด' END AS projectUserStatus
@@ -79,158 +69,134 @@ public partial class Evaluate_User : System.Web.UI.Page
                         LEFT JOIN Account AS A ON M.acountId = A.id
                         WHERE M.acountId =  @AccountId ";
 
-        
-
         string prefix = " AND ";
 
-        if (txtRound.Text != "")
-        {
+        if (txtRound.Text != "") {
             sql += prefix + "projectRound LIKE @projectRound ";
             prefix = " AND ";
         }
-        if (txtYear.Text != "")
-        {
+        if (txtYear.Text != "") {
             sql += prefix + "projectYear LIKE @ProjectYear ";
             prefix = " AND ";
         }
 
         sql += "ORDER BY projectYear DESC ";
 
-
-        
         con.ConnectionString = con_string;
-        SqlCommand cmd = new SqlCommand(sql, con);
+        SqlCommand cmd = new SqlCommand (sql, con);
 
-        try
-        {
-            cmd.Parameters.AddWithValue("@AccountId", Session["AccountId"]);
-            if (txtRound.Text != "")
-            {
-                cmd.Parameters.AddWithValue("@projectRound", "%" + txtRound.Text.Trim() + "%");
+        try {
+            cmd.Parameters.AddWithValue ("@AccountId", Session["AccountId"]);
+            if (txtRound.Text != "") {
+                cmd.Parameters.AddWithValue ("@projectRound", "%" + txtRound.Text.Trim () + "%");
             }
-            if (txtYear.Text != "")
-            {
-                cmd.Parameters.AddWithValue("@ProjectYear", "%" + txtYear.Text.Trim() + "%");
+            if (txtYear.Text != "") {
+                cmd.Parameters.AddWithValue ("@ProjectYear", "%" + txtYear.Text.Trim () + "%");
             }
 
-            if (con.State == ConnectionState.Open)
-            {
-                con.Close();
+            if (con.State == ConnectionState.Open) {
+                con.Close ();
             }
-            con.Open();
+            con.Open ();
 
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            da.Fill(ds, "Data");
-            con.Close();
-            myTable.Rows.Clear();
+            SqlDataAdapter da = new SqlDataAdapter (cmd);
+            DataSet ds = new DataSet ();
+            da.Fill (ds, "Data");
+            con.Close ();
+            myTable.Rows.Clear ();
 
-            for (int i = 0; i < ds.Tables["Data"].Rows.Count; i++)
-            {
-              
-                string MId = ds.Tables["Data"].Rows[i]["Mid"].ToString();
-                string acountId = ds.Tables["Data"].Rows[i]["acountId"].ToString();
-                string projectYear = ds.Tables["Data"].Rows[i]["projectYear"].ToString();
-                string projectRound = ds.Tables["Data"].Rows[i]["projectRound"].ToString();
-                string projectUserStatus = ds.Tables["Data"].Rows[i]["projectUserStatus"].ToString();
-               // string MId = ds.Tables["Data"].Rows[i]["Id"].ToString();
-               
-                DataRow row = myTable.NewRow();
+            for (int i = 0; i < ds.Tables["Data"].Rows.Count; i++) {
+
+                string MId = ds.Tables["Data"].Rows[i]["Mid"].ToString ();
+                string acountId = ds.Tables["Data"].Rows[i]["acountId"].ToString ();
+                string projectYear = ds.Tables["Data"].Rows[i]["projectYear"].ToString ();
+                string projectRound = ds.Tables["Data"].Rows[i]["projectRound"].ToString ();
+                string projectUserStatus = ds.Tables["Data"].Rows[i]["projectUserStatus"].ToString ();
+                // string MId = ds.Tables["Data"].Rows[i]["Id"].ToString();
+
+                DataRow row = myTable.NewRow ();
 
                 row["MId"] = MId;
                 row["acountId"] = acountId;
                 row["projectYear"] = projectYear;
                 row["projectRound"] = projectRound;
                 row["projectUserStatus"] = projectUserStatus;
-                
 
-                myTable.Rows.Add(row);
+                myTable.Rows.Add (row);
             }
 
             gvData.DataSource = myTable.DefaultView;
-            gvData.DataBind();
-            lblRecord.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + ds.Tables["Data"].Rows.Count.ToString("#,###") + " Record(s)</span>";
-        }
-        catch (Exception ex)
-        {
+            gvData.DataBind ();
+            lblRecord.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + ds.Tables["Data"].Rows.Count.ToString ("#,###") + " Record(s)</span>";
+        } catch (Exception ex) {
             lblError.Text += "SearchData = " + ex.Message + "<br />";
-        }
-        finally { con.Close(); }
+        } finally { con.Close (); }
     }
 
-    protected void btReset_Click(object sender, EventArgs e)
-    {
+    protected void btReset_Click (object sender, EventArgs e) {
         txtYear.Text = "";
         txtRound.Text = "";
         UpdatePanel.Visible = false;
-        Response.Redirect("Evaluate_User.aspx");
+        Response.Redirect ("Evaluate_User.aspx");
     }
 
-    protected void bt_EditRound_Click(object sender, EventArgs e)
-    {        
-        GridViewRow row = ((GridViewRow)((Button)sender).NamingContainer);
-        string rId = gvData.DataKeys[row.RowIndex]["MId"].ToString();
+    protected void bt_EditRound_Click (object sender, EventArgs e) {
+        GridViewRow row = ((GridViewRow) ((Button) sender).NamingContainer);
+        string rId = gvData.DataKeys[row.RowIndex]["MId"].ToString ();
         //string rId = Request.QueryString["nId"];
-        Response.Redirect("Evaluate_Index.aspx?nID=" + rId);
+        Response.Redirect ("Evaluate_Index.aspx?nID=" + rId);
     }
 
-
-    protected void bt_ViewData_Click(object sender, EventArgs e)
-    {
-        GridViewRow row = ((GridViewRow)((Button)sender).NamingContainer);
-        string rId = gvData.DataKeys[row.RowIndex]["MId"].ToString();
+    protected void bt_SentRound_Click (object sender, EventArgs e) {
+        GridViewRow row = ((GridViewRow) ((Button) sender).NamingContainer);
+        string rId = gvData.DataKeys[row.RowIndex]["MId"].ToString ();
         //string rId = Request.QueryString["nId"];
-        Response.Redirect("Evaluate_User.aspx?nID=" + rId);
+        Response.Redirect ("Evaluate_User.aspx?nID=" + rId);
     }
 
-    protected void gvData_Sorting(object sender, GridViewSortEventArgs e)
-    {
+    protected void bt_ViewData_Click (object sender, EventArgs e) {
+        GridViewRow row = ((GridViewRow) ((Button) sender).NamingContainer);
+        string rId = gvData.DataKeys[row.RowIndex]["MId"].ToString ();
+        //string rId = Request.QueryString["nId"];
+        Response.Redirect ("Evaluate_User.aspx?nID=" + rId);
+    }
+
+    protected void gvData_Sorting (object sender, GridViewSortEventArgs e) {
         SortDirection SD = GridviewSortDirection;
-        GridviewSortDirection = ST.GridviewSorting(sender, e, (DataTable)ViewState["dtShowData"], SD);
+        GridviewSortDirection = ST.GridviewSorting (sender, e, (DataTable) ViewState["dtShowData"], SD);
     }
 
-    protected void gvData_PageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        gvData.DataSource = ((DataTable)ViewState["dtShowData"]).DefaultView;
+    protected void gvData_PageIndexChanging (object sender, GridViewPageEventArgs e) {
+        gvData.DataSource = ((DataTable) ViewState["dtShowData"]).DefaultView;
         gvData.PageIndex = e.NewPageIndex;
-        gvData.DataBind();
+        gvData.DataBind ();
     }
-    protected void gvData_SelectedIndexChanged(object sender, EventArgs e)
-    {
+    protected void gvData_SelectedIndexChanged (object sender, EventArgs e) {
 
     }
 
-    protected void gvData_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            String ProjectStatus = Convert.ToString(((HiddenField)e.Row.FindControl("hdf_ProjectStatus")).Value);
+    protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
 
-            if (ProjectStatus == "ปิด")
-            {
-                e.Row.FindControl("bt_EditRound").Visible = false;
-                e.Row.FindControl("bt_ViewRound").Visible = true;
-            }
-            else
-            {
+            if (ProjectStatus == "ปิด") {
+                e.Row.FindControl ("bt_EditRound").Visible = false;
+                e.Row.FindControl ("bt_ViewRound").Visible = true;
+            } else {
 
             }
         }
 
     }
 
-    public SortDirection GridviewSortDirection
-    {
-        get
-        {
-            if (ViewState["sortDirection"] == null)
-            {
+    public SortDirection GridviewSortDirection {
+        get {
+            if (ViewState["sortDirection"] == null) {
                 ViewState["sortDirection"] = SortDirection.Ascending;
             }
-            return (SortDirection)ViewState["sortDirection"];
+            return (SortDirection) ViewState["sortDirection"];
         }
-        set
-        {
+        set {
             ViewState["sortDirection"] = value;
         }
     }

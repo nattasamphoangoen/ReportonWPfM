@@ -96,59 +96,61 @@
 
                     <div colspan="2" align="right">
                         <tr>
-
                             <td>
                                 <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/Summary.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal"
+                                        src="Images/file.png" width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n1.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n1.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n2.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n2.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
-
 
                             <td>
                                 <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n3.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n3.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
-
                             <td>
                                 <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n4.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n5.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n5.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n6.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
-
+                            <td>
+                                <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/seven.png"
+                                        width="20" />
+                                </asp:LinkButton>
+                            </td>
                         </tr>
 
                     </div>
