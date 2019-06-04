@@ -40,7 +40,12 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
     }
     protected void reportSummary_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
+        Response.Redirect ("~/Head_Evaluate_Summary.aspx?nID=" + rId);
+
+    }
+    protected void report1_Click (object sender, EventArgs e) {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect ("~/Head_Evaluate_ServiceWork.aspx?nID=" + rId);
 
     }
     protected void report2_Click (object sender, EventArgs e) {
@@ -267,7 +272,6 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -280,13 +284,11 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         string filepathEdit;
         string rootpath = Request.PhysicalApplicationPath;
         string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-1\\";
-        string pathDelete = "Delete\\" + path;
-        string pathEdit = "Edit\\" + path;
-        filepathEdit = rootpath + pathEdit;
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-1\\";
         filepath = rootpath + path;
         filepathDelete = rootpath + pathDelete;
         var directoryInfo = new DirectoryInfo (filepath);
-        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete) || !Directory.Exists (filepathEdit)) {
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
             Directory.CreateDirectory (filepath);
             Directory.CreateDirectory (filepathDelete);
             // Directory.CreateDirectory (filepathEdit);
@@ -308,18 +310,18 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         con.Close ();
 
         string sql = "";
-        
-            if (ID == "" ) {
 
-                sql = @"INSERT INTO EvaluateSevice1_1
+        if (ID == "") {
+
+            sql = @"INSERT INTO EvaluateSevice1_1
                     (masterId,  projectCode,  projectName, projectDate, projectShipft, path, ipAddressCreate, fileNameOld,
                     fileName, createdBy, projectScore, updateDate, updateDateOut, projectDateOut) 
                     VALUES
                     (@MasterId, @ProjectCode, @ProjectName, @ProjectDate, @ProjectShift, @Path, @IpAddress, @FileNameOld,
                     @FileName, @CreatedBy, @Score1_1, @ProjectDate, @ProjectDateOut, @ProjectDateOut)";
-            } else {
+        } else {
 
-                sql = @"UPDATE EvaluateSevice1_1  SET
+            sql = @"UPDATE EvaluateSevice1_1  SET
                     updateDate = @ProjectDate,
                     ipAdressUpdate = @IpAddress,
                     updatedBy = @CreatedBy,
@@ -334,39 +336,39 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
                     (@MasterId, @ProjectCode, @ProjectName, @ProjectDate, @ProjectShift, @Path, @IpAddress, @FileNameOld,
                     @FileName, @CreatedBy, @Score1_1, @ProjectDate, @ProjectDateOut, @ProjectDateOut)";
 
-            }
+        }
 
-            //  db.ConnectionString = con_string;
+        //  db.ConnectionString = con_string;
 
-            SqlCommand cmd = new SqlCommand ();
-            cmd.CommandText = sql;
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = sql;
 
-            try {
-                decimal totalScore1_1 = decimal.Parse (txtProjectShift.Text) * 2;
+        try {
+            decimal totalScore1_1 = decimal.Parse (txtProjectShift.Text) * 2;
 
-                cmd.Parameters.AddWithValue ("@Id", ID);
-                cmd.Parameters.AddWithValue ("@MasterId", rId);
-                cmd.Parameters.AddWithValue ("@ProjectCode", txtProjectCode.Text.Trim ());
-                cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName.Text.Trim ());
-                cmd.Parameters.AddWithValue ("@ProjectDate", txtProjectDate.Text.Trim ());
-                cmd.Parameters.AddWithValue ("@ProjectShift", txtProjectShift.Text.Trim ());
-                cmd.Parameters.AddWithValue ("@Path", filepath);
-                cmd.Parameters.AddWithValue ("@IpAddress", ip);
-                cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
-                cmd.Parameters.AddWithValue ("@FileName", NewFileName);
-                cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
-                cmd.Parameters.AddWithValue ("@Score1_1", totalScore1_1);
-                cmd.Parameters.AddWithValue ("@ProjectDateOut", txtProjectDateOut.Text.Trim ());
-                // cmd.Parameters.AddWithValue ("@FileNameOld1_1", upnameOld);
+            cmd.Parameters.AddWithValue ("@Id", ID);
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectCode", txtProjectCode.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectDate", txtProjectDate.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@ProjectShift", txtProjectShift.Text.Trim ());
+            cmd.Parameters.AddWithValue ("@Path", filepath);
+            cmd.Parameters.AddWithValue ("@IpAddress", ip);
+            cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
+            cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+            cmd.Parameters.AddWithValue ("@CreatedBy", AcountId);
+            cmd.Parameters.AddWithValue ("@Score1_1", totalScore1_1);
+            cmd.Parameters.AddWithValue ("@ProjectDateOut", txtProjectDateOut.Text.Trim ());
+            // cmd.Parameters.AddWithValue ("@FileNameOld1_1", upnameOld);
 
-                db.ExecuteNonQuery (cmd);
+            db.ExecuteNonQuery (cmd);
 
-                return true;
-            } catch (Exception ex) {
-                lblInError1_1.Text += "SaveService = " + ex.Message + "<br />";
-                return false;
-            }
-        
+            return true;
+        } catch (Exception ex) {
+            lblInError1_1.Text += "SaveService = " + ex.Message + "<br />";
+            return false;
+        }
+
         //finally { con.Close(); 
 
     }
@@ -432,8 +434,6 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
         string Id = gvData.DataKeys[row.RowIndex]["id"].ToString ();
         DataTable ds = this.SearchOneArea (Id);
-        string fileSrc;
-        string fileDelete;
 
         if (ds != null && ds.Rows.Count > 0) {
 
@@ -445,11 +445,39 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
             cmd1.Parameters.AddWithValue ("@Id", hdf_SeviceStatus.Value);
             db.ExecuteDataTable (cmd1);
         }
+        string fileSrc;
+        string fileDelete;
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
+                        ";
+
+        com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-1\\";
         string rootpath = Request.PhysicalApplicationPath;
         fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        fileDelete = rootpath + "Delete\\File\\2562\\2\\เจษฎาภาชนนท์\\tab1-1\\" + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
         File.Move (fileSrc, fileDelete);
-        this.SearchData ();
+        reader.Close ();
+        con.Close ();
     }
 
     //###############################EvaluateSevice1_1 end#####################################################
@@ -644,7 +672,7 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
+        // string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -655,17 +683,15 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
 
         string rootpath = Request.PhysicalApplicationPath;
         string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-2\\";
-        string pathDelete = "Delete\\" + path;
-        string pathEdit = "Edit\\" + path;
-        filepathEdit2 = rootpath + pathEdit;
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-2\\";
         filepath2 = rootpath + path;
         filepathDelete2 = rootpath + pathDelete;
 
         var directoryInfo = new DirectoryInfo (filepath2);
-        if (!Directory.Exists (filepath2) || !Directory.Exists (filepathDelete2) || !Directory.Exists (filepathEdit2)) {
+        if (!Directory.Exists (filepath2) || !Directory.Exists (filepathDelete2)) {
             Directory.CreateDirectory (filepath2);
             Directory.CreateDirectory (filepathDelete2);
-            Directory.CreateDirectory (filepathEdit2);
+
             //directoryInfo.CreateSubdirectory("k");
         }
         string OldFileName = Path.GetFileName (FileUpload1_2.FileName);
@@ -794,8 +820,7 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         }
 
     }
-    string fileSrc2;
-    string fileDelete2;
+
     protected void btnDeleteService_Click2 (object sender, EventArgs e) {
         string sql;
         GridViewRow row = ((GridViewRow) ((LinkButton) sender).NamingContainer);
@@ -812,11 +837,39 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
             db.ExecuteDataTable (cmd1);
 
         }
+        string fileSrc;
+        string fileDelete;
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
+                        ";
+
+        com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-2\\";
         string rootpath = Request.PhysicalApplicationPath;
-        fileSrc2 = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        fileDelete2 = rootpath + "Delete\\File\\2562\\2\\เจษฎาภาชนนท์\\tab1-2\\" + ds.Rows[0]["fileName"].ToString ();
-        File.Move (fileSrc2, fileDelete2);
-        this.SearchData2 ();
+        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
+        File.Move (fileSrc, fileDelete);
+        reader.Close ();
+        con.Close ();
 
     }
 
@@ -1000,7 +1053,7 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
+        //  string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1011,15 +1064,14 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
 
         string rootpath = Request.PhysicalApplicationPath;
         string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-3\\";
-        string pathDelete = "Delete\\" + path;
-        string pathEdit = "Edit\\" + path;
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-3\\";
         string filepath = rootpath + path;
         string filepathDelete = rootpath + pathDelete;
-        string filepathEdit = rootpath + pathEdit;
-        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete) || !Directory.Exists (filepathEdit)) {
+
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
             Directory.CreateDirectory (filepath);
             Directory.CreateDirectory (filepathDelete);
-            Directory.CreateDirectory (filepathEdit);
+
             //directoryInfo.CreateSubdirectory("k");
         }
         string OldFileName = Path.GetFileName (FileUpload1_3.FileName);
@@ -1066,7 +1118,7 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         decimal totalScore1_3 = 0;
         try {
 
-            String class1_3 = txtProjectClass3.SelectedValue.ToString();
+            String class1_3 = txtProjectClass3.SelectedValue.ToString ();
             if (class1_3 == "A") {
                 totalScore1_3 = 10;
                 classet1_3 = "Class A";
@@ -1174,11 +1226,39 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
             db.ExecuteDataTable (cmd1);
 
         }
+        string fileSrc;
+        string fileDelete;
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
+                        ";
+
+        com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-3\\";
         string rootpath = Request.PhysicalApplicationPath;
-        string fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        string fileDelete = rootpath + "Delete\\File\\2562\\2\\เจษฎาภาชนนท์\\tab1-3\\" + ds.Rows[0]["fileName"].ToString ();
+        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
         File.Move (fileSrc, fileDelete);
-        this.SearchData3 ();
+        reader.Close ();
+        con.Close ();
 
     }
 
@@ -1350,22 +1430,26 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         SqlConnection con = new SqlConnection (con_string);
         con.Open ();
         str = @"select C.projectYear, C.projectRound, 
-                        M.acountId ,A.FirstName + A.LastName AS FullName
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
-
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
         string AcountId = reader["acountId"].ToString ();
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
+        //string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1376,15 +1460,14 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
 
         string rootpath = Request.PhysicalApplicationPath;
         string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-4\\";
-        string pathDelete = "Delete\\" + path;
-        string pathEdit = "Edit\\" + path;
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-4\\";
         string filepath = rootpath + path;
         string filepathDelete = rootpath + pathDelete;
-        string filepathEdit = rootpath + pathEdit;
-        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete) || !Directory.Exists (filepathEdit)) {
+
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
             Directory.CreateDirectory (filepath);
             Directory.CreateDirectory (filepathDelete);
-            Directory.CreateDirectory (filepathEdit);
+
             //directoryInfo.CreateSubdirectory("k");
         }
         if (!Directory.Exists (filepath)) {
@@ -1537,11 +1620,39 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
             db.ExecuteDataTable (cmd1);
 
         }
+        string fileSrc;
+        string fileDelete;
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
+                        ";
+
+        com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-4\\";
         string rootpath = Request.PhysicalApplicationPath;
-        string fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        string fileDelete = rootpath + "Delete\\File\\2562\\2\\เจษฎาภาชนนท์\\tab1-4\\" + ds.Rows[0]["fileName"].ToString ();
+        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
         File.Move (fileSrc, fileDelete);
-        this.SearchData4 ();
+        reader.Close ();
+        con.Close ();
 
     }
 
@@ -1713,13 +1824,18 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         SqlConnection con = new SqlConnection (con_string);
         con.Open ();
         str = @"select C.projectYear, C.projectRound, 
-                        M.acountId ,A.FirstName + A.LastName AS FullName
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1728,7 +1844,7 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
+        // string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1739,15 +1855,14 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
 
         string rootpath = Request.PhysicalApplicationPath;
         string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-5\\";
-        string pathDelete = "Delete\\" + path;
-        string pathEdit = "Edit\\" + path;
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-5\\";
         string filepath = rootpath + path;
         string filepathDelete = rootpath + pathDelete;
-        string filepathEdit = rootpath + pathEdit;
-        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete) || !Directory.Exists (filepathEdit)) {
+
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
             Directory.CreateDirectory (filepath);
             Directory.CreateDirectory (filepathDelete);
-            Directory.CreateDirectory (filepathEdit);
+
             //directoryInfo.CreateSubdirectory("k");
         }
         string OldFileName = Path.GetFileName (FileUpload1_5.FileName);
@@ -1896,10 +2011,39 @@ public partial class Head_Evaluate_ServiceWork : System.Web.UI.Page {
             db.ExecuteDataTable (cmd1);
             this.SearchData5 ();
         }
+        string fileSrc;
+        string fileDelete;
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
+                        ";
+
+        com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+
+        SqlDataReader reader = com.ExecuteReader ();
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+        string path = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-5\\";
         string rootpath = Request.PhysicalApplicationPath;
-        string fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
-        string fileDelete = rootpath + "Delete\\File\\2562\\2\\เจษฎาภาชนนท์\\tab1-5\\" + ds.Rows[0]["fileName"].ToString ();
+        fileSrc = ds.Rows[0]["path"].ToString () + ds.Rows[0]["fileName"].ToString ();
+        fileDelete = rootpath + path + ds.Rows[0]["fileName"].ToString ();
         File.Move (fileSrc, fileDelete);
+        reader.Close ();
+        con.Close ();
 
     }
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="EvaluateSummary" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Evaluate_Summary.aspx.cs" Inherits="Evaluate_Summary" Async="true" %>
+﻿<%@ Page Title="EvaluateSummary" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Head_Evaluate_Summary.aspx.cs" Inherits="Head_Evaluate_Summary" Async="true" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
@@ -41,54 +41,59 @@
 
                     <div colspan="2" align="right">
                         <tr>
-
+                            <td>
+                                <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal"
+                                        src="Images/Summary.png" width="20" />
+                                </asp:LinkButton>
+                            </td>
 
                             <td>
                                 <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n1.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n1.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n2.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n2.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n3.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n3.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n4.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n5.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n5.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n6.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n7.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n7.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
                         </tr>
@@ -134,7 +139,10 @@
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">_______________________ </strong>
+                            <strong style="color: #2300a1" class="h4">
+                                <asp:Label ID="lbl_FullName" runat="server" Text=''>
+                                </asp:Label>
+                            </strong>
                         </td>
                     </tr>
 
@@ -145,14 +153,20 @@
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">_______________________ </strong>
+                            <strong style="color: #2300a1" class="h4">
+                                <asp:Label ID="lbl_Position" runat="server" Text=''>
+                                </asp:Label>
+                            </strong>
                         </td>
+                        <td>&nbsp;</td>
                         <td valign="top" align="center">
                             <strong style="color: #000000" class="h4">ระดับ Level : </strong>
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">_______ </strong>
+                            <strong style="color: #2300a1" class="h4">.........
+
+                            </strong>
                         </td>
                     </tr>
                     <br />
@@ -162,7 +176,10 @@
                         </td>
 
                         <td valign="top" align="center">
-                            <strong style="color: #2300a1" class="h4">สถานีวิจัย </strong>
+                            <strong style="color: #2300a1" class="h4">
+                                <asp:Label ID="lbl_Department" runat="server" Text=''>
+                                </asp:Label>
+                            </strong>
                         </td>
                     </tr>
                     <br />
@@ -291,7 +308,7 @@
 
                 <br />
                 <br />
-                
+
 
                 <table align="center" width="100%">
                     <tr>
@@ -320,7 +337,7 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="ที่" ItemStyle-Width="5px">
+                                    <asp:TemplateField HeaderText="ที่" ItemStyle-Width="5px" Visible="False">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hdf_ProjectStatus" runat="server"
                                                 Value='<%# Bind("id") %>'></asp:HiddenField>
@@ -332,25 +349,12 @@
                                         <ItemStyle Width="1px" />
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText ="Hello World">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblHello" runat ="server" Text ="Hello"/>
-                                        </ItemTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblWorld" runat ="server" Text ="World"/>
-                                        </ItemTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblHello1" runat ="server" Text ="Hello"/>
-                                        </ItemTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblWorld1" runat ="server" Text ="World"/>
-                                        </ItemTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblWorld2" runat ="server" Text ="World"/>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="งาน"
+                                        DataField="E1_1" ItemStyle-Width="250px">
+                                        <ItemStyle Width="250px" Font-Size="Small" />
+                                    </asp:BoundField>
 
-                                    <asp:BoundField HeaderText="คะแนน" DataField="ddlOrder" ItemStyle-Width="50px">
+                                    <asp:BoundField HeaderText="คะแนน" DataField="score1_1" ItemStyle-Width="50px">
                                         <ItemStyle Width="50px" Font-Size="Small" />
                                     </asp:BoundField>
 

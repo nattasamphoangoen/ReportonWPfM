@@ -42,50 +42,57 @@
                         <tr>
                             <td>
                                 <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal"
-                                        src="Images/Summary.png" width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/file.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n1.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n1.png"
+                                        width="20" />
+                                </asp:LinkButton>
+                            </td>
+
+                            <td>
+                                <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/two.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n3.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n3.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n4.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n5.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n5.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n6.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
                                 <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
-                                    <img id="report" alt="" border="0" height="16" name="popcal" src="Images/n7.png"
-                                        width="16" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n7.png"
+                                        width="20" />
                                 </asp:LinkButton>
                             </td>
                         </tr>
@@ -733,7 +740,7 @@
 
 
 
-                                                <asp:TemplateField HeaderText="เอกสารตอบรับ/ยื่นจด" ShowHeader="False"
+                                                <asp:TemplateField HeaderText="เอกสารยื่นจดสิทธิบัตร" ShowHeader="False"
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="100px" Font-Size="Small" />
                                                     <ItemTemplate>
@@ -877,7 +884,7 @@
                                         <tr>
                                             <td valign="top" align="right">
                                                 <span style="color: Red">*</span> <strong
-                                                    style="color: #003359">เอกสารตอบรับ/่ยื่นจด :</strong>
+                                                    style="color: #003359">เอกสารยื่นจดสิทธิบัตร/ตอบรับ :</strong>
                                             </td>
                                             <td valign="top" width="150" colspan="2">
                                                 <asp:FileUpload ID="FileUpload2_3" runat="server" />
@@ -1298,7 +1305,7 @@
                                                     <ItemStyle Width="120px" Font-Size="Small" />
                                                 </asp:BoundField>
                                                 <asp:BoundField HeaderText="ประเภท" DataField="projectType"
-                                                    ItemStyle-Width="80px">
+                                                    Visible="False" ItemStyle-Width="80px">
                                                     <ItemStyle Width="120px" Font-Size="Small" />
                                                 </asp:BoundField>
                                                 <asp:BoundField HeaderText="Class" DataField="projectClass"
@@ -1430,12 +1437,12 @@
                                         </tr>
 
                                         <tr>
-                                            <td align="right" valign="top">
+                                            <!-- <td align="right" valign="top">
                                                 <span style="color: Red">*</span> <strong style="color: #003359">ประเภท
                                                     :</strong>
-                                            </td>
+                                            </td> -->
                                             <td valign="top">
-                                                <asp:DropDownList ID="txtProjectType5" runat="server"
+                                                <asp:DropDownList ID="txtProjectType5" runat="server" Visible="False"
                                                     AppendDataBoundItems="True" CssClass="gray"
                                                     DataSourceID="sqlType5Add" DataTextField="ddlDisplay"
                                                     DataValueField="ddlDisplay" Width="180" AutoPostBack="False">
@@ -1941,8 +1948,8 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnEditDevelMaint6_2" runat="server" Text='' Visible="False"
-                                                            OnClick="btnEditDevelMaint_Click6_2">
+                                                        <asp:LinkButton ID="btnEditDevelMaint6_2" runat="server" Text=''
+                                                            Visible="False" OnClick="btnEditDevelMaint_Click6_2">
                                                             <img id="editDevelMaint6_2" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -1956,8 +1963,9 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnDeletDevelMaint6_2" runat="server" Visible="False"
-                                                            Text='' OnClick="btnDeleteDevelMaint_Click6_2">
+                                                        <asp:LinkButton ID="btnDeletDevelMaint6_2" runat="server"
+                                                            Visible="False" Text=''
+                                                            OnClick="btnDeleteDevelMaint_Click6_2">
                                                             <img id="DeletDevelMaint6_2" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -1979,8 +1987,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="right">
-                                        <asp:Button ID="Add2_6_2" runat="server" CssClass="btn btn-success" Text="Add" Visible="False"
-                                            OnClick="Add2_6_2_Click" />
+                                        <asp:Button ID="Add2_6_2" runat="server" CssClass="btn btn-success" Text="Add"
+                                            Visible="False" OnClick="Add2_6_2_Click" />
                                     </td>
                                 </tr>
 
@@ -2181,6 +2189,7 @@
                                 <tr>
                                     <h5 class="h5" align="left">7. วิทยานิพนธ์
                                         (ที่เป็นอาจารย์ที่ปรึกษา/อาจารย์ที่ปรึกษาร่วม) (Claim ได้ครั้งเดียว)</h5>
+                                    <span class="h5" style="color: Red">หมายเหตุต้องสำเร็จการศึกษา</span>
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="Left">
@@ -2266,8 +2275,8 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnEditDevelMaint7" runat="server" Text='' Visible="False"
-                                                            OnClick="btnEditDevelMaint_Click7">
+                                                        <asp:LinkButton ID="btnEditDevelMaint7" runat="server" Text=''
+                                                            Visible="False" OnClick="btnEditDevelMaint_Click7">
                                                             <img id="editDevelMaint7" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -2281,8 +2290,8 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnDeletDevelMaint7" runat="server" Text='' Visible="False"
-                                                            OnClick="btnDeleteDevelMaint_Click7">
+                                                        <asp:LinkButton ID="btnDeletDevelMaint7" runat="server" Text=''
+                                                            Visible="False" OnClick="btnDeleteDevelMaint_Click7">
                                                             <img id="DeletDevelMaint7" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -2304,8 +2313,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="right">
-                                        <asp:Button ID="Add2_7" runat="server" CssClass="btn btn-success" Text="Add" Visible="False"
-                                            OnClick="Add2_7_Click" />
+                                        <asp:Button ID="Add2_7" runat="server" CssClass="btn btn-success" Text="Add"
+                                            Visible="False" OnClick="Add2_7_Click" />
                                     </td>
                                 </tr>
 
@@ -2462,6 +2471,7 @@
                                         การเข้าร่วมประชุมเชิงปฏิบัติการและฝึกอบรมทั้งในและต่างประเทศ
                                         ที่เกี่ยวข้องกับการพัฒนาและบำรุงรักษาระบบลำเลียงแสง หรือสถานีทดลอง
                                         หรือห้องปฏิบัติการต่าง ๆ (Technical training, training on the job)</h5>
+
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="Left">
@@ -2545,8 +2555,8 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnEditDevelMaint8" runat="server" Text='' Visible="False"
-                                                            OnClick="btnEditDevelMaint_Click8">
+                                                        <asp:LinkButton ID="btnEditDevelMaint8" runat="server" Text=''
+                                                            Visible="False" OnClick="btnEditDevelMaint_Click8">
                                                             <img id="editDevelMaint8" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -2560,8 +2570,8 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnDeletDevelMaint8" runat="server" Text='' Visible="False"
-                                                            OnClick="btnDeleteDevelMaint_Click8">
+                                                        <asp:LinkButton ID="btnDeletDevelMaint8" runat="server" Text=''
+                                                            Visible="False" OnClick="btnDeleteDevelMaint_Click8">
                                                             <img id="DeletDevelMaint8" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -2583,8 +2593,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="right">
-                                        <asp:Button ID="Add2_8" runat="server" CssClass="btn btn-success" Text="Add" Visible="False"
-                                            OnClick="Add2_8_Click" />
+                                        <asp:Button ID="Add2_8" runat="server" CssClass="btn btn-success" Text="Add"
+                                            Visible="False" OnClick="Add2_8_Click" />
                                     </td>
                                 </tr>
 
@@ -2716,7 +2726,7 @@
 
 
                 <div>
-                    <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                    <asp:UpdatePanel ID="UpdatePanel9" runat="server" Visible="False">
                         <ContentTemplate>
                             <table align="center" width="100%">
                                 <tr>
@@ -2804,8 +2814,8 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnEditDevelMaint9" runat="server" Text='' Visible="False"
-                                                            OnClick="btnEditDevelMaint_Click9">
+                                                        <asp:LinkButton ID="btnEditDevelMaint9" runat="server" Text=''
+                                                            Visible="False" OnClick="btnEditDevelMaint_Click9">
                                                             <img id="editDevelMaint9" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -2819,8 +2829,8 @@
                                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center"
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="btnDeletDevelMaint9" runat="server" Text='' Visible="False"
-                                                            OnClick="btnDeleteDevelMaint_Click9">
+                                                        <asp:LinkButton ID="btnDeletDevelMaint9" runat="server" Text=''
+                                                            Visible="False" OnClick="btnDeleteDevelMaint_Click9">
                                                             <img id="DeletDevelMaint9" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -2842,8 +2852,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="right">
-                                        <asp:Button ID="Add2_9" runat="server" CssClass="btn btn-success" Text="Add" Visible="False"
-                                            OnClick="Add2_9_Click" />
+                                        <asp:Button ID="Add2_9" runat="server" CssClass="btn btn-success" Text="Add"
+                                            Visible="False" OnClick="Add2_9_Click" />
                                     </td>
                                 </tr>
 

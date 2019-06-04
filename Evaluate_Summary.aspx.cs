@@ -67,9 +67,9 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
     }
 
     protected void SearchData () {
-        string sql = @"SELECT DISTINCT E1_1.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+        string sql = @"SELECT DISTINCT M.id, E1_1.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
                 C.projectYear, C.projectRound, SUM1_1.score1_1, A.Position,  A.Department, E1_1.createdBy,
-                'งาน Local contact (Experimental setup, Sample preparation, and Measurement)' as E1_1
+                '1. งานให้บริการ (ภาควิชาการ, ภาคอุตสาหกรรม)' as E1_1
                 FROM EvaluateSevice1_1 AS E1_1
                 INNER JOIN EvaluateMaster AS M ON M.id = E1_1.masterId 
                 INNER JOIN Account AS A ON A.id = M.acountId
@@ -83,9 +83,25 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
 
                 UNION ALL
 
-                SELECT DISTINCT E1_2.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                SELECT DISTINCT M.id, E1_1.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                C.projectYear, C.projectRound, SUM1_1.score1_1, A.Position,  A.Department, E1_1.createdBy,
+                '1.1. งาน Local contact (Experimental setup, Sample preparation, and Measurement) งานสอบเทียบเครื่องมือและมาตรฐานการวัด' as E1_1
+                FROM EvaluateSevice1_1 AS E1_1
+                INNER JOIN EvaluateMaster AS M ON M.id = E1_1.masterId 
+                INNER JOIN Account AS A ON A.id = M.acountId
+                INNER JOIN ProjectControl AS C ON C.id = M.roundId
+                INNER JOIN 
+                    (SELECT masterId,sum(projectScore) as score1_1
+                    FROM EvaluateSevice1_1
+                    WHERE projectStatus = 'A'
+                    GROUP BY masterId) AS  SUM1_1 ON E1_1.masterId = SUM1_1.masterId
+                WHERE M.acountId = E1_1.createdBy AND E1_1.masterId = @MasterId
+
+                UNION ALL
+
+                SELECT DISTINCT M.id, E1_2.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
                 C.projectYear, C.projectRound, SUM1_2.score1_2, A.Position, A.Department, E1_2.createdBy, 
-                'งานให้บริการภาคอุตสาหกรรม' as E1_1
+                '1.2. งานให้บริการภาคอุตสาหกรรม' as E1_1
                 FROM EvaluateSevice1_2 AS E1_2
                 INNER JOIN EvaluateMaster AS M ON M.id = E1_2.masterId 
                 INNER JOIN Account AS A ON A.id = M.acountId
@@ -99,9 +115,9 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
 
                 UNION ALL
 
-                SELECT DISTINCT E1_3.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                SELECT DISTINCT M.id, E1_3.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
                 C.projectYear, C.projectRound, SUM1_3.score1_3, A.Position, A.Department, E1_3.createdBy,
-                'งานเป็นที่ปรึกษาให้กับผู้ใช้บริการแสงซินโครตรอน / ภาคอุตสาหกรรม' as E1_1
+                '1.3. งานเป็นที่ปรึกษาให้กับผู้ใช้บริการแสงซินโครตรอน / ภาคอุตสาหกรรม' as E1_1
                 FROM EvaluateSevice1_3 AS E1_3
                 INNER JOIN EvaluateMaster AS M ON M.id = E1_3.masterId 
                 INNER JOIN Account AS A ON A.id = M.acountId
@@ -115,9 +131,9 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
                 
 				 UNION ALL
 
-                SELECT DISTINCT E1_4.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                SELECT DISTINCT M.id, E1_4.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
                 C.projectYear, C.projectRound, SUM1_4.score1_4, A.Position, A.Department, E1_4.createdBy,
-                'Technical manual (*)' as E1_1
+                '1.4. Technical manual (*)' as E1_1
                 FROM EvaluateSevice1_4 AS E1_4
                 INNER JOIN EvaluateMaster AS M ON M.id = E1_4.masterId 
                 INNER JOIN Account AS A ON A.id = M.acountId
@@ -131,9 +147,9 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
 
 				UNION ALL
 
-                SELECT DISTINCT E1_5.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
+                SELECT DISTINCT M.id, E1_5.masterId, A.Title+' '+A.FirstName + ' ' +A.LastName AS FullName, 
                 C.projectYear, C.projectRound, SUM1_5.score1_5, A.Position, A.Department, E1_5.createdBy,
-                'Standard protocol (คู่มือกระบวนการดำเนินงาน)' as E1_1
+                '1.5. Standard protocol (คู่มือกระบวนการดำเนินงาน)' as E1_1
                 FROM EvaluateSevice1_5 AS E1_5
                 INNER JOIN EvaluateMaster AS M ON M.id = E1_5.masterId 
                 INNER JOIN Account AS A ON A.id = M.acountId
@@ -148,11 +164,11 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
         con.ConnectionString = con_string;
         con.Open ();
         SqlCommand cmd = new SqlCommand (sql, con);
-
         string rId = Request.QueryString["nId"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
+
         SqlDataReader reader = cmd.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
