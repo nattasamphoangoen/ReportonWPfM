@@ -28,41 +28,55 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
 
     }
 
-    protected void report1_Click (object sender, EventArgs e) {
+    protected void reportSummary_Click(object sender, EventArgs e)
+    {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Head_Evaluate_ServiceWork.aspx?nID=" + rId);
+        Response.Redirect("~/Head_Evaluate_Summary.aspx?nID=" + rId);
 
     }
-    protected void report3_Click (object sender, EventArgs e) {
+    protected void report1_Click(object sender, EventArgs e)
+    {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Head_Evaluate_Research.aspx?nID=" + rId);
+        Response.Redirect("~/Head_Evaluate_ServiceWork.aspx?nID=" + rId);
 
     }
-    protected void report2_Click (object sender, EventArgs e) {
+    protected void report2_Click(object sender, EventArgs e)
+    {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Head_Evaluate_Develop_Mainten.aspx?nID=" + rId);
+        Response.Redirect("~/Head_Evaluate_Develop_Mainten.aspx?nID=" + rId);
 
     }
-    protected void report4_Click (object sender, EventArgs e) {
+    protected void report3_Click(object sender, EventArgs e)
+    {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Head_Evaluate_Promotion_work.aspx?nID=" + rId);
+        Response.Redirect("~/Head_Evaluate_Research.aspx?nID=" + rId);
 
     }
-    protected void report6_Click (object sender, EventArgs e) {
+    protected void report4_Click(object sender, EventArgs e)
+    {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Head_Evaluate_Management.aspx?nID=" + rId);
+        Response.Redirect("~/Head_Evaluate_Promotion_work.aspx?nID=" + rId);
 
     }
-    protected void report7_Click (object sender, EventArgs e) {
+    protected void report5_Click(object sender, EventArgs e)
+    {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Head_Evaluate_Other.aspx?nID=" + rId);
+        Response.Redirect("~/Head_Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
-    protected void reportSummary_Click (object sender, EventArgs e) {
+    protected void report6_Click(object sender, EventArgs e)
+    {
         string rId = Request.QueryString["nId"];
-        Response.Redirect ("~/Head_Evaluate_Summary.aspx?nID=" + rId);
+        Response.Redirect("~/Head_Evaluate_Management.aspx?nID=" + rId);
 
     }
+    protected void report7_Click(object sender, EventArgs e)
+    {
+        string rId = Request.QueryString["nId"];
+        Response.Redirect("~/Head_Evaluate_Other.aspx?nID=" + rId);
+
+    }
+
 
     protected void SearchData () {
         string sql = @"SELECT [id]
@@ -220,9 +234,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -231,7 +250,7 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
+    
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -417,9 +436,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+       
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -597,9 +621,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -608,7 +637,7 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
+        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -786,9 +815,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -967,9 +1001,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -978,7 +1017,7 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
+        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1158,9 +1197,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+       
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1336,9 +1380,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1347,7 +1396,7 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
+        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1522,9 +1571,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+       
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -1546,7 +1600,7 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
     //##########################################################Strat 5_5###############################################################
     protected void SearchData5 () {
         string sql = @"SELECT [id]
-                     ,[masterId]
+                    ,[masterId]
                     ,[projectDescription]
                     ,[dateNumber]
                     ,[projectScore]
@@ -1698,9 +1752,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1709,7 +1768,7 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        string rId = Request.QueryString["nId"];
+       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1885,9 +1944,14 @@ public partial class Head_Evaluate_AcademicServices : System.Web.UI.Page {
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
                         INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
                         ";
 
         com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+      
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();

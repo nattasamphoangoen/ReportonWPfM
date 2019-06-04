@@ -156,9 +156,16 @@
                                 <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
                                     <ItemTemplate>
                                         <asp:Button ID="bt_EditRound" runat="server" CssClass="txt_howtonav" OnClick="bt_EditRound_Click"
-                                            Text="Add" Font-Size="Small" Visible="true"/> 
+                                            Text="แก้ไข" Font-Size="Small" Visible="true"/> 
                                         <asp:Button ID="bt_ViewRound" runat="server" CssClass="txt_howtonav" OnClick="bt_ViewData_Click"
                                             Text="View" Font-Size="Small" Visible="false"/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
+                                    <ItemTemplate>
+                                        <asp:Button ID="bt_SentRound" runat="server" CssClass="txt_howtonav" OnClick="bt_SentRound_Click"
+                                            Text="ส่ง" Font-Size="Small" Visible="true"/> 
+                                        
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
