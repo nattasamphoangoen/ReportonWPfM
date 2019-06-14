@@ -42,56 +42,65 @@
                     <div colspan="2" align="right">
                         <tr>
                             <td>
-                                <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="20" name="popcal"
-                                        src="Images/file.png" width="20" />
+                                <asp:LinkButton ID="reportSummary" runat="server" Text='' title="Summary"
+                                    OnClick="reportSummary_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/file.png"
+                                        width="20" />
+
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
+                                <asp:LinkButton ID="report1" runat="server" Text='' title="งานให้บริการ"
+                                    OnClick="report1_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n1.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
+                                <asp:LinkButton ID="report2" runat="server" Text='' title="งานพัฒนาและบำรุงรักษา"
+                                    OnClick="report2_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n2.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
+                                <asp:LinkButton ID="report3" runat="server" Text='' title="งานวิจัย"
+                                    OnClick="report3_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/three.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
+                                <asp:LinkButton ID="report4" runat="server" Text='' title="งานส่งเสริมการใช้แสง"
+                                    OnClick="report4_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
+                                <asp:LinkButton ID="report5" runat="server" Text='' title="งานบริการวิชาการ"
+                                    OnClick="report5_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n5.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
+                                <asp:LinkButton ID="report6" runat="server" Text='' title="งานบริหารจัดการ"
+                                    OnClick="report6_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
+                                <asp:LinkButton ID="report7" runat="server" Text='' title="งานอื่น ๆ"
+                                    OnClick="report7_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n7.png"
                                         width="20" />
                                 </asp:LinkButton>
@@ -925,7 +934,8 @@
 
                                         <tr>
                                             <td align="center" colspan="6">
-                                                <asp:Label ID="lblInE3_3" runat="server" Text="เอกสารลิขสิทธิ์/สิทธิบัตร" ForeColor="Red">
+                                                <asp:Label ID="lblInE3_3" runat="server"
+                                                    Text="เอกสารลิขสิทธิ์/สิทธิบัตร" ForeColor="Red">
                                                 </asp:Label>
                                             </td>
                                         </tr>
@@ -2162,8 +2172,9 @@
                                 <tr>
                                     <h5 class="h5" align="left">8. วิทยานิพนธ์
                                         (ที่เป็นอาจารย์ที่ปรึกษา/อาจารย์ที่ปรึกษาร่วม) (Claim ได้ครั้งเดียว)</h5>
-                                        <span class="h5" style="color: Red"> *เฉพาะนิสิตนักศึกษาที่ได้รับการพิจารณาแล้ว</span>
-                                    
+                                    <span class="h5" style="color: Red">
+                                        *เฉพาะนิสิตนักศึกษาที่ได้รับการพิจารณาแล้ว</span>
+
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="Left">
@@ -2524,8 +2535,9 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
-                                                <asp:TemplateField HeaderText="เอกสารแนบ (ให้ทุน/รายได้จากหน่วยงานภายนอก)  " ShowHeader="False"
-                                                    ItemStyle-Width="80px">
+                                                <asp:TemplateField
+                                                    HeaderText="เอกสารแนบ (ให้ทุน/รายได้จากหน่วยงานภายนอก)  "
+                                                    ShowHeader="False" ItemStyle-Width="80px">
                                                     <ItemStyle Width="80px" Font-Size="Small" />
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lnkDownload3_9_2" runat="server"
@@ -2696,7 +2708,8 @@
                                         <tr>
                                             <td valign="top" align="right">
                                                 <span style="color: Red">*</span> <strong
-                                                    style="color: #003359">เอกสารแนบ (ให้ทุน/รายได้จากหน่วยงานภายนอก) :</strong>
+                                                    style="color: #003359">เอกสารแนบ (ให้ทุน/รายได้จากหน่วยงานภายนอก)
+                                                    :</strong>
                                             </td>
                                             <td valign="top" width="150" colspan="2">
                                                 <asp:FileUpload ID="FileUpload3_9_2" runat="server" />

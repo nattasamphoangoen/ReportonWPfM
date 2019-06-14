@@ -42,7 +42,7 @@
                                             <tr>
                                                 <td align="center" colspan="6" >
                                                     <asp:Button ID="report1" runat="server" CssClass="btn btn-info" OnClick="report1_Click" 
-                                                     Text="ภาระงาน" Width="150px" />
+                                                     Text="ภาระงานนักวิทยาศาสตร์" Width="150px" />
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                                     <asp:Button ID="pt2" runat="server" CssClass="btn btn-info" OnClick="report2_Click"
                                                         Text="แบบรายงานผลการปฏิบัติงาน" Width="300px" />

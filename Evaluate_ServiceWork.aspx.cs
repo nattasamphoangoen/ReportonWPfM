@@ -28,7 +28,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         // this.DataSource((DataTable)ViewState["dtShowData"]);
 
         this.SearchData ();
-
         this.SearchData2 ();
 
         this.SearchData3 ();
@@ -147,6 +146,15 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
         }
+        // if (e.Row.RowType == DataControlRowType.DataRow) {
+
+        //     if (ProjectStatus == "W") {
+        //         e.Row.FindControl ("btnDeletService").Visible = true;
+        //         e.Row.FindControl ("btnEditSevice").Visible = true;
+        //     } else {
+
+        //     }
+        // }
 
     }
 
@@ -243,6 +251,82 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
     //###################################################################################
     string upnameNew;
     string upnameOld;
+    protected void FileUpload1_1_Click (object sender, EventArgs e) {
+        SqlCommand com;
+        string str;
+
+        SqlConnection con = new SqlConnection (con_string);
+        con.Open ();
+        str = @"select C.projectYear, C.projectRound, 
+                        M.acountId ,A.FirstName  + A.LastName AS FullName
+                        from ProjectControl AS C
+                        INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
+                        INNER JOIN Account AS A ON M.acountId = A.id 
+                        WHERE M.id = @MId
+                        ";
+
+        com = new SqlCommand (str, con);
+        string rId = Request.QueryString["nId"];
+        com.Parameters.AddWithValue ("@MId", rId);
+        SqlDataAdapter da = new SqlDataAdapter (com);
+        DataSet ds = new DataSet ();
+        SqlDataReader reader = com.ExecuteReader ();
+
+        reader.Read ();
+        string FullName = reader["FullName"].ToString ();
+        string AcountId = reader["acountId"].ToString ();
+        string projectYear = reader["projectYear"].ToString ();
+        string projectRound = reader["projectRound"].ToString ();
+
+        string filepath;
+        string filepathDelete;
+        string filepathEdit;
+        string rootpath = Request.PhysicalApplicationPath;
+        string path = "File\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-1\\";
+        string pathDelete = "Delete\\" + projectYear + "\\" + projectRound + "\\" + FullName + "\\tab1-1\\";
+        filepath = rootpath + path;
+        filepathDelete = rootpath + pathDelete;
+        var directoryInfo = new DirectoryInfo (filepath);
+        if (!Directory.Exists (filepath) || !Directory.Exists (filepathDelete)) {
+            Directory.CreateDirectory (filepath);
+            Directory.CreateDirectory (filepathDelete);
+            // Directory.CreateDirectory (filepathEdit);
+            //directoryInfo.CreateSubdirectory("k");
+        }
+        string OldFileName = Path.GetFileName (FileUpload1_1.FileName);
+        string NewFileName = "Sevice1_1_" + DateTime.Now.ToString ("yyyyMMddHHmmss") + "_" + FileUpload1_1.FileName;
+        // string NewFileName = FileUpload1_1.FileName;
+
+        string InsertFile = filepath + NewFileName;
+        //InsertFile.SaveAs
+        if (FileUpload1_1.HasFile) {
+            FileUpload1_1.SaveAs (InsertFile);
+        }
+        //hpf.SaveAs(InsertFile);
+
+        //==========================upfile end===============================
+        reader.Close ();
+        con.Close ();
+
+        string sql = "";
+
+        sql = @"INSERT INTO EvaluateSevice1_1
+                    ( path, fileNameOld,
+                    fileName) 
+                    VALUES
+                    ( @Path, @FileNameOld,
+                    @FileName)";
+
+        SqlCommand cmd = new SqlCommand ();
+        cmd.CommandText = sql;
+
+        cmd.Parameters.AddWithValue ("@Path", filepath);
+        cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
+        cmd.Parameters.AddWithValue ("@FileName", NewFileName);
+
+        db.ExecuteNonQuery (cmd);
+
+    }
 
     protected bool SaveService (string ID) {
 
@@ -1119,6 +1203,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         try {
 
             String class1_3 = txtProjectClass3.SelectedValue.ToString ();
+            totalScore1_3 = 0;
             if (class1_3 == "A") {
                 totalScore1_3 = 10;
                 classet1_3 = "Class A";
@@ -1142,7 +1227,8 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@ProjectCode", txtProjectCode3.Text.Trim ());
             cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName3.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectClass", classet1_3);
+            //cmd.Parameters.AddWithValue ("@ProjectClass", classet1_3);
+            cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");
             cmd.Parameters.AddWithValue ("@ProjectDescription", txtProjectDescription3.Text.Trim ());
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
@@ -1518,7 +1604,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         try {
 
             String class1_4 = txtProjectClass4.SelectedValue.ToString ();
-
+            totalScore1_4 = 0;
             if (class1_4 == "A") {
                 totalScore1_4 = 0.2 * 100;
                 classet1_4 = "Class A";
@@ -1536,8 +1622,8 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName4.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectClass", classet1_4);
-
+            // cmd.Parameters.AddWithValue ("@ProjectClass", classet1_4);
+            cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");
             cmd.Parameters.AddWithValue ("@Path", filepath);
 
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
@@ -1913,7 +1999,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         try {
 
             String class1_5 = txtProjectClass5.SelectedValue.ToString ();
-
+            totalScore1_5 = 0;
             if (class1_5 == "A") {
                 totalScore1_5 = 0.2 * 100;
                 classet1_5 = "Class A";
@@ -1931,7 +2017,8 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName5.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectClass", classet1_5);
+            //cmd.Parameters.AddWithValue ("@ProjectClass", classet1_5);
+            cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
 

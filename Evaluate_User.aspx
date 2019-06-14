@@ -161,13 +161,7 @@
                                             Text="View" Font-Size="Small" Visible="false"/>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
-                                    <ItemTemplate>
-                                        <asp:Button ID="bt_SentRound" runat="server" CssClass="txt_howtonav" OnClick="bt_SentRound_Click"
-                                            Text="ส่ง" Font-Size="Small" Visible="true"/> 
-                                        
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                                
 
                                 
 
