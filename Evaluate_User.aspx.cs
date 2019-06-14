@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Configuration;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
 using ClassLibrary;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using WebSite2;
+using System.Web.Mvc;
+using System.IO;
+using System.Net;
+
 
 public partial class Evaluate_User : System.Web.UI.Page {
     Authorize A = new Authorize ();
@@ -202,6 +194,24 @@ public partial class Evaluate_User : System.Web.UI.Page {
         set {
             ViewState["sortDirection"] = value;
         }
+    }
+
+    protected void btnDownload_Click (object sender, EventArgs e) {
+        string rootpath = Request.PhysicalApplicationPath;
+        string PartManual = "Manual\\Guideline for RFD Excel Score Sheet_NK20190613.pdf";
+        string Pathfile = rootpath + PartManual;
+
+        Response.Clear ();
+        byte[] Content = File.ReadAllBytes (Pathfile);
+        Response.ContentType = "application/octect-stream";
+        Response.AddHeader ("Content-Disposition", "attachment; filename=" + Path.GetFileName (Pathfile));
+        Response.TransmitFile (Pathfile);
+        Response.BufferOutput = true;
+        Response.WriteFile (Pathfile);
+        Response.Flush ();
+        Response.End ();
+        con.Close ();
+
     }
 
 }

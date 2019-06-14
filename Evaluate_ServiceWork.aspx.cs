@@ -21,11 +21,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
     ConnectDB db = new ConnectDB ();
 
     protected void Page_Load (object sender, EventArgs e) {
-        // A.ActionLog("ACCOUNTS", "", "View");
-        // dtShowData = new DataTable();
-        // dtShowData = this.CreateTableShowData();
-        // ViewState["dtShowData"] = dtShowData;
-        // this.DataSource((DataTable)ViewState["dtShowData"]);
 
         this.SearchData ();
         this.SearchData2 ();
@@ -35,6 +30,14 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         this.SearchData4 ();
 
         this.SearchData5 ();
+
+        if (!this.CheckData ()) {
+            Add1_1.Visible = false;
+            Add1_2.Visible = false;
+            Add1_3.Visible = false;
+            Add1_4.Visible = false;
+            Add1_5.Visible = false;
+        }
 
     }
     protected void reportSummary_Click (object sender, EventArgs e) {
@@ -142,19 +145,95 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     }
 
+    // protected void Visible_Add(){
+    //    string sql = @"SELECT M.evaluateStatus, E.id
+    //                 FROM [EvaluateSevice1_1] AS E
+    //                 INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+    //                 WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+    //         con.ConnectionString = con_string;
+    //         con.Open ();
+    //         SqlCommand cmd = new SqlCommand (sql, con);
+
+    //         string rId = Request.QueryString["nId"];
+    //         cmd.Parameters.AddWithValue ("@MasterId", rId);
+
+    //         SqlDataReader reader1_1 = cmd.ExecuteReader ();
+    //         reader1_1.Read ();
+    //         string ProjectStatus = reader1_1["id"].ToString ();
+    //         cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+    //         if (reader1_1["evaluateStatus"].ToString () == "W") {
+    //             Add1_1.Visible = true;
+
+    //         } else {
+    //             Add1_1.Visible = false;
+    //         }
+
+    //     con.Close ();
+    // }
+
     protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
+
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateSevice1_1] AS E1_1
+                    INNER JOIN EvaluateMaster AS M ON M.id = E1_1.masterId
+
+                    WHERE   M.id =  @MasterId AND E1_1.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletService").Visible = true;
+                e.Row.FindControl ("btnEditSevice").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletService").Visible = false;
+                e.Row.FindControl ("btnEditSevice").Visible = false;
+
+            }
+
         }
-        // if (e.Row.RowType == DataControlRowType.DataRow) {
+        con.Close ();
 
-        //     if (ProjectStatus == "W") {
-        //         e.Row.FindControl ("btnDeletService").Visible = true;
-        //         e.Row.FindControl ("btnEditSevice").Visible = true;
-        //     } else {
+    }
+    protected bool CheckData () {
+        string sql = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId ";
 
-        //     }
-        // }
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd.ExecuteReader ();
+        reader.Read ();
+
+        object res = db.ExecuteScalar (cmd);
+        if (res != null)
+            if (reader["evaluateStatus"].ToString () == "W") {
+                return true;
+            }
+        else {
+            return false;
+        } else {
+            return false;
+        }
+        con.Close ();
 
     }
 
@@ -633,8 +712,35 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus2 = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateSevice1_2] AS E1_2
+                    INNER JOIN EvaluateMaster AS M ON M.id = E1_2.masterId
+
+                    WHERE   M.id =  @MasterId AND E1_2.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletService2").Visible = true;
+                e.Row.FindControl ("btnEditSevice2").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletService2").Visible = false;
+                e.Row.FindControl ("btnEditSevice2").Visible = false;
+
+            }
         }
+        con.Close ();
 
     }
 
@@ -1023,8 +1129,35 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus3 = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateSevice1_3] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletService3").Visible = true;
+                e.Row.FindControl ("btnEditSevice3").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletService3").Visible = false;
+                e.Row.FindControl ("btnEditSevice3").Visible = false;
+
+            }
         }
+        con.Close ();
 
     }
 
@@ -1414,8 +1547,35 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     protected void gvData_RowDataBound4 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus4 = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateSevice1_4] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletService4").Visible = true;
+                e.Row.FindControl ("btnEditSevice4").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletService4").Visible = false;
+                e.Row.FindControl ("btnEditSevice4").Visible = false;
+
+            }
         }
+        con.Close ();
 
     }
 
@@ -1808,8 +1968,35 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     protected void gvData_RowDataBound5 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus5 = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateSevice1_5] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletService5").Visible = true;
+                e.Row.FindControl ("btnEditSevice5").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletService5").Visible = false;
+                e.Row.FindControl ("btnEditSevice5").Visible = false;
+
+            }
         }
+        con.Close ();
 
     }
 

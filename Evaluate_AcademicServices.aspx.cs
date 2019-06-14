@@ -25,58 +25,58 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         this.SearchData3 ();
         this.SearchData4 ();
         this.SearchData5 ();
+        if (!this.CheckData())
+            {
+                Add5_1.Visible = false;
+                Add5_2.Visible = false;
+                Add5_3.Visible = false;
+                Add5_4.Visible = false;
+                Add5_5.Visible = false;               
+
+            }
 
     }
 
-    protected void reportSummary_Click(object sender, EventArgs e)
-    {
+    protected void reportSummary_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Summary.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
     }
-    protected void report1_Click(object sender, EventArgs e)
-    {
+    protected void report1_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_ServiceWork.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_ServiceWork.aspx?nID=" + rId);
 
     }
-    protected void report2_Click(object sender, EventArgs e)
-    {
+    protected void report2_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Develop_Mainten.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_Develop_Mainten.aspx?nID=" + rId);
 
     }
-    protected void report3_Click(object sender, EventArgs e)
-    {
+    protected void report3_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Research.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_Research.aspx?nID=" + rId);
 
     }
-    protected void report4_Click(object sender, EventArgs e)
-    {
+    protected void report4_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Promotion_work.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_Promotion_work.aspx?nID=" + rId);
 
     }
-    protected void report5_Click(object sender, EventArgs e)
-    {
+    protected void report5_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_AcademicServices.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
-    protected void report6_Click(object sender, EventArgs e)
-    {
+    protected void report6_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Management.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_Management.aspx?nID=" + rId);
 
     }
-    protected void report7_Click(object sender, EventArgs e)
-    {
+    protected void report7_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Other.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_Other.aspx?nID=" + rId);
 
     }
-
 
     protected void SearchData () {
         string sql = @"SELECT [id]
@@ -140,7 +140,69 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
     protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateAcademicServices5_1] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletAcademic").Visible = true;
+                e.Row.FindControl ("btnEditAcademic").Visible = true;
+                Add5_1.Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletAcademic").Visible = false;
+                e.Row.FindControl ("btnEditAcademic").Visible = false;
+                Add5_1.Visible = false;
+
+            }
+
         }
+        con.Close ();
+
+    }
+
+    protected bool CheckData () {
+        string sql = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId ";
+
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd.ExecuteReader ();
+        reader.Read ();
+
+       object res = db.ExecuteScalar(cmd);
+        if (res != null)
+            if (reader["evaluateStatus"].ToString () == "W")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        else
+        {
+            return false;
+        }
+        con.Close ();
 
     }
 
@@ -250,7 +312,6 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-    
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -443,7 +504,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -527,8 +588,33 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateAcademicServices5_2] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletAcademic2").Visible = true;
+                e.Row.FindControl ("btnEditAcademic2").Visible = true;
+            } else {
+                e.Row.FindControl ("btnDeletAcademic2").Visible = false;
+                e.Row.FindControl ("btnEditAcademic2").Visible = false;            }
+
         }
+        con.Close ();
 
     }
 
@@ -637,7 +723,6 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -822,7 +907,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-        
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -907,8 +992,33 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateAcademicServices5_3] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletAcademic3").Visible = true;
+                e.Row.FindControl ("btnEditAcademic3").Visible = true;
+            } else {
+                e.Row.FindControl ("btnDeletAcademic3").Visible = false;
+                e.Row.FindControl ("btnEditAcademic3").Visible = false;            }
+
         }
+        con.Close ();
 
     }
 
@@ -1017,7 +1127,6 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1204,7 +1313,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1287,8 +1396,33 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound4 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateAcademicServices5_4] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletAcademic4").Visible = true;
+                e.Row.FindControl ("btnEditAcademic4").Visible = true;
+            } else {
+                e.Row.FindControl ("btnDeletAcademic4").Visible = false;
+                e.Row.FindControl ("btnEditAcademic4").Visible = false;            }
+
         }
+        con.Close ();
 
     }
 
@@ -1396,7 +1530,6 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1578,7 +1711,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -1658,8 +1791,33 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound5 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateAcademicServices5_5] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletAcademic5").Visible = true;
+                e.Row.FindControl ("btnEditAcademic5").Visible = true;
+            } else {
+                e.Row.FindControl ("btnDeletAcademic5").Visible = false;
+                e.Row.FindControl ("btnEditAcademic5").Visible = false;            }
+
         }
+        con.Close ();
 
     }
 
@@ -1768,7 +1926,6 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1951,7 +2108,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-      
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();

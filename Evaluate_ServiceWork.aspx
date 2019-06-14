@@ -341,7 +341,7 @@
                                 <tr>
                                     <td colspan="6" align="right">
                                         <asp:Button ID="Add1_1" runat="server" CssClass="btn btn-success" Text="Add"
-                                            OnClick="Add1_1_Click" />
+                                            Visible="true" OnClick="Add1_1_Click" />
                                     </td>
                                 </tr>
 
@@ -595,7 +595,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnEditSevice2" runat="server" Text=''
-                                                            OnClick="btnEditService_Click2">
+                                                            Visible="true" OnClick="btnEditService_Click2">
                                                             <img id="editService2" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -610,7 +610,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnDeletService2" runat="server" Text=''
-                                                            OnClick="btnDeleteService_Click2">
+                                                            Visible="true" OnClick="btnDeleteService_Click2">
                                                             <img id="DeletService2" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -634,7 +634,7 @@
                                 <tr>
                                     <td colspan="6" align="right">
                                         <asp:Button ID="Add1_2" runat="server" CssClass="btn btn-success" Text="Add"
-                                            OnClick="Add1_2_Click" />
+                                            Visible="true" OnClick="Add1_2_Click" />
                                     </td>
                                 </tr>
 
@@ -899,7 +899,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnEditSevice3" runat="server" Text=''
-                                                            OnClick="btnEditService_Click3">
+                                                            Visible="true" OnClick="btnEditService_Click3">
                                                             <img id="editService3" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -914,7 +914,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnDeletService3" runat="server" Text=''
-                                                            OnClick="btnDeleteService_Click3">
+                                                            Visible="true" OnClick="btnDeleteService_Click3">
                                                             <img id="DeletService3" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -937,7 +937,7 @@
                                 <tr>
                                     <td colspan="6" align="right">
                                         <asp:Button ID="Add1_3" runat="server" CssClass="btn btn-success" Text="Add"
-                                            OnClick="Add1_3_Click" />
+                                            Visible="true" OnClick="Add1_3_Click" />
                                     </td>
                                 </tr>
 
@@ -1018,11 +1018,11 @@
                                                     AppendDataBoundItems="True" CssClass="gray"
                                                     DataSourceID="sqlClassAdd" DataTextField="ddlDisplay"
                                                     DataValueField="ddlValue" Width="180" AutoPostBack="False">
-                                                    <asp:ListItem Value="">คณะกรรมการเป็นผู้พิจารณา</asp:ListItem>
+                                                    <asp:ListItem Value="">Select</asp:ListItem>
                                                 </asp:DropDownList>
                                                 <asp:SqlDataSource ID="sqlClassAdd" runat="server"
                                                     ConnectionString="<%$ ConnectionStrings:SLRIConnectionString %>"
-                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'test' ORDER BY id">
+                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'Sevice1-3-Type' ORDER BY id">
                                                 </asp:SqlDataSource>
                                                 <asp:RequiredFieldValidator ID="reqClassAdd" runat="server"
                                                     ControlToValidate="txtProjectClass3" Display="Dynamic"
@@ -1186,7 +1186,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnEditSevice4" runat="server" Text=''
-                                                            OnClick="btnEditService_Click4">
+                                                            Visible="true" OnClick="btnEditService_Click4">
                                                             <img id="editService4" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -1201,7 +1201,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnDeletService4" runat="server" Text=''
-                                                            OnClick="btnDeleteService_Click4">
+                                                            Visible="true" OnClick="btnDeleteService_Click4">
                                                             <img id="DeletService4" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -1224,7 +1224,7 @@
                                 <tr>
                                     <td colspan="6" align="right">
                                         <asp:Button ID="Add1_4" runat="server" CssClass="btn btn-success" Text="Add"
-                                            OnClick="Add1_4_Click" />
+                                            Visible="true" OnClick="Add1_4_Click" />
                                     </td>
                                 </tr>
 
@@ -1452,7 +1452,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnEditSevice5" runat="server" Text=''
-                                                            OnClick="btnEditService_Click5">
+                                                            Visible="true" OnClick="btnEditService_Click5">
                                                             <img id="editService5" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -1467,7 +1467,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnDeletService5" runat="server" Text=''
-                                                            OnClick="btnDeleteService_Click5">
+                                                            Visible="true" OnClick="btnDeleteService_Click5">
                                                             <img id="DeletService5" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -1490,7 +1490,7 @@
                                 <tr>
                                     <td colspan="6" align="right">
                                         <asp:Button ID="Add1_5" runat="server" CssClass="btn btn-success" Text="Add"
-                                            OnClick="Add1_5_Click" />
+                                            Visible="true" OnClick="Add1_5_Click" />
                                     </td>
                                 </tr>
 
