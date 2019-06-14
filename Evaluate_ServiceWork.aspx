@@ -99,56 +99,65 @@
                     <div colspan="2" align="right">
                         <tr>
                             <td>
-                                <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="20" name="popcal"
-                                        src="Images/file.png" width="20" />
+                                <asp:LinkButton ID="reportSummary" runat="server" Text='' title="Summary"
+                                    OnClick="reportSummary_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/file.png"
+                                        width="20" />
+
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
+                                <asp:LinkButton ID="report1" runat="server" Text='' title="งานให้บริการ"
+                                    OnClick="report1_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/one.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
+                                <asp:LinkButton ID="report2" runat="server" Text='' title="งานพัฒนาและบำรุงรักษา"
+                                    OnClick="report2_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n2.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
+                                <asp:LinkButton ID="report3" runat="server" Text='' title="งานวิจัย"
+                                    OnClick="report3_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n3.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
+                                <asp:LinkButton ID="report4" runat="server" Text='' title="งานส่งเสริมการใช้แสง"
+                                    OnClick="report4_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
+                                <asp:LinkButton ID="report5" runat="server" Text='' title="งานบริการวิชาการ"
+                                    OnClick="report5_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n5.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
+                                <asp:LinkButton ID="report6" runat="server" Text='' title="งานบริหารจัดการ"
+                                    OnClick="report6_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
+                                <asp:LinkButton ID="report7" runat="server" Text='' title="งานอื่น ๆ"
+                                    OnClick="report7_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n7.png"
                                         width="20" />
                                 </asp:LinkButton>
@@ -175,6 +184,7 @@
                                     <h5 class="h5" align="left">1. งาน Local contact (Experimental setup, Sample
                                         preparation, and Measurement) งานสอบเทียบเครื่องมือและมาตรฐานการวัด</h5>
                                 </tr>
+
                                 <tr>
                                     <td colspan="6" align="Left">
                                         <asp:GridView ID="gvData" runat="server" Width="900px" AllowPaging="True"
@@ -271,7 +281,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnEditSevice" runat="server" Text=''
-                                                            OnClick="btnEditService_Click">
+                                                            Visible="true" OnClick="btnEditService_Click">
                                                             <img id="editService" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_edit_16x16_9821.gif"
@@ -286,7 +296,7 @@
                                                     HeaderStyle-VerticalAlign="Middle">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="btnDeletService" runat="server" Text=''
-                                                            OnClick="btnDeleteService_Click">
+                                                            Visible="true" OnClick="btnDeleteService_Click">
                                                             <img id="DeletService" alt="" border="0" height="16"
                                                                 name="popcal"
                                                                 src="Images/iconfinder_trash_(delete)_16x16_10030.gif"
@@ -307,7 +317,27 @@
                                         </asp:GridView>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td align="Left" width="20">
+                                        <asp:FileUpload ID="FileUpload1_1" runat="server" EnableTheming="True"
+                                            style="color: #0d0044; font-size: 13px;" />
+                                        <asp:RequiredFieldValidator ID="reqProjectFileAdd" runat="server"
+                                            ErrorMessage="*โปรดเลือกไฟล์" style="color: #ff0000; font-size: 13px;"
+                                            ControlToValidate="FileUpload1_1" Display="Dynamic" SetFocusOnError="True"
+                                            ValidationGroup="AddServeice1_1">
+                                        </asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="vldUploadDeparture" runat="server"
+                                            style="color: #ff0000; font-size: 10px;" ControlToValidate="FileUpload1_1"
+                                            Display="Dynamic" ErrorMessage="*ระบุได้เฉพาะไฟล์ (PDF, Excel, Word)!!"
+                                            SetFocusOnError="True"
+                                            ValidationExpression="^.+\.((docx)|(odt)|(doc)|(pdf)|(xlsx)|(xls))$"
+                                            ValidationGroup="AddServeice1_1"></asp:RegularExpressionValidator>
+                                        <asp:Button ID="Upload1_1" runat="server"
+                                            style="color: #0d0044; font-size: 12px;" Text="Upload"
+                                            OnClick="FileUpload1_1_Click" />
+                                    </td>
 
+                                </tr>
                                 <tr>
                                     <td colspan="6" align="right">
                                         <asp:Button ID="Add1_1" runat="server" CssClass="btn btn-success" Text="Add"
@@ -428,28 +458,7 @@
                                                 </asp:RequiredFieldValidator>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td valign="top" align="right">
-                                                <span style="color: Red">*</span> <strong
-                                                    style="color: #003359">เอกสารแนบ :</strong>
-                                            </td>
-                                            <td valign="top" width="150" colspan="3">
-                                                <asp:FileUpload ID="FileUpload1_1" runat="server" EnableTheming="True"
-                                                    style="color: #0d0044" />
-                                                <asp:RequiredFieldValidator ID="reqProjectFileAdd" runat="server"
-                                                    ErrorMessage="*โปรดเลือกไฟล์" style="color: #ff0000"
-                                                    ControlToValidate="FileUpload1_1" Display="Dynamic"
-                                                    SetFocusOnError="True" ValidationGroup="AddServeice1_1">
-                                                </asp:RequiredFieldValidator>
-                                                <asp:RegularExpressionValidator ID="vldUploadDeparture" runat="server"
-                                                    style="color: #ff0000" ControlToValidate="FileUpload1_1"
-                                                    Display="Dynamic"
-                                                    ErrorMessage="*ระบุได้เฉพาะไฟล์ (PDF, Excel, Word)!!"
-                                                    SetFocusOnError="True"
-                                                    ValidationExpression="^.+\.((docx)|(odt)|(doc)|(pdf)|(xlsx)|(xls))$"
-                                                    ValidationGroup="AddServeice1_1"></asp:RegularExpressionValidator>
-                                            </td>
-                                        </tr>
+
 
                                         <tr>
                                             <td align="center" colspan="6">
@@ -1009,11 +1018,11 @@
                                                     AppendDataBoundItems="True" CssClass="gray"
                                                     DataSourceID="sqlClassAdd" DataTextField="ddlDisplay"
                                                     DataValueField="ddlValue" Width="180" AutoPostBack="False">
-                                                    <asp:ListItem Value="">Select</asp:ListItem>
+                                                    <asp:ListItem Value="">คณะกรรมการเป็นผู้พิจารณา</asp:ListItem>
                                                 </asp:DropDownList>
                                                 <asp:SqlDataSource ID="sqlClassAdd" runat="server"
                                                     ConnectionString="<%$ ConnectionStrings:SLRIConnectionString %>"
-                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'Sevice1-3-Type' ORDER BY id">
+                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'test' ORDER BY id">
                                                 </asp:SqlDataSource>
                                                 <asp:RequiredFieldValidator ID="reqClassAdd" runat="server"
                                                     ControlToValidate="txtProjectClass3" Display="Dynamic"
@@ -1029,7 +1038,7 @@
                                             </td>
                                             <td valign="top" width="150" colspan="3">
                                                 <asp:TextBox ID="txtProjectDescription3" runat="server" CssClass="gray"
-                                                    Width="180px"></asp:TextBox>
+                                                    Width="180px" Height="50px" Font-Overline="True"></asp:TextBox>
                                             </td>
                                         </tr>
                                         <tr>
@@ -1280,11 +1289,11 @@
                                                     AppendDataBoundItems="True" CssClass="gray"
                                                     DataSourceID="sqlClass4Add" DataTextField="ddlDisplay"
                                                     DataValueField="ddlValue" Width="180" AutoPostBack="False">
-                                                    <asp:ListItem Value="">Select</asp:ListItem>
+                                                    <asp:ListItem Value="">คณะกรรมการเป็นผู้พิจารณา</asp:ListItem>
                                                 </asp:DropDownList>
                                                 <asp:SqlDataSource ID="sqlClass4Add" runat="server"
                                                     ConnectionString="<%$ ConnectionStrings:SLRIConnectionString %>"
-                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'Sevice1-4-Type' ORDER BY id">
+                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'test' ORDER BY id">
                                                 </asp:SqlDataSource>
                                                 <asp:RequiredFieldValidator ID="reqClass4Add" runat="server"
                                                     ControlToValidate="txtProjectClass4" Display="Dynamic"
@@ -1547,11 +1556,11 @@
                                                     AppendDataBoundItems="True" CssClass="gray"
                                                     DataSourceID="sqlClass5Add" DataTextField="ddlDisplay"
                                                     DataValueField="ddlValue" Width="180" AutoPostBack="False">
-                                                    <asp:ListItem Value="">Select</asp:ListItem>
+                                                    <asp:ListItem Value="">คณะกรรมการเป็นผู้พิจารณา</asp:ListItem>
                                                 </asp:DropDownList>
                                                 <asp:SqlDataSource ID="sqlClass5Add" runat="server"
                                                     ConnectionString="<%$ ConnectionStrings:SLRIConnectionString %>"
-                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'Sevice1-5-Type' AND ddlStatus = 'A' ORDER BY id">
+                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'test' AND ddlStatus = 'A' ORDER BY id">
                                                 </asp:SqlDataSource>
                                                 <asp:RequiredFieldValidator ID="reqClass5Add" runat="server"
                                                     ControlToValidate="txtProjectClass5" Display="Dynamic"
@@ -1620,7 +1629,7 @@
 
         </ContentTemplate>
         <Triggers>
-            <asp:PostBackTrigger ControlID="btnAddService" />
+            <asp:PostBackTrigger ControlID="Upload1_1" />
             <asp:PostBackTrigger ControlID="btnAddService2" />
             <asp:PostBackTrigger ControlID="btnAddService3" />
             <asp:PostBackTrigger ControlID="btnAddService4" />

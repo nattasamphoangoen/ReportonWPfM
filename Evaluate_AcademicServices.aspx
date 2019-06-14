@@ -37,58 +37,67 @@
                     <p class="lead">สถาบันวิจัยแสงซินโครตรอน (องค์การมหาชน)</p>
 
                     <div colspan="2" align="right">
-                         <tr>
+                        <tr>
                             <td>
-                                <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="20" name="popcal"
-                                        src="Images/file.png" width="20" />
+                                <asp:LinkButton ID="reportSummary" runat="server" Text='' title="Summary"
+                                    OnClick="reportSummary_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/file.png"
+                                        width="20" />
+
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
+                                <asp:LinkButton ID="report1" runat="server" Text='' title="งานให้บริการ"
+                                    OnClick="report1_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n1.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
+                                <asp:LinkButton ID="report2" runat="server" Text='' title="งานพัฒนาและบำรุงรักษา"
+                                    OnClick="report2_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n2.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
+                                <asp:LinkButton ID="report3" runat="server" Text='' title="งานวิจัย"
+                                    OnClick="report3_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n3.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
+                                <asp:LinkButton ID="report4" runat="server" Text='' title="งานส่งเสริมการใช้แสง"
+                                    OnClick="report4_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
+                                <asp:LinkButton ID="report5" runat="server" Text='' title="งานบริการวิชาการ"
+                                    OnClick="report5_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/five.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
+                                <asp:LinkButton ID="report6" runat="server" Text='' title="งานบริหารจัดการ"
+                                    OnClick="report6_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
+                                <asp:LinkButton ID="report7" runat="server" Text='' title="งานอื่น ๆ"
+                                    OnClick="report7_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n7.png"
                                         width="20" />
                                 </asp:LinkButton>

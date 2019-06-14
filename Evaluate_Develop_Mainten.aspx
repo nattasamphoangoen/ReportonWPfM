@@ -41,56 +41,65 @@
                     <div colspan="2" align="right">
                         <tr>
                             <td>
-                                <asp:LinkButton ID="reportSummary" runat="server" Text='' OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="20" name="popcal"
-                                        src="Images/file.png" width="20" />
+                                <asp:LinkButton ID="reportSummary" runat="server" Text='' title="Summary"
+                                    OnClick="reportSummary_Click">
+                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/file.png"
+                                        width="20" />
+
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report1" runat="server" Text='' OnClick="report1_Click">
+                                <asp:LinkButton ID="report1" runat="server" Text='' title="งานให้บริการ"
+                                    OnClick="report1_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n1.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report2" runat="server" Text='' OnClick="report2_Click">
+                                <asp:LinkButton ID="report2" runat="server" Text='' title="งานพัฒนาและบำรุงรักษา"
+                                    OnClick="report2_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/two.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report3" runat="server" Text='' OnClick="report3_Click">
+                                <asp:LinkButton ID="report3" runat="server" Text='' title="งานวิจัย"
+                                    OnClick="report3_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n3.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report4" runat="server" Text='' OnClick="report4_Click">
+                                <asp:LinkButton ID="report4" runat="server" Text='' title="งานส่งเสริมการใช้แสง"
+                                    OnClick="report4_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n4.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report5" runat="server" Text='' OnClick="report5_Click">
+                                <asp:LinkButton ID="report5" runat="server" Text='' title="งานบริการวิชาการ"
+                                    OnClick="report5_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n5.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report6" runat="server" Text='' OnClick="report6_Click">
+                                <asp:LinkButton ID="report6" runat="server" Text='' title="งานบริหารจัดการ"
+                                    OnClick="report6_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n6.png"
                                         width="20" />
                                 </asp:LinkButton>
                             </td>
 
                             <td>
-                                <asp:LinkButton ID="report7" runat="server" Text='' OnClick="report7_Click">
+                                <asp:LinkButton ID="report7" runat="server" Text='' title="งานอื่น ๆ"
+                                    OnClick="report7_Click">
                                     <img id="report" alt="" border="0" height="20" name="popcal" src="Images/n7.png"
                                         width="20" />
                                 </asp:LinkButton>
@@ -722,7 +731,7 @@
                                                     <ItemStyle Width="20px" />
                                                 </asp:TemplateField>
 
-                                                <asp:BoundField HeaderText="หัวข้อ" DataField="projectTopic"
+                                                <asp:BoundField HeaderText="ชื่อขอจดสิทธิบัตร/อนุสิทธิบัตร" DataField="projectTopic"
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="120px" Font-Size="Small" />
                                                 </asp:BoundField>
@@ -843,7 +852,7 @@
                                         <tr>
                                             <asp:HiddenField ID="hdf_DevelMaintStatus3" runat="server" />
                                             <td valign="top" align="right">
-                                                <span style="color: Red">*</span> <strong style="color: #003359">หัวข้อ
+                                                <span style="color: Red">*</span> <strong style="color: #003359">ชื่อขอจดจดสิทธิบัตร/อนุสิทธิบัตร
                                                     :</strong>
                                             </td>
                                             <td valign="top" width="150" colspan="2">
@@ -1469,11 +1478,11 @@
                                                     AppendDataBoundItems="True" CssClass="gray"
                                                     DataSourceID="sqlClass5Add" DataTextField="ddlDisplay"
                                                     DataValueField="ddlDisplay" Width="180" AutoPostBack="False">
-                                                    <asp:ListItem Value="">Select</asp:ListItem>
+                                                    <asp:ListItem Value="">คณะกรรมการเป็นผู้พิจารณา</asp:ListItem>
                                                 </asp:DropDownList>
                                                 <asp:SqlDataSource ID="sqlClass5Add" runat="server"
                                                     ConnectionString="<%$ ConnectionStrings:SLRIConnectionString %>"
-                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'Develop2-5-Class' ORDER BY id">
+                                                    SelectCommand="SELECT id, ddlDisplay, ddlValue, ddlType  FROM MasterDDL WHERE ddlType = 'test' ORDER BY id">
                                                 </asp:SqlDataSource>
                                                 <asp:RequiredFieldValidator ID="reqClass5Add" runat="server"
                                                     ControlToValidate="txtProjectClass5" Display="Dynamic"
@@ -1911,17 +1920,17 @@
                                                 </asp:BoundField>
                                                 <asp:BoundField HeaderText="% แผนที่ตั้งไว้" DataField="projectPlan"
                                                     ItemStyle-Width="80px">
-                                                    <ItemStyle Width="60px" Font-Size="Small" />
+                                                    <ItemStyle Width="40px" Font-Size="Small" />
                                                 </asp:BoundField>
                                                 <asp:BoundField HeaderText="% การดำเนินงาน"
                                                     DataField="projectInProgress" ItemStyle-Width="80px">
-                                                    <ItemStyle Width="60px" Font-Size="Small" />
+                                                    <ItemStyle Width="50px" Font-Size="Small" />
                                                 </asp:BoundField>
 
 
                                                 <asp:BoundField HeaderText="คะแนน" DataField="projectScore"
-                                                    ItemStyle-Width="80px">
-                                                    <ItemStyle Width="50px" Font-Size="Small" />
+                                                    ItemStyle-Width="50px">
+                                                    <ItemStyle Width="30px" Font-Size="Small" />
                                                 </asp:BoundField>
 
 
@@ -2517,7 +2526,7 @@
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="110px" Font-Size="Small" />
                                                 </asp:BoundField>
-                                                <asp:BoundField HeaderText="จำนวนวัน" DataField="dateNumber"
+                                                <asp:BoundField HeaderText="จำนวนวัน (อย่างเป็นทางการ)" DataField="dateNumber"
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="110px" Font-Size="Small" />
                                                 </asp:BoundField>
@@ -2651,7 +2660,7 @@
                                         <tr>
                                             <td valign="top" align="right">
                                                 <span style="color: Red">*</span> <strong
-                                                    style="color: #003359">จำนวนวัน :</strong>
+                                                    style="color: #003359">จำนวนวัน (อย่างเป็นทางการ):</strong>
                                             </td>
                                             <td valign="top" width="150" colspan="2">
                                                 <asp:TextBox ID="txtDateNumber8" runat="server" CssClass="gray"

@@ -1915,15 +1915,18 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     totalScore2_5 = 15;
                 } else if (Class2_5 == "Class D                                                                                             ") {
                     totalScore2_5 = 10;
-                } else {
+                } else if(Class2_5 == "Class E                                                                                             "){
                     totalScore2_5 = 5;
+                }else{
+                    totalScore2_5 = 0;
                 }
             }
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectType", txtProjectType5.SelectedValue);
             cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic5.Text.Trim ());
-            cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass5.SelectedValue);
+           // cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass5.SelectedValue);
+            cmd.Parameters.AddWithValue ("@ProjectClass", "รอพิจารณา");
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
             cmd.Parameters.AddWithValue ("@FileNameOld", OldFileName);
@@ -2445,8 +2448,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         string sql = @"SELECT [id]
                     ,[masterId]
                     ,[projectTopic]
-                    ,[projectClass]
                     ,[projectName]
+                    ,[projectClass]
                     ,[projectPlan]
                     ,[projectInProgress]
                     ,[projectScore]
@@ -2458,7 +2461,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
-                    ,[createdDate]
+                    ,[createdDaye]
                     FROM [EvaluateDevelopMainten2_6_2] 
 
                     WHERE  projectStatus = 'A' AND masterId =  @MasterId ";
@@ -2744,8 +2747,8 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         cmd.CommandText = @"SELECT [id]
                     ,[masterId]
                     ,[projectTopic]
-                    ,[projectClass]
                     ,[projectName]
+                    ,[projectClass]
                     ,[projectPlan]
                     ,[projectInProgress]
                     ,[projectScore]
@@ -2757,7 +2760,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     ,[ipAddressCreate]
                     ,[updatedBy]
                     ,[ipAdressUpdate]
-                    ,[createdDate]
+                    ,[createdDaye]
                                                         
                     FROM [EvaluateDevelopMainten2_6_2] 
 

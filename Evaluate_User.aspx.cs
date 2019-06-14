@@ -151,6 +151,9 @@ public partial class Evaluate_User : System.Web.UI.Page {
         GridViewRow row = ((GridViewRow) ((Button) sender).NamingContainer);
         string rId = gvData.DataKeys[row.RowIndex]["MId"].ToString ();
         //string rId = Request.QueryString["nId"];
+        
+        // bt_EditRound.Visible = false;
+        // bt_ViewRound.Visible = true;
         Response.Redirect ("Evaluate_User.aspx?nID=" + rId);
     }
 

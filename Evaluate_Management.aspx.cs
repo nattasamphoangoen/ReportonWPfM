@@ -1077,14 +1077,16 @@ public partial class Evaluate_Management : System.Web.UI.Page {
             string class3 = txtProjectClass3.SelectedValue;
             if (class3 == "โครงการวิจัย") {
                 totalScore6_2 = 20;
-            } else {
+            } else if(class3 == "โครงการอุตสาหกรรม"){
                 totalScore6_2 = 10;
+            }else {
+                totalScore6_2 = 0;
             }
 
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-            cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass3.SelectedValue);
-            //cmd.Parameters.AddWithValue ("@ProjectThesisTopic", txtProjectThesisTopic3.Text);
+          //  cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass3.SelectedValue);            
+            cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");   
             cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName3.Text);
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
