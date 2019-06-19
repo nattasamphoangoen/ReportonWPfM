@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Manage_Round_Search.aspx.cs" Inherits="Manage_Round_Search" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AdminEvaluted.aspx.cs" Inherits="AdminEvaluted" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -13,7 +13,7 @@
 
             <div class="jumbotron">
                 <div class="jumbotron" style="padding: 10px; background-color: #DCDCDC">
-                    <h2>ภาระงานนักวิทยาศาสตร์</h2>
+                    <h2>แบบรายงานผลการปฏิบัติงาน</h2>
                     <p class="lead">สถาบันวิจัยแสงซินโครตรอน (องค์การมหาชน)</p>
                 </div>
 
@@ -29,7 +29,7 @@
                                 <td width="118" class="auto-style1"></td>
                             </tr>
                             <tr class="lead">
-                                <td colspan="6" align="center" class="txt_title_rewards">ค้นหาข้อมูลรอบประเมิน</td>
+                                <td colspan="6" align="center" class="txt_title_rewards">ค้นหาข้อมูล</td>
                             </tr>
                             <tr>
                                 <td colspan="6">&nbsp;
@@ -48,7 +48,7 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td valign="top" align="right"><strong>ปีงบประมาณ &nbsp;:</strong>
+                                                <td valign="top" align="right"><strong>ปี &nbsp;:</strong>
                                                 </td>
                                                 <td valign="top">
                                                     <asp:TextBox ID="txtYear" runat="server" CssClass="gray"
@@ -114,19 +114,14 @@
                                 <tr>
                                     <td colspan="5">
                                 </tr>
-                                <tr>
-                                    <td colspan="5">
-                                        <asp:Button ID="btnSurveyAdd" runat="server" CssClass="btn btn-success"
-                                            OnClick="btnSurveyAdd_Click" Text="เพิ่มรอบประเมิน" />
-                                    </td>
-                                </tr>
+                               
                                 <tr>
                                     <td colspan="6" align="Left">
                                         <asp:GridView ID="gvData" runat="server" Width="900px" AllowPaging="True"
                                             OnPageIndexChanging="gvData_PageIndexChanging" AllowSorting="True"
                                             OnSorting="gvData_Sorting" AutoGenerateColumns="False" CellPadding="4"
                                             OnRowDataBound="gvData_RowDataBound" ForeColor="#333333" GridLines="None"
-                                            DataKeyNames="RoundId" PageSize="50"
+                                            DataKeyNames="id" PageSize="50"
                                             OnSelectedIndexChanged="gvData_SelectedIndexChanged">
                                             <PagerSettings FirstPageText="&amp;lt;&amp;lt;First"
                                                 LastPageText="Last&amp;gt;&amp;gt;" NextPageText="Next&amp;gt;"
@@ -143,11 +138,11 @@
                                             <AlternatingRowStyle BackColor="#DAEAFF" CssClass="gray"
                                                 HorizontalAlign="Left" />
                                             <Columns>
-                                                <asp:TemplateField HeaderText="RoundId" SortExpression="RoundId"
+                                                <asp:TemplateField HeaderText="id" SortExpression="id"
                                                     Visible="False">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lbl_RoundId" runat="server"
-                                                            Text='<%# Bind("RoundId") %>'></asp:Label>
+                                                        <asp:Label ID="lbl_id" runat="server"
+                                                            Text='<%# Bind("id") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="ที่" ItemStyle-Width="20px">
@@ -161,7 +156,7 @@
                                                     </ItemTemplate>
                                                     <ItemStyle Width="20px" />
                                                 </asp:TemplateField>
-                                                <asp:BoundField HeaderText="ปีงบประมาณ" DataField="projectYear"
+                                                <asp:BoundField HeaderText="ปี" DataField="projectYear"
                                                     ItemStyle-Width="100px" SortExpression="projectYear">
                                                     <ItemStyle Width="100px" Font-Size="Small" />
                                                 </asp:BoundField>
@@ -169,51 +164,21 @@
                                                     ItemStyle-Width="80px" SortExpression="projectRound">
                                                     <ItemStyle Width="80px" Font-Size="Small" />
                                                 </asp:BoundField>
-                                                <asp:BoundField HeaderText="สถานะ" DataField="projectStatusDetail"
-                                                    ItemStyle-Width="200px" SortExpression="projectStatusDetail">
+                                                <asp:BoundField HeaderText="ชื่อ-นามสกุล" DataField="FullName"
+                                                    ItemStyle-Width="200px" SortExpression="FullName">
+                                                    <ItemStyle Width="200px" Font-Size="Small" />
+                                                </asp:BoundField>
+                                                <asp:BoundField HeaderText="คะแนนรวม" DataField="SUMALLSORE"
+                                                    ItemStyle-Width="200px" SortExpression="SUMALLSORE">
                                                     <ItemStyle Width="200px" Font-Size="Small" />
                                                 </asp:BoundField>
 
-                                                <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
-                                                    <ItemTemplate>
-                                                        <asp:Button ID="bt_ProjectDetail" runat="server"
-                                                            CssClass="txt_howtonav" OnClick="bt_ProjectDetail_Click"
-                                                            Text="% Project" Font-Size="Small" Visible="true" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
 
                                                 <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
                                                     <ItemTemplate>
-                                                        <asp:Button ID="bt_UserDetail" runat="server"
-                                                            CssClass="txt_howtonav" OnClick="bt_UserDetail_Click"
-                                                            Text="% Workload" Font-Size="Small" Visible="true" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-
-                                                <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
-                                                    <ItemTemplate>
-                                                        <asp:Button ID="bt_EditRound" runat="server"
-                                                            CssClass="txt_howtonav" OnClick="bt_EditRound_Click"
-                                                            Text="Edit Data" Font-Size="Small" Visible="true" />
                                                         <asp:Button ID="bt_ViewRound" runat="server"
                                                             CssClass="txt_howtonav" OnClick="bt_ViewData_Click"
-                                                            Text="View Data" Font-Size="Small" Visible="false" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-
-                                                <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
-                                                    <ItemTemplate>
-                                                        <asp:Button ID="bt_ProjectCompleted" runat="server"
-                                                            CssClass="txt_howtonav" OnClick="bt_ProjectCompleted_Click"
-                                                            Text="% Completed" Font-Size="Small" Visible="true" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText=" " ItemStyle-Width="80px">
-                                                    <ItemTemplate>
-                                                        <asp:Button ID="bt_ProjectPersonal" runat="server"
-                                                            CssClass="txt_howtonav" OnClick="bt_ProjectPersonal_Click"
-                                                            Text="% ส่วนบุคคล" Font-Size="Small" Visible="true"
-                                                            target="_blank" />
+                                                            Text="View Data" Font-Size="Small" Visible="true" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 

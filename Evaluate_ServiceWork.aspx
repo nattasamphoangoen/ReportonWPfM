@@ -7,7 +7,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <style type="text/css">
         .modalBackground {
-            background-color: ##f8b1cf;
+            background-color: #ffffff;
             filter: alpha(opacity=50);
             opacity: 0.7;
         }
@@ -1630,6 +1630,7 @@
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="Upload1_1" />
+            <asp:PostBackTrigger ControlID="btnAddService" />
             <asp:PostBackTrigger ControlID="btnAddService2" />
             <asp:PostBackTrigger ControlID="btnAddService3" />
             <asp:PostBackTrigger ControlID="btnAddService4" />

@@ -24,6 +24,40 @@ public partial class Evaluate_Management : System.Web.UI.Page {
         this.SearchData2 ();
         this.SearchData3 ();
 
+        if (!this.CheckData ()) {
+            Add6_1_1.Visible = false;
+            Add6_1_2.Visible = false;
+            Add6_2.Visible = false;
+
+        }
+
+    }
+    protected bool CheckData () {
+        string sql = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId ";
+
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd.ExecuteReader ();
+        reader.Read ();
+
+        object res = db.ExecuteScalar (cmd);
+        if (res != null)
+            if (reader["evaluateStatus"].ToString () == "W") {
+                return true;
+            }
+        else {
+            return false;
+        } else {
+            return false;
+        }
+        con.Close ();
+
     }
 
     protected void report1_Click (object sender, EventArgs e) {
@@ -127,7 +161,35 @@ public partial class Evaluate_Management : System.Web.UI.Page {
     protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateManagement6_1_1] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletManag").Visible = true;
+                e.Row.FindControl ("btnEditManag").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletManag").Visible = false;
+                e.Row.FindControl ("btnEditManag").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -508,7 +570,36 @@ public partial class Evaluate_Management : System.Web.UI.Page {
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateManagement6_1_2] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletManag2").Visible = true;
+                e.Row.FindControl ("btnEditManag2").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletManag2").Visible = false;
+                e.Row.FindControl ("btnEditManag2").Visible = false;
+
+            }
+
         }
+        con.Close ();
+
 
     }
 
@@ -894,7 +985,36 @@ public partial class Evaluate_Management : System.Web.UI.Page {
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateManagement6_2] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletManag3").Visible = true;
+                e.Row.FindControl ("btnEditManag3").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletManag3").Visible = false;
+                e.Row.FindControl ("btnEditManag3").Visible = false;
+
+            }
+
         }
+        con.Close ();
+
 
     }
 
@@ -1077,16 +1197,16 @@ public partial class Evaluate_Management : System.Web.UI.Page {
             string class3 = txtProjectClass3.SelectedValue;
             if (class3 == "โครงการวิจัย") {
                 totalScore6_2 = 20;
-            } else if(class3 == "โครงการอุตสาหกรรม"){
+            } else if (class3 == "โครงการอุตสาหกรรม") {
                 totalScore6_2 = 10;
-            }else {
+            } else {
                 totalScore6_2 = 0;
             }
 
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@MasterId", rId);
-          //  cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass3.SelectedValue);            
-            cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");   
+            //  cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass3.SelectedValue);            
+            cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");
             cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName3.Text);
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);

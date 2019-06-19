@@ -26,6 +26,41 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
         this.SearchData4 ();
         this.SearchData5 ();
         this.SearchData6 ();
+        if (!this.CheckData ()) {
+            Add4_1.Visible = false;
+            Add4_2.Visible = false;
+            Add4_3.Visible = false;
+            Add4_4.Visible = false;
+            Add4_5.Visible = false;
+            Add4_6.Visible = false;
+        }
+
+    }
+    protected bool CheckData () {
+        string sql = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId ";
+
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd.ExecuteReader ();
+        reader.Read ();
+
+        object res = db.ExecuteScalar (cmd);
+        if (res != null)
+            if (reader["evaluateStatus"].ToString () == "W") {
+                return true;
+            }
+        else {
+            return false;
+        } else {
+            return false;
+        }
+        con.Close ();
 
     }
 
@@ -131,8 +166,35 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
-        }
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluatePromotionWork4_1] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
 
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletPromot").Visible = true;
+                e.Row.FindControl ("btnEditPromot").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletPromot").Visible = false;
+                e.Row.FindControl ("btnEditPromot").Visible = false;
+
+            }
+
+        }
+        con.Close ();
     }
 
     public SortDirection GridviewSortDirection {
@@ -523,9 +585,37 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
-        if (e.Row.RowType == DataControlRowType.DataRow) {
+       if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluatePromotionWork4_2] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletPromot2").Visible = true;
+                e.Row.FindControl ("btnEditPromot2").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletPromot2").Visible = false;
+                e.Row.FindControl ("btnEditPromot2").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -909,10 +999,37 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
-        if (e.Row.RowType == DataControlRowType.DataRow) {
+         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
-        }
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluatePromotionWork4_3] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
 
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletPromot3").Visible = true;
+                e.Row.FindControl ("btnEditPromot3").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletPromot3").Visible = false;
+                e.Row.FindControl ("btnEditPromot3").Visible = false;
+
+            }
+
+        }
+        con.Close ();
     }
 
     public SortDirection GridviewSortDirection3 {
@@ -1298,9 +1415,37 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound4 (object sender, GridViewRowEventArgs e) {
-        if (e.Row.RowType == DataControlRowType.DataRow) {
+         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluatePromotionWork4_4] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletPromot4").Visible = true;
+                e.Row.FindControl ("btnEditPromot4").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletPromot4").Visible = false;
+                e.Row.FindControl ("btnEditPromot4").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -1731,9 +1876,37 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound5 (object sender, GridViewRowEventArgs e) {
-        if (e.Row.RowType == DataControlRowType.DataRow) {
+         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluatePromotionWork4_5] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletPromot5").Visible = true;
+                e.Row.FindControl ("btnEditPromot5").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletPromot5").Visible = false;
+                e.Row.FindControl ("btnEditPromot5").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -2105,9 +2278,37 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound6 (object sender, GridViewRowEventArgs e) {
-        if (e.Row.RowType == DataControlRowType.DataRow) {
+         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluatePromotionWork4_6] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader1_1 = cmd.ExecuteReader ();
+            reader1_1.Read ();
+
+            if (reader1_1["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletPromot6").Visible = true;
+                e.Row.FindControl ("btnEditPromot6").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletPromot6").Visible = false;
+                e.Row.FindControl ("btnEditPromot6").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 

@@ -34,6 +34,18 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         this.SearchData5 ();
         this.SearchData6_1 ();
         this.SearchData6_2 ();
+        if (!this.CheckData ()) {
+            Add2_1.Visible = false;
+            Add2_2.Visible = false;
+            Add2_3.Visible = false;
+            Add2_4.Visible = false;
+            Add2_5.Visible = false;
+            Add2_6_1.Visible = false;
+            Add2_6_2.Visible = false;
+            Add2_7.Visible = false;
+            Add2_8.Visible = false;
+            Add2_9.Visible = false;
+        }
 
     }
 
@@ -140,7 +152,62 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_1] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint").Visible = false;
+
+            }
+
         }
+        con.Close ();
+
+    }
+    protected bool CheckData () {
+        string sql = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId ";
+
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd.ExecuteReader ();
+        reader.Read ();
+
+        object res = db.ExecuteScalar (cmd);
+        if (res != null)
+            if (reader["evaluateStatus"].ToString () == "W") {
+                return true;
+            }
+        else {
+            return false;
+        } else {
+            return false;
+        }
+        con.Close ();
 
     }
 
@@ -543,7 +610,35 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_2] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint2").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint2").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint2").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint2").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -927,7 +1022,35 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_3] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint3").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint3").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint3").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint3").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -1314,7 +1437,35 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound4 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_4] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint4").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint4").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint4").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint4").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -1709,7 +1860,35 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound5 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_5] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint5").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint5").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint5").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint5").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -1915,9 +2094,9 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
                     totalScore2_5 = 15;
                 } else if (Class2_5 == "Class D                                                                                             ") {
                     totalScore2_5 = 10;
-                } else if(Class2_5 == "Class E                                                                                             "){
+                } else if (Class2_5 == "Class E                                                                                             ") {
                     totalScore2_5 = 5;
-                }else{
+                } else {
                     totalScore2_5 = 0;
                 }
             }
@@ -1925,7 +2104,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectType", txtProjectType5.SelectedValue);
             cmd.Parameters.AddWithValue ("@ProjectTopic", txtProjectTopic5.Text.Trim ());
-           // cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass5.SelectedValue);
+            // cmd.Parameters.AddWithValue ("@ProjectClass", txtProjectClass5.SelectedValue);
             cmd.Parameters.AddWithValue ("@ProjectClass", "รอพิจารณา");
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
@@ -2117,7 +2296,35 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound6_1 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6_1")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_6_1] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint6_1").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint6_1").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint6_1").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint6_1").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -2506,10 +2713,38 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound6_2 (object sender, GridViewRowEventArgs e) {
+
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6_2")).Value);
-        }
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_6_2] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
 
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint6_2").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint6_2").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint6_2").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint6_2").Visible = false;
+
+            }
+
+        }
+        con.Close ();
     }
 
     public SortDirection GridviewSortDirection6_2 {
@@ -2915,7 +3150,35 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound7 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus7")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_7] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint7").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint7").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint7").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint7").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -3297,7 +3560,35 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound8 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus8")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_8] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint8").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint8").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint8").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint8").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -3671,7 +3962,36 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
     protected void gvData_RowDataBound9 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus9")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateDevelopMainten2_9] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletDevelMaint9").Visible = true;
+                e.Row.FindControl ("btnEditDevelMaint9").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletDevelMaint9").Visible = false;
+                e.Row.FindControl ("btnEditDevelMaint9").Visible = false;
+
+            }
+
         }
+        con.Close ();
+
 
     }
 

@@ -41,42 +41,42 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     }
     protected void reportSummary_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_Summary.aspx?nID=" + rId);
 
     }
     protected void report1_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_ServiceWork.aspx?nID=" + rId);
 
     }
     protected void report2_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_Develop_Mainten.aspx?nID=" + rId);
 
     }
     protected void report3_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_Research.aspx?nID=" + rId);
 
     }
     protected void report4_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_Promotion_work.aspx?nID=" + rId);
 
     }
     protected void report5_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_AcademicServices.aspx?nID=" + rId);
 
     }
     protected void report6_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_Management.aspx?nID=" + rId);
 
     }
     protected void report7_Click (object sender, EventArgs e) {
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         Response.Redirect ("~/Evaluate_Other.aspx?nID=" + rId);
 
     }
@@ -109,19 +109,16 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         con.ConnectionString = con_string;
         con.Open ();
         SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
-
-        con.Close ();
 
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
         gvData.DataSource = blacklistDT.DefaultView;
         gvData.DataBind ();
         lblRecord.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
-
+        con.Close ();
     }
 
     protected void Add1_1_Click (object sender, EventArgs e) {
@@ -145,35 +142,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     }
 
-    // protected void Visible_Add(){
-    //    string sql = @"SELECT M.evaluateStatus, E.id
-    //                 FROM [EvaluateSevice1_1] AS E
-    //                 INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
-
-    //                 WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
-
-    //         con.ConnectionString = con_string;
-    //         con.Open ();
-    //         SqlCommand cmd = new SqlCommand (sql, con);
-
-    //         string rId = Request.QueryString["nId"];
-    //         cmd.Parameters.AddWithValue ("@MasterId", rId);
-
-    //         SqlDataReader reader1_1 = cmd.ExecuteReader ();
-    //         reader1_1.Read ();
-    //         string ProjectStatus = reader1_1["id"].ToString ();
-    //         cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
-
-    //         if (reader1_1["evaluateStatus"].ToString () == "W") {
-    //             Add1_1.Visible = true;
-
-    //         } else {
-    //             Add1_1.Visible = false;
-    //         }
-
-    //     con.Close ();
-    // }
-
     protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
 
         if (e.Row.RowType == DataControlRowType.DataRow) {
@@ -187,8 +155,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             con.ConnectionString = con_string;
             con.Open ();
             SqlCommand cmd = new SqlCommand (sql, con);
-
-            string rId = Request.QueryString["nId"];
+            string rId = Request.QueryString["nID"];
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
 
@@ -210,29 +177,31 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
     }
     protected bool CheckData () {
-        string sql = @"SELECT evaluateStatus
+        string sql = @"SELECT id, evaluateStatus
                     FROM EvaluateMaster                   
-                    WHERE   id = @MasterId ";
+                    WHERE id = @MasterId";
 
         con.ConnectionString = con_string;
         con.Open ();
         SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
+
         SqlDataReader reader = cmd.ExecuteReader ();
         reader.Read ();
+        string EvaluateStatus = reader["evaluateStatus"].ToString ();
 
         object res = db.ExecuteScalar (cmd);
         if (res != null)
-            if (reader["evaluateStatus"].ToString () == "W") {
+            if (EvaluateStatus == "W") {
                 return true;
+            } else {
+                return false;
             }
         else {
             return false;
-        } else {
-            return false;
         }
+        reader.Close ();
         con.Close ();
 
     }
@@ -345,7 +314,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
         DataSet ds = new DataSet ();
@@ -423,7 +392,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
         DataSet ds = new DataSet ();
@@ -624,7 +593,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
 
@@ -656,8 +625,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                     ,[projectScore]
                     ,[projectStatus]
                     ,[path]
-                    ,[fileName] 
-                    ,path + fileName AS Pathfile
+                    ,[fileName]
                     ,[fileNameOld]
                     ,[createdBy]
                     ,[createdDate]
@@ -676,7 +644,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         con.ConnectionString = con_string;
         SqlCommand cmd = new SqlCommand (sql, con);
 
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
 
         SqlDataAdapter da = new SqlDataAdapter (cmd);
@@ -723,7 +691,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             con.Open ();
             SqlCommand cmd = new SqlCommand (sql, con);
 
-            string rId = Request.QueryString["nId"];
+            string rId = Request.QueryString["nID"];
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
 
@@ -850,7 +818,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
         DataSet ds = new DataSet ();
@@ -1043,7 +1011,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
 
@@ -1093,7 +1061,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         con.ConnectionString = con_string;
         SqlCommand cmd = new SqlCommand (sql, con);
 
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
 
         SqlDataAdapter da = new SqlDataAdapter (cmd);
@@ -1140,7 +1108,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             con.Open ();
             SqlCommand cmd = new SqlCommand (sql, con);
 
-            string rId = Request.QueryString["nId"];
+            string rId = Request.QueryString["nID"];
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
 
@@ -1258,7 +1226,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
         DataSet ds = new DataSet ();
@@ -1270,7 +1238,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        //  string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1461,7 +1428,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
 
@@ -1511,7 +1478,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         con.ConnectionString = con_string;
         SqlCommand cmd = new SqlCommand (sql, con);
 
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
 
         SqlDataAdapter da = new SqlDataAdapter (cmd);
@@ -1558,7 +1525,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             con.Open ();
             SqlCommand cmd = new SqlCommand (sql, con);
 
-            string rId = Request.QueryString["nId"];
+            string rId = Request.QueryString["nID"];
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
 
@@ -1684,7 +1651,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
         DataSet ds = new DataSet ();
@@ -1695,7 +1662,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        //string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1882,7 +1848,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
 
@@ -1932,7 +1898,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         con.ConnectionString = con_string;
         SqlCommand cmd = new SqlCommand (sql, con);
 
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
 
         SqlDataAdapter da = new SqlDataAdapter (cmd);
@@ -1979,7 +1945,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             con.Open ();
             SqlCommand cmd = new SqlCommand (sql, con);
 
-            string rId = Request.QueryString["nId"];
+            string rId = Request.QueryString["nID"];
             cmd.Parameters.AddWithValue ("@MasterId", rId);
             cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
 
@@ -2105,7 +2071,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
         DataSet ds = new DataSet ();
@@ -2117,7 +2083,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        // string rId = Request.QueryString["nId"];
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -2301,7 +2266,7 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
                         ";
 
         com = new SqlCommand (str, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
 

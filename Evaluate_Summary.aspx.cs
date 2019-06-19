@@ -731,7 +731,7 @@ public partial class Evaluate_Summary : System.Web.UI.Page {
         con.ConnectionString = con_string;
         con.Open ();
         SqlCommand cmd = new SqlCommand (sql, con);
-        string rId = Request.QueryString["nId"];
+        string rId = Request.QueryString["nID"];
         cmd.Parameters.AddWithValue ("@MasterId", rId);
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
