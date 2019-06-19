@@ -33,6 +33,44 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         this.SearchData9 ();
         this.SearchData5 ();
         this.SearchData6 ();
+        if (!this.CheckData ()) {
+            Add3_1.Visible = false;
+            Add3_2.Visible = false;
+            Add3_3.Visible = false;
+            Add3_4.Visible = false;
+            Add3_5.Visible = false;
+            Add3_6.Visible = false;
+            Add3_7.Visible = false;
+            Add3_8.Visible = false;
+            Add3_9.Visible = false;
+        }
+
+    }
+    protected bool CheckData () {
+        string sql = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId ";
+
+        con.ConnectionString = con_string;
+        con.Open ();
+        SqlCommand cmd = new SqlCommand (sql, con);
+
+        string rId = Request.QueryString["nId"];
+        cmd.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd.ExecuteReader ();
+        reader.Read ();
+
+        object res = db.ExecuteScalar (cmd);
+        if (res != null)
+            if (reader["evaluateStatus"].ToString () == "W") {
+                return true;
+            }
+        else {
+            return false;
+        } else {
+            return false;
+        }
+        con.Close ();
 
     }
 
@@ -46,10 +84,9 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         Response.Redirect ("~/Evaluate_Develop_Mainten.aspx?nID=" + rId);
 
     }
-    protected void report3_Click(object sender, EventArgs e)
-    {
+    protected void report3_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nId"];
-        Response.Redirect("~/Evaluate_Research.aspx?nID=" + rId);
+        Response.Redirect ("~/Evaluate_Research.aspx?nID=" + rId);
 
     }
     protected void report4_Click (object sender, EventArgs e) {
@@ -139,8 +176,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
-        }
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_1] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
 
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch").Visible = true;
+                e.Row.FindControl ("btnEditResearch").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch").Visible = false;
+                e.Row.FindControl ("btnEditResearch").Visible = false;
+
+            }
+
+        }
+        con.Close ();
     }
 
     public SortDirection GridviewSortDirection {
@@ -249,7 +313,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-     
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -461,7 +524,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-        
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -546,7 +609,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_2] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch2").Visible = true;
+                e.Row.FindControl ("btnEditResearch2").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch2").Visible = false;
+                e.Row.FindControl ("btnEditResearch2").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -655,7 +746,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-    
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -847,7 +937,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-        
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -931,7 +1021,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_3] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch3").Visible = true;
+                e.Row.FindControl ("btnEditResearch3").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch3").Visible = false;
+                e.Row.FindControl ("btnEditResearch3").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -1040,8 +1158,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
-      
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1234,7 +1350,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-        
+
         SqlDataReader reader = com.ExecuteReader ();
 
         reader.Read ();
@@ -1320,7 +1436,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound4 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_4] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch4").Visible = true;
+                e.Row.FindControl ("btnEditResearch4").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch4").Visible = false;
+                e.Row.FindControl ("btnEditResearch4").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -1431,7 +1575,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-        
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -1634,7 +1777,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -1720,7 +1863,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound5 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_5] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch5").Visible = true;
+                e.Row.FindControl ("btnEditResearch5").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch5").Visible = false;
+                e.Row.FindControl ("btnEditResearch5").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -1865,7 +2036,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-      
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -2093,7 +2263,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-     
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -2182,7 +2352,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound6 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_6] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch6").Visible = true;
+                e.Row.FindControl ("btnEditResearch6").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch6").Visible = false;
+                e.Row.FindControl ("btnEditResearch6").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -2327,7 +2525,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-      
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -2547,7 +2744,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -2630,8 +2827,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound7 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus7")).Value);
-        }
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_7] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
 
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch7").Visible = true;
+                e.Row.FindControl ("btnEditResearch7").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch7").Visible = false;
+                e.Row.FindControl ("btnEditResearch7").Visible = false;
+
+            }
+
+        }
+        con.Close ();
     }
 
     public SortDirection GridviewSortDirection7 {
@@ -2740,7 +2964,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -2924,7 +3147,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
 
         SqlConnection con = new SqlConnection (con_string);
         con.Open ();
-       str = @"select C.projectYear, C.projectRound, 
+        str = @"select C.projectYear, C.projectRound, 
                         M.acountId ,A.FirstName  + A.LastName AS FullName
                         from ProjectControl AS C
                         INNER JOIN EvaluateMaster AS M ON M.roundId = C.id
@@ -2936,7 +3159,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-       
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -3020,7 +3243,35 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     protected void gvData_RowDataBound8 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus8")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_8] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch8").Visible = true;
+                e.Row.FindControl ("btnEditResearch8").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch8").Visible = false;
+                e.Row.FindControl ("btnEditResearch8").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -3131,7 +3382,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3316,7 +3566,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-    
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();
@@ -3400,9 +3650,37 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound9 (object sender, GridViewRowEventArgs e) {
-        if (e.Row.RowType == DataControlRowType.DataRow) {
+       if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus9")).Value);
+            string sql = @"SELECT M.evaluateStatus
+                    FROM [EvaluateResearch3_9] AS E
+                    INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
+
+                    WHERE   M.id =  @MasterId AND E.id = @ProjectID ";
+
+            con.ConnectionString = con_string;
+            con.Open ();
+            SqlCommand cmd = new SqlCommand (sql, con);
+
+            string rId = Request.QueryString["nId"];
+            cmd.Parameters.AddWithValue ("@MasterId", rId);
+            cmd.Parameters.AddWithValue ("@ProjectID", ProjectStatus);
+
+            SqlDataReader reader = cmd.ExecuteReader ();
+            reader.Read ();
+
+            if (reader["evaluateStatus"].ToString () == "W") {
+                e.Row.FindControl ("btnDeletResearch9").Visible = true;
+                e.Row.FindControl ("btnEditResearch9").Visible = true;
+
+            } else {
+                e.Row.FindControl ("btnDeletResearch9").Visible = false;
+                e.Row.FindControl ("btnEditResearch9").Visible = false;
+
+            }
+
         }
+        con.Close ();
 
     }
 
@@ -3549,7 +3827,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string projectYear = reader["projectYear"].ToString ();
         string projectRound = reader["projectRound"].ToString ();
 
-       
         //==========================IPADDRESS ==================================
         string strHostName = System.Net.Dns.GetHostName ();
         IPHostEntry ipEntry = System.Net.Dns.GetHostEntry (strHostName);
@@ -3771,7 +4048,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         string rId = Request.QueryString["nId"];
         com.Parameters.AddWithValue ("@MId", rId);
         SqlDataAdapter da = new SqlDataAdapter (com);
-      
+
         SqlDataReader reader = com.ExecuteReader ();
         reader.Read ();
         string FullName = reader["FullName"].ToString ();

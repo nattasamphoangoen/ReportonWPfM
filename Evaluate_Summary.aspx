@@ -42,8 +42,8 @@
                             <td>
                                 <asp:LinkButton ID="reportSummary" runat="server" Text='' title="Summary"
                                     OnClick="reportSummary_Click">
-                                    <img id="report" alt="" border="0" height="20" name="popcal" src="Images/Summary.png"
-                                        width="20" />
+                                    <img id="report" alt="" border="0" height="20" name="popcal"
+                                        src="Images/Summary.png" width="20" />
 
                                 </asp:LinkButton>
                             </td>
@@ -224,57 +224,39 @@
                         </td>
                     </tr>
                     <br />
-
-                    <tr>
-                        <td>&nbsp;</td>
-                    </tr>
-
                 </div>
 
 
-                <div align="left">
+                <table align="left" width="40%" border="1">
                     <tr>
 
                         <td valign="top">
                             <strong style="color: #000000" class="h4">คะแนนส่วนบุคคล 65% : </strong>
                         </td>
-
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-
                         <td valign="top">
                             <strong style="color: #2300a1" class="h4">0.00 </strong>
                         </td>
-                    <tr>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <td valign="top">
-                        <strong style="color: #2300a1" class="h4">0.00 </strong>
-                    </td>
+                        <td valign="top">
+                            <strong style="color: #2300a1" class="h4">0.00 </strong>
+                        </td>
                     </tr>
                     <br />
                     <tr>
                         <td valign="top">
                             <strong style="color: #000000" class="h4">คะแนนกลุ่ม/ส่วนงาน 25% : </strong>
                         </td>
-                        <td>&nbsp;</td>
-
                         <td valign="top">
                             <strong style="color: #2300a1" class="h4">0.00 </strong>
                         </td>
-                    <tr>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <td valign="top">
-                        <strong style="color: #2300a1" class="h4">0.00 </strong>
-                    </td>
+                        <td valign="top">
+                            <strong style="color: #2300a1" class="h4">0.00 </strong>
+                        </td>
                     </tr>
                     <br />
                     <tr>
                         <td valign="top">
                             <strong style="color: #000000" class="h4">พฤติกรรมการทำงาน 10% : </strong>
                         </td>
-                        <td>&nbsp;</td>
                         <td valign="top">
                             <strong style="color: #2300a1" class="h4">0.00 </strong>
                         </td>
@@ -284,18 +266,15 @@
                         <td valign="top">
                             <strong style="color: #000000" class="h4">คะแนนรวมทั้งหมด : </strong>
                         </td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
                         <td valign="top">
                             <strong style="color: #2300a1" class="h4">0.00 </strong>
                         </td>
                     </tr>
                     <br />
-                </div>
+                </table>
 
-
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <div align="right">
                     <tr>
                         <td valign="top">
@@ -328,7 +307,7 @@
 
                 <br />
                 <br />
-
+                
 
                 <table align="center" width="100%" border="1">
                     <tr>
@@ -365,6 +344,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE1_1" runat="server"
                                     Text='1.1. งาน Local contact (Experimental setup, Sample preparation, and Measurement) งานสอบเทียบเครื่องมือและมาตรฐานการวัด'>
@@ -381,6 +361,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE1_2" runat="server" Text='1.2. งานให้บริการภาคอุตสาหกรรม'>
                                 </asp:Label>
@@ -396,6 +377,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE1_3" runat="server"
                                     Text='1.3. งานเป็นที่ปรึกษาให้กับผู้ใช้บริการแสงซินโครตรอน / ภาคอุตสาหกรรม'>
@@ -412,6 +394,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE1_4" runat="server" Text='1.4. Technical manual (*)'>
                                 </asp:Label>
@@ -427,6 +410,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE1_5" runat="server"
                                     Text='1.5. Standard protocol (คู่มือกระบวนการดำเนินงาน)'>
@@ -460,6 +444,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_1" runat="server" Text='2.1. Journal publication (ISI/Scopus)'>
                                 </asp:Label>
@@ -475,6 +460,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_2" runat="server" Text='2.2. Conference proceeding'>
                                 </asp:Label>
@@ -490,6 +476,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_3" runat="server"
                                     Text='2.3. ยื่นขอจดสิทธิบัตร (ปตท./ไทย) /  ยื่นขอจดอนุสิทธิบัตร'>
@@ -506,6 +493,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_4" runat="server"
                                     Text='2.4. Oral  (ตปท./ไทย) / Poster Presentation (ตปท./ไทย)'>
@@ -522,6 +510,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_5" runat="server" Text='2.5. Technical report '>
                                 </asp:Label>
@@ -537,6 +526,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_6" runat="server" Text='2.6. ผลงานการพัฒนาที่นำไปใช้จริง'>
                                 </asp:Label>
@@ -553,6 +543,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;&nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_6_1" runat="server"
                                     Text='2.6.1 ออกแบบระบบลำเลียงแสง / ออกแบบสถานีทดลอง /ติดตั้งและทดสอบระบบลำเลียงแสง'>
@@ -569,6 +560,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;&nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_6_2" runat="server"
                                     Text='2.6.2 ออกแบบเครื่องมือตรวจวัดและอุปกรณ์ต่างๆ / ปรับปรุงระบบทัศนศาสตร์ของระบบลำเลียงแสง'>
@@ -585,6 +577,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_7" runat="server"
                                     Text='2.7. วิทยานิพนธ์ (ที่เป็นอาจารย์ที่ปรึกษา/อาจารย์ที่ปรึกษาร่วม) '>
@@ -601,6 +594,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE2_8" runat="server"
                                     Text='2.8. การเข้าร่วมประชุมเชิงปฏิบัติการและฝึกอบรมทั้งในและต่างประเทศ ที่เกี่ยวข้องกับการพัฒนาและบำรุงรักษาระบบลำเลียงแสง หรือสถานีทดลอง หรือห้องปฏิบัติการต่าง ๆ (Technical training, training on the job)'>
@@ -635,6 +629,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_1" runat="server" Text='3.1. Journal publication (ISI/Scopus)'>
                                 </asp:Label>
@@ -650,6 +645,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_2" runat="server" Text='3.2. Conference proceeding '>
                                 </asp:Label>
@@ -665,6 +661,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_3" runat="server"
                                     Text='3.3. ยื่นขอจดสิทธิบัตร (ปตท./ไทย) /  ยื่นขอจดอนุสิทธิบัตร'>
@@ -681,6 +678,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_4" runat="server"
                                     Text='3.4. Oral  (ตปท./ไทย) / Poster Presentation (ตปท./ไทย)'>
@@ -697,6 +695,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_5" runat="server"
                                     Text='3.5. รายงานฉบับสมบูรณ์ (ภาควิชาการ ภาคอุตสาหกรรม)'>
@@ -713,6 +712,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_6" runat="server" Text='3.6. ผลิตภัณฑ์ที่เกิดจากงานวิจัย'>
                                 </asp:Label>
@@ -728,6 +728,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_7" runat="server"
                                     Text='3.7. รายงานความก้าวหน้า (Progress report) ที่ระบุเนื้อหาระหว่างดำเนินงานวิจัยที่ได้รับมอบหมาย โดยระบุเนื้อหาระหว่างดำเนินงานอย่างมีรายละเอียด (เช่น รอบ 3 เดือน/6 เดือน/12 เดือน)'>
@@ -744,6 +745,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_8" runat="server"
                                     Text='3.8. วิทยานิพนธ์ (ที่เป็นอาจารย์ที่ปรึกษา/อาจารย์ที่ปรึกษาร่วม)'>
@@ -759,6 +761,7 @@
                     </tr>
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE3_9" runat="server"
                                     Text='3.9. ทุนวิจัยที่ได้รับจากหน่วยงานภายนอก (เฉพาะทุนที่เจ้าหน้าที่สถาบันฯ เป็นหัวหน้าโครงการ เช่น Talent mobility fund) รวมทุน ITAP ทุน FI (โดยเจ้าหน้าที่สถาบันฯ ให้คะแนนทุกคนจากการหารตามสัดส่วนที่รับผิดชอบโครงการ) และรายได้จากการบริการ '>
@@ -792,6 +795,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE4_1" runat="server"
                                     Text='4.1. การจัดการประชุมเชิงปฏิบัติการและการฝึกอบรม (Workshop, Training) การร่วมเตรียมงาน (ทั้งประธานและคณะทำงาน) / การมีส่วนร่วมในวันงาน'>
@@ -808,6 +812,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE4_2" runat="server"
                                     Text='4.2. งานเขียนบทความ (Annual report, Research Highlight, Annual review, Poster นิทรรศการ)'>
@@ -824,6 +829,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE4_3" runat="server"
                                     Text='4.3. การเป็นวิทยากรรับเชิญ (Invited lecturer) (โดยสถาบัน / หน่วยงานในประเทศ / หน่วยงานต่างประเทศ)'>
@@ -840,6 +846,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE4_4" runat="server"
                                     Text='4.4. การให้สัมภาษณ์ผ่านสื่อต่าง ๆ เช่น รายการโทรทัศน์ วิทยุ หนังสือพิมพ์ (หากเป็นผลงานกลุ่ม ให้ทีมงานได้คะแนนด้วย)'>
@@ -856,6 +863,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE4_5" runat="server"
                                     Text='4.5. การประสานความร่วมมือเพื่อให้เกิดบันทึกความเข้าใจระหว่างสถาบันกับหน่วยงานอื่น ๆ (MOU initiation)'>
@@ -872,6 +880,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE4_6" runat="server"
                                     Text='4.6.  ข้อเสนอโครงการเพื่องานวิจัยภาคอุตสาหกรรม (ลงนามสัญญาจ้าง)'>
@@ -904,6 +913,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE5_1" runat="server"
                                     Text='5.1. คณะกรรมการงานประชุมวิชาการระดับนานาชาติ-ระดับชาติ'>
@@ -920,6 +930,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE5_2" runat="server" Text='5.2. การเป็นอาจารย์ที่ปรึกษาร่วม'>
                                 </asp:Label>
@@ -935,6 +946,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE5_3" runat="server" Text='5.3. งานสอบวิทยานิพนธ์'>
                                 </asp:Label>
@@ -950,6 +962,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE5_4" runat="server"
                                     Text='5.4. ประเมินโครงการใช้แสงซินโครตรอน (BLM และ BLS)'>
@@ -966,6 +979,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE5_5" runat="server"
                                     Text='5.5. งานบริการวิชาการและสังคม (กรณีไม่มีค่าตอบแทน)'>
@@ -999,6 +1013,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE6_1" runat="server" Text='6.1. งาน BLM และรับผิดชอบระบบลำเลียงแสง'>
                                 </asp:Label>
@@ -1015,6 +1030,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;&nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE6_1_1" runat="server"
                                     Text='6.1.1. การบำรุงรักษา ให้บริการ ดำเนินงานวิจัยและพัฒนา ณ ระบบลำเลียงแสง โดยพิจารณาจากเอกสาร % Utilization'>
@@ -1031,6 +1047,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;&nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE6_1_2" runat="server"
                                     Text='6.1.2. จำนวนโครงการที่เข้ามาใช้บริการแสงซินโครตรอน และห้องปฏิบัติการสนับสนุน'>
@@ -1047,6 +1064,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE6_2" runat="server"
                                     Text='6.2. การเป็นหัวหน้าโครงการและโครงการอุตสาหกรรม'>
@@ -1079,6 +1097,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE7_1" runat="server"
                                     Text='7.1. การเป็นคณะกรรมการ/คณะทำงาน (สัมมนา ประเมินความสุข ปีใหม่ กีฬา พัสดุ มหกรรมวิทย์ ฯลฯ)'>
@@ -1095,6 +1114,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE7_2" runat="server" Text='7.2. การต้อนรับแขกและนำเยี่ยมชมสถาบันฯ'>
                                 </asp:Label>
@@ -1110,6 +1130,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE7_3" runat="server"
                                     Text='7.3. คณะกรรมการร่าง TOR เฉพาะอุปกรณ์ที่มีความซับซ้อน ที่สถาบันฯ ไม่เคยซื้อมาก่อน'>
@@ -1126,6 +1147,7 @@
 
                     <tr>
                         <td valign="top">
+                            &nbsp;
                             <strong style="color: #000000" class="h5">
                                 <asp:Label ID="lblE7_4" runat="server" Text='7.4. คณะกรรมการตรวจนับพัสดุ'>
                                 </asp:Label>
