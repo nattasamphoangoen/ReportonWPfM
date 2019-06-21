@@ -33,44 +33,6 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         this.SearchData9 ();
         this.SearchData5 ();
         this.SearchData6 ();
-        if (!this.CheckData ()) {
-            Add3_1.Visible = false;
-            Add3_2.Visible = false;
-            Add3_3.Visible = false;
-            Add3_4.Visible = false;
-            Add3_5.Visible = false;
-            Add3_6.Visible = false;
-            Add3_7.Visible = false;
-            Add3_8.Visible = false;
-            Add3_9.Visible = false;
-        }
-
-    }
-    protected bool CheckData () {
-        string sql = @"SELECT evaluateStatus
-                    FROM EvaluateMaster                   
-                    WHERE   id = @MasterId ";
-
-        con.ConnectionString = con_string;
-        con.Open ();
-        SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
-        cmd.Parameters.AddWithValue ("@MasterId", rId);
-        SqlDataReader reader = cmd.ExecuteReader ();
-        reader.Read ();
-
-        object res = db.ExecuteScalar (cmd);
-        if (res != null)
-            if (reader["evaluateStatus"].ToString () == "W") {
-                return true;
-            }
-        else {
-            return false;
-        } else {
-            return false;
-        }
-        con.Close ();
 
     }
 
@@ -143,6 +105,37 @@ public partial class Evaluate_Research : System.Web.UI.Page {
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
 
+        string ckdt = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId";
+
+        SqlCommand cmd1 = new SqlCommand (ckdt, con);
+        cmd1.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd1.ExecuteReader ();
+        reader.Read ();
+        string EvaluateStatus = reader["evaluateStatus"].ToString ();
+        if (EvaluateStatus == "W") {
+            Add3_1.Visible = true;
+            Add3_2.Visible = true;
+            Add3_3.Visible = true;
+            Add3_4.Visible = true;
+            Add3_5.Visible = true;
+            Add3_6.Visible = true;
+            Add3_7.Visible = true;
+            Add3_8.Visible = true;
+            Add3_9.Visible = true;
+        } else {
+           Add3_1.Visible = false;
+            Add3_2.Visible = false;
+            Add3_3.Visible = false;
+            Add3_4.Visible = false;
+            Add3_5.Visible = false;
+            Add3_6.Visible = false;
+            Add3_7.Visible = false;
+            Add3_8.Visible = false;
+            Add3_9.Visible = false;
+        }
+       
         con.Close ();
 
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
@@ -3650,7 +3643,7 @@ public partial class Evaluate_Research : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound9 (object sender, GridViewRowEventArgs e) {
-       if (e.Row.RowType == DataControlRowType.DataRow) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus9")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluateResearch3_9] AS E

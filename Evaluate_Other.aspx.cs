@@ -24,39 +24,6 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         this.SearchData2 ();
         this.SearchData3 ();
         this.SearchData4 ();
-        if (!this.CheckData ()) {
-            Add7_1.Visible = false;
-            Add7_2.Visible = false;
-            Add7_3.Visible = false;
-            Add7_4.Visible = false;
-
-        }
-    }
-    protected bool CheckData () {
-        string sql = @"SELECT evaluateStatus
-                    FROM EvaluateMaster                   
-                    WHERE   id = @MasterId ";
-
-        con.ConnectionString = con_string;
-        con.Open ();
-        SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
-        cmd.Parameters.AddWithValue ("@MasterId", rId);
-        SqlDataReader reader = cmd.ExecuteReader ();
-        reader.Read ();
-
-        object res = db.ExecuteScalar (cmd);
-        if (res != null)
-            if (reader["evaluateStatus"].ToString () == "W") {
-                return true;
-            }
-        else {
-            return false;
-        } else {
-            return false;
-        }
-        con.Close ();
 
     }
 
@@ -128,6 +95,27 @@ public partial class Evaluate_Other : System.Web.UI.Page {
         cmd.Parameters.AddWithValue ("@MasterId", rId);
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
+
+        string ckdt = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId";
+
+        SqlCommand cmd1 = new SqlCommand (ckdt, con);
+        cmd1.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd1.ExecuteReader ();
+        reader.Read ();
+        string EvaluateStatus = reader["evaluateStatus"].ToString ();
+        if (EvaluateStatus == "W") {
+            Add7_1.Visible = true;
+            Add7_2.Visible = true;
+            Add7_3.Visible = true;
+            Add7_4.Visible = true;
+        } else {
+            Add7_1.Visible = false;
+            Add7_2.Visible = false;
+            Add7_3.Visible = false;
+            Add7_4.Visible = false;
+        }
 
         con.Close ();
 
