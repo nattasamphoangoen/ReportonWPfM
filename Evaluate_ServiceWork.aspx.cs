@@ -31,14 +31,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
 
         this.SearchData5 ();
 
-        if (!this.CheckData ()) {
-            Add1_1.Visible = false;
-            Add1_2.Visible = false;
-            Add1_3.Visible = false;
-            Add1_4.Visible = false;
-            Add1_5.Visible = false;
-        }
-
     }
     protected void reportSummary_Click (object sender, EventArgs e) {
         string rId = Request.QueryString["nID"];
@@ -114,10 +106,38 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
 
+        string ckdt = @"SELECT id, evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId";
+
+        SqlCommand cmd1 = new SqlCommand (ckdt, con);
+        cmd1.Prepare ();
+        cmd1.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataAdapter da1 = new SqlDataAdapter (cmd1);
+        SqlDataReader reader = cmd1.ExecuteReader ();
+        reader.Read ();
+        //string EvaluateStatus = Request.QueryString["evaluateStatus"];
+        string EvaluateStatus = reader["evaluateStatus"].ToString ();
+        if (EvaluateStatus == "W") {
+            Add1_1.Visible = true;
+            Add1_2.Visible = true;
+            Add1_3.Visible = true;
+            Add1_4.Visible = true;
+            Add1_5.Visible = true;
+        } else {
+            Add1_1.Visible = false;
+            Add1_2.Visible = false;
+            Add1_3.Visible = false;
+            Add1_4.Visible = false;
+            Add1_5.Visible = false;
+        }
+
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
         gvData.DataSource = blacklistDT.DefaultView;
         gvData.DataBind ();
         lblRecord.Text = "<span Font-Size='Small' class='tex12b'>Search Result :</span><span style='color:Red'> " + blacklistDT.Rows.Count.ToString ("#,###") + " Record(s)</span>";
+        // cmd1.ExecuteNonQuery ();
+        reader.Close ();
         con.Close ();
     }
 
@@ -173,35 +193,6 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             }
 
         }
-        con.Close ();
-
-    }
-    protected bool CheckData () {
-        string sql = @"SELECT id, evaluateStatus
-                    FROM EvaluateMaster                   
-                    WHERE id = @MasterId";
-
-        con.ConnectionString = con_string;
-        con.Open ();
-        SqlCommand cmd = new SqlCommand (sql, con);
-        string rId = Request.QueryString["nID"];
-        cmd.Parameters.AddWithValue ("@MasterId", rId);
-
-        SqlDataReader reader = cmd.ExecuteReader ();
-        reader.Read ();
-        string EvaluateStatus = reader["evaluateStatus"].ToString ();
-
-        object res = db.ExecuteScalar (cmd);
-        if (res != null)
-            if (EvaluateStatus == "W") {
-                return true;
-            } else {
-                return false;
-            }
-        else {
-            return false;
-        }
-        reader.Close ();
         con.Close ();
 
     }

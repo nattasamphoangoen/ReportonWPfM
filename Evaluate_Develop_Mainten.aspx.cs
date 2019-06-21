@@ -34,18 +34,7 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         this.SearchData5 ();
         this.SearchData6_1 ();
         this.SearchData6_2 ();
-        if (!this.CheckData ()) {
-            Add2_1.Visible = false;
-            Add2_2.Visible = false;
-            Add2_3.Visible = false;
-            Add2_4.Visible = false;
-            Add2_5.Visible = false;
-            Add2_6_1.Visible = false;
-            Add2_6_2.Visible = false;
-            Add2_7.Visible = false;
-            Add2_8.Visible = false;
-            Add2_9.Visible = false;
-        }
+        
 
     }
 
@@ -119,6 +108,40 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
 
+        string ckdt = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId";
+
+        SqlCommand cmd1 = new SqlCommand (ckdt, con);
+        cmd1.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd1.ExecuteReader ();
+        reader.Read ();
+        string EvaluateStatus = reader["evaluateStatus"].ToString ();
+        if (EvaluateStatus == "W") {
+            Add2_1.Visible = true;
+            Add2_2.Visible = true;
+            Add2_3.Visible = true;
+            Add2_4.Visible = true;
+            Add2_5.Visible = true;
+            Add2_6_1.Visible = true;
+            Add2_6_2.Visible = true;
+            Add2_7.Visible = true;
+            Add2_8.Visible = true;
+            Add2_9.Visible = true;
+        } else {
+            Add2_1.Visible = false;
+            Add2_2.Visible = false;
+            Add2_3.Visible = false;
+            Add2_4.Visible = false;
+            Add2_5.Visible = false;
+            Add2_6_1.Visible = false;
+            Add2_6_2.Visible = false;
+            Add2_7.Visible = false;
+            Add2_8.Visible = false;
+            Add2_9.Visible = false;
+        }
+        
+
         con.Close ();
 
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
@@ -179,33 +202,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
             }
 
-        }
-        con.Close ();
-
-    }
-    protected bool CheckData () {
-        string sql = @"SELECT evaluateStatus
-                    FROM EvaluateMaster                   
-                    WHERE   id = @MasterId ";
-
-        con.ConnectionString = con_string;
-        con.Open ();
-        SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
-        cmd.Parameters.AddWithValue ("@MasterId", rId);
-        SqlDataReader reader = cmd.ExecuteReader ();
-        reader.Read ();
-
-        object res = db.ExecuteScalar (cmd);
-        if (res != null)
-            if (reader["evaluateStatus"].ToString () == "W") {
-                return true;
-            }
-        else {
-            return false;
-        } else {
-            return false;
         }
         con.Close ();
 
@@ -3991,7 +3987,6 @@ public partial class Evaluate_Develop_Mainten : System.Web.UI.Page {
 
         }
         con.Close ();
-
 
     }
 

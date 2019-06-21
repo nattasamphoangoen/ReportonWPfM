@@ -25,15 +25,6 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         this.SearchData3 ();
         this.SearchData4 ();
         this.SearchData5 ();
-        if (!this.CheckData())
-            {
-                Add5_1.Visible = false;
-                Add5_2.Visible = false;
-                Add5_3.Visible = false;
-                Add5_4.Visible = false;
-                Add5_5.Visible = false;               
-
-            }
 
     }
 
@@ -107,6 +98,29 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
 
+        string ckdt = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId";
+
+        SqlCommand cmd1 = new SqlCommand (ckdt, con);
+        cmd1.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd1.ExecuteReader ();
+        reader.Read ();
+        string EvaluateStatus = reader["evaluateStatus"].ToString ();
+        if (EvaluateStatus == "W") {
+            Add5_1.Visible = true;
+            Add5_2.Visible = true;
+            Add5_3.Visible = true;
+            Add5_4.Visible = true;
+            Add5_5.Visible = true;
+        } else {
+            Add5_1.Visible = false;
+            Add5_2.Visible = false;
+            Add5_3.Visible = false;
+            Add5_4.Visible = false;
+            Add5_5.Visible = false;
+        }
+
         con.Close ();
 
         DataTable blacklistDT = db.ExecuteDataTable (cmd);
@@ -169,38 +183,6 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
             }
 
-        }
-        con.Close ();
-
-    }
-
-    protected bool CheckData () {
-        string sql = @"SELECT evaluateStatus
-                    FROM EvaluateMaster                   
-                    WHERE   id = @MasterId ";
-
-        con.ConnectionString = con_string;
-        con.Open ();
-        SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
-        cmd.Parameters.AddWithValue ("@MasterId", rId);
-        SqlDataReader reader = cmd.ExecuteReader ();
-        reader.Read ();
-
-       object res = db.ExecuteScalar(cmd);
-        if (res != null)
-            if (reader["evaluateStatus"].ToString () == "W")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        else
-        {
-            return false;
         }
         con.Close ();
 
@@ -611,7 +593,8 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
                 e.Row.FindControl ("btnEditAcademic2").Visible = true;
             } else {
                 e.Row.FindControl ("btnDeletAcademic2").Visible = false;
-                e.Row.FindControl ("btnEditAcademic2").Visible = false;            }
+                e.Row.FindControl ("btnEditAcademic2").Visible = false;
+            }
 
         }
         con.Close ();
@@ -1015,7 +998,8 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
                 e.Row.FindControl ("btnEditAcademic3").Visible = true;
             } else {
                 e.Row.FindControl ("btnDeletAcademic3").Visible = false;
-                e.Row.FindControl ("btnEditAcademic3").Visible = false;            }
+                e.Row.FindControl ("btnEditAcademic3").Visible = false;
+            }
 
         }
         con.Close ();
@@ -1419,7 +1403,8 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
                 e.Row.FindControl ("btnEditAcademic4").Visible = true;
             } else {
                 e.Row.FindControl ("btnDeletAcademic4").Visible = false;
-                e.Row.FindControl ("btnEditAcademic4").Visible = false;            }
+                e.Row.FindControl ("btnEditAcademic4").Visible = false;
+            }
 
         }
         con.Close ();
@@ -1814,7 +1799,8 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
                 e.Row.FindControl ("btnEditAcademic5").Visible = true;
             } else {
                 e.Row.FindControl ("btnDeletAcademic5").Visible = false;
-                e.Row.FindControl ("btnEditAcademic5").Visible = false;            }
+                e.Row.FindControl ("btnEditAcademic5").Visible = false;
+            }
 
         }
         con.Close ();

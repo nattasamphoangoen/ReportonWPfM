@@ -26,41 +26,6 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
         this.SearchData4 ();
         this.SearchData5 ();
         this.SearchData6 ();
-        if (!this.CheckData ()) {
-            Add4_1.Visible = false;
-            Add4_2.Visible = false;
-            Add4_3.Visible = false;
-            Add4_4.Visible = false;
-            Add4_5.Visible = false;
-            Add4_6.Visible = false;
-        }
-
-    }
-    protected bool CheckData () {
-        string sql = @"SELECT evaluateStatus
-                    FROM EvaluateMaster                   
-                    WHERE   id = @MasterId ";
-
-        con.ConnectionString = con_string;
-        con.Open ();
-        SqlCommand cmd = new SqlCommand (sql, con);
-
-        string rId = Request.QueryString["nId"];
-        cmd.Parameters.AddWithValue ("@MasterId", rId);
-        SqlDataReader reader = cmd.ExecuteReader ();
-        reader.Read ();
-
-        object res = db.ExecuteScalar (cmd);
-        if (res != null)
-            if (reader["evaluateStatus"].ToString () == "W") {
-                return true;
-            }
-        else {
-            return false;
-        } else {
-            return false;
-        }
-        con.Close ();
 
     }
 
@@ -132,6 +97,31 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
         cmd.Parameters.AddWithValue ("@MasterId", rId);
         SqlDataAdapter da = new SqlDataAdapter (cmd);
         DataSet ds = new DataSet ();
+
+        string ckdt = @"SELECT evaluateStatus
+                    FROM EvaluateMaster                   
+                    WHERE   id = @MasterId";
+
+        SqlCommand cmd1 = new SqlCommand (ckdt, con);
+        cmd1.Parameters.AddWithValue ("@MasterId", rId);
+        SqlDataReader reader = cmd1.ExecuteReader ();
+        reader.Read ();
+        string EvaluateStatus = reader["evaluateStatus"].ToString ();
+        if (EvaluateStatus == "W") {
+            Add4_1.Visible = true;
+            Add4_2.Visible = true;
+            Add4_3.Visible = true;
+            Add4_4.Visible = true;
+            Add4_5.Visible = true;
+            Add4_6.Visible = true;
+        } else {
+            Add4_1.Visible = false;
+            Add4_2.Visible = false;
+            Add4_3.Visible = false;
+            Add4_4.Visible = false;
+            Add4_5.Visible = false;
+            Add4_6.Visible = false;
+        }
 
         con.Close ();
 
@@ -585,7 +575,7 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
-       if (e.Row.RowType == DataControlRowType.DataRow) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluatePromotionWork4_2] AS E
@@ -999,7 +989,7 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
-         if (e.Row.RowType == DataControlRowType.DataRow) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluatePromotionWork4_3] AS E
@@ -1415,7 +1405,7 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound4 (object sender, GridViewRowEventArgs e) {
-         if (e.Row.RowType == DataControlRowType.DataRow) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluatePromotionWork4_4] AS E
@@ -1876,7 +1866,7 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound5 (object sender, GridViewRowEventArgs e) {
-         if (e.Row.RowType == DataControlRowType.DataRow) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluatePromotionWork4_5] AS E
@@ -2278,7 +2268,7 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
     }
 
     protected void gvData_RowDataBound6 (object sender, GridViewRowEventArgs e) {
-         if (e.Row.RowType == DataControlRowType.DataRow) {
+        if (e.Row.RowType == DataControlRowType.DataRow) {
             String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus6")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluatePromotionWork4_6] AS E
