@@ -153,7 +153,7 @@ public partial class Evaluate_User : System.Web.UI.Page {
         GridViewRow row = ((GridViewRow) ((Button) sender).NamingContainer);
         string rId = gvData.DataKeys[row.RowIndex]["MId"].ToString ();
         //string rId = Request.QueryString["nId"];
-        Response.Redirect ("Evaluate_User.aspx?nID=" + rId);
+        Response.Redirect ("Evaluate_Summary.aspx?nID=" + rId);
     }
 
     protected void gvData_Sorting (object sender, GridViewSortEventArgs e) {
