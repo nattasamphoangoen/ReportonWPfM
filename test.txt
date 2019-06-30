@@ -677,6 +677,26 @@ AS
             ON C.managerId = A1.managerId
 )
 SELECT * FROM CTE ORDER BY employeeAccount
+/////////////////////////////////////////////////////////////////////////////////////////////
+;WITH CTE
+AS
+(
+    SELECT DISTINCT U.managerId , U.employeeAccount
+    FROM AccountUnder as U
+        LEFT JOIN AccountUnder as A 
+            ON U.managerId = A.employeeAccount
+    WHERE A.id IS NULL
+	UNION ALL 
+	SELECT DISTINCT U.managerId , U.employeeAccount
+    FROM AccountUnder as U
+        LEFT JOIN AccountUnder as A 
+            ON U.managerId = A.employeeAccount
+    WHERE A.id IS NULL
+    
+)
+SELECT * FROM CTE 
+where managerId = 113
+ORDER BY employeeAccount
 
 
 
