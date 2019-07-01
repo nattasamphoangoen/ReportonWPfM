@@ -190,7 +190,7 @@
                                                     <ItemTemplate>
                                                         <asp:Button ID="bt_EditRound" runat="server"
                                                             CssClass="txt_howtonav" OnClick="bt_EditRound_Click"
-                                                            title="กรอกหรือแก้ไขแบบรายงานผลการปฏิบัติงาน" Text="แก้ไข"
+                                                            title="กรอกหรือแก้ไขแบบรายงานผลการปฏิบัติงาน" Text="บันทึก/แก้ไข"
                                                             Font-Size="Small" Visible="true" />
                                                         <asp:Button ID="bt_ViewRound" runat="server"
                                                             CssClass="txt_howtonav" OnClick="bt_ViewData_Click"

@@ -233,7 +233,7 @@
                                                 </asp:BoundField>
                                                 <asp:BoundField HeaderText="ชื่อโครงการ" DataField="projectName"
                                                     ItemStyle-Width="80px">
-                                                    <ItemStyle Width="120px" Font-Size="Small" />
+                                                    <ItemStyle Width="100px" Font-Size="Small" />
                                                 </asp:BoundField>
 
                                                 <asp:templatefield headertext="วันที่ให้บริการ" ItemStyle-Width="120px">
@@ -262,7 +262,7 @@
                                                     <ItemTemplate>
                                                         <asp:HiddenField ID="hdf_Path" runat="server"
                                                             Value='<%# Bind("path") %>'></asp:HiddenField>
-                                                        <asp:LinkButton ID="lnkDownload" runat="server"
+                                                        <asp:LinkButton ID="lnkDownload" runat="server" Visible="False"
                                                             CausesValidation="False" OnClick="btnDownload_Click">
                                                             <img id="DownloadService" alt="" border="0" height="16"
                                                                 name="popcal" src="Images/Dowload.gif" width="16" />
@@ -577,7 +577,7 @@
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="100px" Font-Size="Small" />
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="lnkDownload1_2" runat="server"
+                                                        <asp:LinkButton ID="lnkDownload1_2" runat="server" Visible="False"
                                                             OnClick="btnDownload_Click2">
                                                             <img id="DownloadService" alt="" border="0" height="16"
                                                                 name="popcal" src="Images/Dowload.gif" width="16" />
@@ -881,7 +881,7 @@
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="100px" Font-Size="Small" />
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="lnkDownload1_3" runat="server"
+                                                        <asp:LinkButton ID="lnkDownload1_3" runat="server" Visible="False"
                                                             OnClick="btnDownload_Click3">
                                                             <img id="DownloadService" alt="" border="0" height="16"
                                                                 name="popcal" src="Images/Dowload.gif" width="16" />
@@ -1168,7 +1168,7 @@
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="100px" Font-Size="Small" />
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="lnkDownload1_4" runat="server"
+                                                        <asp:LinkButton ID="lnkDownload1_4" runat="server" Visible="False"
                                                             OnClick="btnDownload_Click4">
                                                             <img id="DownloadService" alt="" border="0" height="16"
                                                                 name="popcal" src="Images/Dowload.gif" width="16" />
@@ -1434,7 +1434,7 @@
                                                     ItemStyle-Width="150px">
                                                     <ItemStyle Width="100px" Font-Size="Small" />
                                                     <ItemTemplate>
-                                                        <asp:LinkButton ID="lnkDownload1_5" runat="server"
+                                                        <asp:LinkButton ID="lnkDownload1_5" runat="server" Visible="False"
                                                             CausesValidation="False" OnClick="btnDownload_Click5">
                                                             <img id="DownloadService" alt="" border="0" height="16"
                                                                 name="popcal" src="Images/Dowload.gif" width="16" />

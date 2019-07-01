@@ -368,15 +368,15 @@ public partial class Evaluate_Promotion_work : System.Web.UI.Page {
             string Type4_1 = txtProjectType.SelectedValue.ToString ();
             decimal DateNumber = decimal.Parse (txtdateNumber.Text);
             if (Type4_1 == "Class A") {
-                totalScore4_1 = 52 + (DateNumber * 2);
+                totalScore4_1 = 50 + (DateNumber * 2);
             } else if (Type4_1 == "Class B") {
-                totalScore4_1 = 42 + (DateNumber * 2);
+                totalScore4_1 = 40 + (DateNumber * 2);
             } else if (Type4_1 == "Class C") {
-                totalScore4_1 = 32 + (DateNumber * 2);
+                totalScore4_1 = 30 + (DateNumber * 2);
             } else if (Type4_1 == "Class D") {
-                totalScore4_1 = 22 + (DateNumber * 2);
+                totalScore4_1 = 20 + (DateNumber * 2);
             } else {
-                totalScore4_1 = 12 + (DateNumber * 2);
+                totalScore4_1 = 10 + (DateNumber * 2);
             }
 
             cmd.Parameters.AddWithValue ("@Id", ID);
