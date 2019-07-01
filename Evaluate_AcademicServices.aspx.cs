@@ -570,7 +570,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound2 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus2")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluateAcademicServices5_2] AS E
                     INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
@@ -975,7 +975,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound3 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus3")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluateAcademicServices5_3] AS E
                     INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
@@ -1380,7 +1380,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound4 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus4")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluateAcademicServices5_4] AS E
                     INNER JOIN EvaluateMaster AS M ON M.id = E.masterId
@@ -1776,7 +1776,7 @@ public partial class Evaluate_AcademicServices : System.Web.UI.Page {
 
     protected void gvData_RowDataBound5 (object sender, GridViewRowEventArgs e) {
         if (e.Row.RowType == DataControlRowType.DataRow) {
-            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus")).Value);
+            String ProjectStatus = Convert.ToString (((HiddenField) e.Row.FindControl ("hdf_ProjectStatus5")).Value);
             string sql = @"SELECT M.evaluateStatus
                     FROM [EvaluateAcademicServices5_5] AS E
                     INNER JOIN EvaluateMaster AS M ON M.id = E.masterId

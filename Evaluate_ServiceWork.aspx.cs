@@ -1318,8 +1318,8 @@ public partial class Evaluate_ServiceWork : System.Web.UI.Page {
             cmd.Parameters.AddWithValue ("@Id", ID);
             cmd.Parameters.AddWithValue ("@ProjectCode", txtProjectCode3.Text.Trim ());
             cmd.Parameters.AddWithValue ("@ProjectName", txtProjectName3.Text.Trim ());
-            //cmd.Parameters.AddWithValue ("@ProjectClass", classet1_3);
-            cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");
+            cmd.Parameters.AddWithValue ("@ProjectClass", classet1_3);
+            //cmd.Parameters.AddWithValue ("@ProjectClass", "รอการพิจารณา");
             cmd.Parameters.AddWithValue ("@ProjectDescription", txtProjectDescription3.Text.Trim ());
             cmd.Parameters.AddWithValue ("@Path", filepath);
             cmd.Parameters.AddWithValue ("@IpAddress", ip);
